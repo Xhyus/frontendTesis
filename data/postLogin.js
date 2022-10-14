@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const postLogin = async (email, password) => {
-    const response = await axios.post(`${process.env.SERVIDOR}/api/login`, {
+    const response = await axios.post(`${process.env.SERVIDOR}/login`, {
         email,
         password,
     });
