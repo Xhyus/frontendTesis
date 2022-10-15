@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Heading, Button, Container, HStack, Text } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
 import postService from '../../data/postService';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
@@ -53,9 +53,9 @@ const crear = () => {
 
     if (loading) {
         return (
-            <Container maxW="container.xl" centerContent>
-                <Heading>Creando servicio...</Heading>
-            </Container>
+            <Center h="92.5vh">
+                <Spinner size="xl" />
+            </Center>
         )
     }
 
@@ -94,15 +94,15 @@ const crear = () => {
                     handleSubmit,
                 }) => (
                     <form onSubmit={handleSubmit} id="form" >
-                        <FormInput label="Nombre del servicio" handleChange={handleChange} values={values.name} errors={errors} touched={touched} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
+                        <FormInput label="Nombre del servicio" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
                         {touched.name && errors.name && (
                             <Text color={"red"}>{errors.name}</Text>
                         )}
-                        <FormInput label="Descripción del servicio" handleChange={handleChange} values={values.description} errors={errors} touched={touched} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
+                        <FormInput label="Descripción del servicio" handleChange={handleChange} values={values.description} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
                         {touched.description && errors.description && (
                             <Text color={"red"}>{errors.description}</Text>
                         )}
-                        <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} errors={errors} touched={touched} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 100" />
+                        <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
                         {touched.price && errors.price && (
                             <Text color={"red"}>{errors.price}</Text>
                         )}
@@ -114,7 +114,7 @@ const crear = () => {
                         <Button onClick={handleAddItem} colorScheme="orange" mt="5" w="full">Agregar Ítem</Button>
                         <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
                             <Button colorScheme={"green"} type="submit" w="full"> Crear </Button>
-                            <Button colorScheme={"red"} type="reset" w="full"> Cancelar </Button>
+                            <Button colorScheme={"red"} type="reset" w="full" onClick={() => router.push('/servicios')}> Cancelar </Button>
                         </HStack>
                     </form>
                 )}
