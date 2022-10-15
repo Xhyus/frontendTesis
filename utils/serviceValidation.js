@@ -13,10 +13,7 @@ const serviceValidation = yup.object({
         .required("La descripción es obligatoria"),
     price: yup.number()
         .min(1000, "El precio debe ser mayor o igual a $1.000 pesos")
-        .required("El precio es obligatorio"),
-    itemList: yup.array()
-        .min(1, "La lista de items debe contener al menos 1 item")
-        .required("La lista de items es obligatoria"),
+        .required("El precio es obligatorio")
 })
 
 export default serviceValidation
