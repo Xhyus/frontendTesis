@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Heading, Button, Container, HStack } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Text } from '@chakra-ui/react';
 import postService from '../../data/postService';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
@@ -32,10 +32,14 @@ const crear = () => {
     }
 
     const handleAddItem = () => {
-        setItems([...items, {
-            id: items[items.length - 1].id + 1,
-            name: ''
-        }])
+        if (items.length < 8) {
+            setItems([...items, {
+                id: items[items.length - 1].id + 1,
+                name: ''
+            }])
+        } else {
+            return null
+        }
     }
 
     const handleDeleteItem = (id) => {
@@ -89,17 +93,26 @@ const crear = () => {
                     handleBlur,
                     handleSubmit,
                 }) => (
-                    <form onSubmit={handleSubmit} id="form">
+                    <form onSubmit={handleSubmit} id="form" >
                         <FormInput label="Nombre del servicio" handleChange={handleChange} values={values.name} errors={errors} touched={touched} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
+                        {touched.name && errors.name && (
+                            <Text color={"red"}>{errors.name}</Text>
+                        )}
                         <FormInput label="Descripción del servicio" handleChange={handleChange} values={values.description} errors={errors} touched={touched} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
+                        {touched.description && errors.description && (
+                            <Text color={"red"}>{errors.description}</Text>
+                        )}
                         <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} errors={errors} touched={touched} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 100" />
-                        <Heading fontSize={20}>Lista de Items</Heading>
+                        {touched.price && errors.price && (
+                            <Text color={"red"}>{errors.price}</Text>
+                        )}
+                        <Heading fontSize={20} pt="5">Lista de Ítems</Heading>
                         {items.map((item, index) => {
                             return <Item key={index} id={item.id} handleDeleteItem={handleDeleteItem} handleChangeItem={handleChangeItem} lastItem={items.length} />
                         })
                         }
-                        <Button onClick={handleAddItem} colorScheme="orange" mt="5" w="full">Agregar Item</Button>
-                        <HStack align={"center"} justify={"center"} mt={5}>
+                        <Button onClick={handleAddItem} colorScheme="orange" mt="5" w="full">Agregar Ítem</Button>
+                        <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
                             <Button colorScheme={"green"} type="submit" w="full"> Crear </Button>
                             <Button colorScheme={"red"} type="reset" w="full"> Cancelar </Button>
                         </HStack>
