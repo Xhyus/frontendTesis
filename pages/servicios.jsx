@@ -2,11 +2,13 @@ import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { Text, Stack, HStack, Button, Heading, Spinner, Center, Td, Table, Tr, Thead, Th, Tbody, Container, FormControl, Input, ListItem, List } from '@chakra-ui/react'
 import getServices from '../data/getServices'
+import ServiceMap from '../components/ServiceMap'
 
 const servicios = () => {
 
     const [services, setServices] = useState([])
     const [filteredServices, setFilteredServices] = useState([])
+    const [filter, setFilter] = useState(false)
     const [loading, setLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState('')
     const router = useRouter()
@@ -15,21 +17,42 @@ const servicios = () => {
         getServices()
             .then((res) => {
                 setServices(res.data)
-                console.log(res.data)
                 setLoading(false)
             })
     }, [])
 
     useEffect(() => {
-        setFilteredServices(
-            services.filter(service => {
-                return service.name.toLowerCase().includes(searchTerm.toLowerCase())
-            })
-        )
+        // filter by name, description, price, item.description
+        const results = services.filter(service => {
+            return (
+                service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                service.price.toString().includes(searchTerm) ||
+                service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
+            )
+        })
+        setFilteredServices(results)
     }, [searchTerm])
 
     const setSearch = (e) => {
-        setSearchTerm(e.target.value)
+        if (e.target.value.length > 0) {
+            setSearchTerm(e.target.value)
+            setFilter(true)
+        } else {
+            setFilter(false)
+        }
+    }
+
+    const renderInfo = () => {
+        if (filter === true) {
+            return (
+                <ServiceMap services={filteredServices} />
+            )
+        } else {
+            return (
+                <ServiceMap services={services} />
+            )
+        }
     }
 
     if (loading) {
@@ -56,32 +79,7 @@ const servicios = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {
-                        services.map(service => {
-                            return (
-                                <Tr id={service._id}>
-                                    <Td>{service.name} para para para para para para</Td>
-                                    <Td>{service.description} para para para para para para</Td>
-                                    <Td>${service.price}</Td>
-                                    <Td>
-                                        <List>{service.item.map(item => {
-                                            return (
-                                                <ListItem id={item._id}>
-                                                    <Text>{item.description} para para para para para para</Text>
-                                                </ListItem>
-                                            )
-                                        })}</List>
-                                    </Td>
-                                    <Td>
-                                        <HStack>
-                                            <Button colorScheme="blue">Editar</Button>
-                                            <Button colorScheme="red">Eliminar</Button>
-                                        </HStack>
-                                    </Td>
-                                </Tr>
-                            )
-                        })
-                    }
+                    {renderInfo()}
                 </Tbody>
             </Table>
         </Container>
