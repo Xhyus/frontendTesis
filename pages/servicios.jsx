@@ -1,28 +1,40 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Text, Stack, HStack, Button, Heading, Spinner, Center, Td, Table, Tr, Thead, Th, Tbody, Container, FormControl, Input, ListItem, List } from '@chakra-ui/react'
+import { HStack, Button, Heading, Spinner, Center, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import getServices from '../data/getServices'
 import ServiceMap from '../components/ServiceMap'
+import { AiOutlineClose, } from 'react-icons/ai'
+import Pagination from '../components/Pagination'
 
 const servicios = () => {
 
     const [services, setServices] = useState([])
     const [filteredServices, setFilteredServices] = useState([])
-    const [filter, setFilter] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [status, setStatus] = useState({
+        loading: true,
+        filter: false
+    })
     const [searchTerm, setSearchTerm] = useState('')
+    const [currentPage, setCurrentPage] = useState(1);
+    const [servicesPerPage] = useState(4);
+    const indexOfLastRecord = currentPage * servicesPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - servicesPerPage;
+    const nPages = Math.ceil(services.length / servicesPerPage)
+    const currentRecords = services.slice(indexOfFirstRecord, indexOfLastRecord);
     const router = useRouter()
 
     useEffect(() => {
         getServices()
             .then((res) => {
                 setServices(res.data)
-                setLoading(false)
+                setStatus({
+                    loading: false,
+                    filter: false
+                })
             })
     }, [])
 
     useEffect(() => {
-        // filter by name, description, price, item.description
         const results = services.filter(service => {
             return (
                 service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,32 +42,33 @@ const servicios = () => {
                 service.price.toString().includes(searchTerm) ||
                 service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
             )
-        })
+        }).slice(indexOfFirstRecord, indexOfLastRecord)
         setFilteredServices(results)
     }, [searchTerm])
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
             setSearchTerm(e.target.value)
-            setFilter(true)
+            setStatus({
+                loading: false,
+                filter: true
+            })
         } else {
-            setFilter(false)
+            setStatus({
+                loading: false,
+                filter: false
+            })
         }
     }
 
     const renderInfo = () => {
-        if (filter === true) {
-            return (
-                <ServiceMap services={filteredServices} />
-            )
-        } else {
-            return (
-                <ServiceMap services={services} />
-            )
+        if (status.filter === false) {
+            return <ServiceMap services={currentRecords} setServices={setServices} />
         }
+        return <ServiceMap services={filteredServices} setServices={setServices} />
     }
 
-    if (loading) {
+    if (status.loading === true) {
         <Center h="92.5vh">
             <Spinner size="xl" />
         </Center>
@@ -66,7 +79,10 @@ const servicios = () => {
             <Heading mt={10}>Servicios</Heading>
             <HStack w={"full"} my={5}>
                 <Button w={"full"} colorScheme="blue" onClick={() => router.push('/servicios/crear')}>Crear</Button>
-                <Input w={"full"} type="text" placeholder="Buscar" onChange={setSearch} />
+                <InputGroup w={"full"} >
+                    <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
+                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
+                </InputGroup>
             </HStack>
             <Table variant="striped">
                 <Thead>
@@ -82,8 +98,8 @@ const servicios = () => {
                     {renderInfo()}
                 </Tbody>
             </Table>
+            <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </Container>
-
     )
 }
 
