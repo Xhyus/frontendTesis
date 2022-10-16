@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter()
 	axios.defaults.withCredentials = true
 	const useNavbar = () => {
-		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/500') {
+		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404') {
 			return <>
 				<Component {...pageProps} />
 			</>
@@ -32,9 +32,7 @@ function MyApp({ Component, pageProps }) {
 					}
 				`}</style>
 			</Head>
-			<Stack>
-				{useNavbar()}
-			</Stack>
+			{useNavbar()}
 		</ChakraProvider>
 	)
 }

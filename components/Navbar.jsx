@@ -34,12 +34,12 @@ const Navbar = () => {
 	const desk = () => {
 		return (
 			<Box bgColor={"transparent"}>
-				<HStack justify={"space-between"} ml={5} mr={5}>
-					<Image src="../public/logo.png" width={'30'} height={'20'} />
+				<HStack justify={"space-between"} my={5} mx={10}>
+					<Image src="/logo.png" width={'32'} height={'8'} />
 					<HStack spacing={8}>
-						<Link _hover={"none"} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => router.push('servicios')} >Servicios</Link>
-						<Link _hover={"none"} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('cotizaciones')} >Cotizaciones</Link>
-						<Link _hover={"none"} color={"white"} fontWeight={"bold"} onClick={() => router.push('/')} >Cerrar Sesión</Link>
+						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => router.push('servicios')} >Servicios</Link>
+						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('cotizaciones')} >Cotizaciones</Link>
+						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={() => router.push('/')} >Cerrar Sesión</Link>
 					</HStack>
 				</HStack>
 			</Box>
@@ -59,7 +59,7 @@ const Navbar = () => {
 					<DrawerContent>
 						<DrawerCloseButton />
 						<DrawerHeader>
-							<Image src="../public/logo.png" alt="logo" />
+							<Image src="/logo.png" alt="logo" w={'64'} />
 						</DrawerHeader>
 						<DrawerBody justifyContent={"center"}>
 							<Stack>
