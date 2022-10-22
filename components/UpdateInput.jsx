@@ -2,7 +2,6 @@ import React from 'react'
 import { FormControl, FormLabel, Input, Tooltip } from '@chakra-ui/react'
 
 const UpdateInput = ({ label, handleChange, handleBlur, name, type, placeHolder, values }) => {
-    console.log(values)
     return (
         <FormControl isRequired py={3}>
             <FormLabel>{label}</FormLabel>

@@ -7,17 +7,19 @@ import ItemUpdate from '../../components/ItemUpdate';
 import UpdateInput from '../../components/UpdateInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
+import updateServices from '../../data/updateServices';
+import updateManyItems from '../../data/updateManyItems';
 
 const update = () => {
     const [loading, setLoading] = useState(true)
     const [items, setItems] = useState([])
     const [service, setService] = useState([])
     const router = useRouter()
-    const { pid } = router.query
+    const { sid } = router.query // sid = service id
 
     useEffect(() => {
         (async () => {
-            const data = await getSpecificService(pid)
+            const data = await getSpecificService(sid)
             data.item.map((item, index) => {
                 let values = {
                     description: item.description,
@@ -29,7 +31,7 @@ const update = () => {
             setService(data)
             setLoading(false)
         })();
-    }, [pid])
+    }, [sid])
 
     const handleChangeItem = (e) => {
         setItems(
@@ -38,7 +40,7 @@ const update = () => {
                     item.name = e.target.value
                     return {
                         ...item,
-                        name: e.target.value
+                        description: e.target.value
                     }
                 }
                 return item
@@ -50,7 +52,7 @@ const update = () => {
         if (items.length < 8) {
             setItems([...items, {
                 id: items[items.length - 1].id + 1,
-                name: ''
+                description: ''
             }])
         } else {
             return null
@@ -69,8 +71,7 @@ const update = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 setItems((items) => items.filter((item) => item.id !== id))
-                // setItems(items.filter(item => item.id !== id))
-                if (items.length === undefined || items.length === 0) {
+                if (items.length === 1) {
                     setItems([{ id: 0, name: '' }])
                 }
                 items.map(item => {
@@ -100,20 +101,27 @@ const update = () => {
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
                     setLoading(true)
-                    postService(values.name, values.description, values.price, items)
-                        .then((res) => {
-                            if (res.status === 200) {
-                                Swal.fire({
-                                    title: 'Servicio creado',
-                                    text: 'El servicio ha sido creado correctamente',
-                                    icon: 'success',
-                                    confirmButtonText: 'Aceptar'
-                                }).then(() => {
-                                    router.replace('/servicios')
+                    try {
+                        updateServices(sid, values)
+                            .then(() => {
+                                let itemList = []
+                                items.map(item => {
+                                    itemList.push(item.description)
                                 })
-                            }
+                                updateManyItems(sid, itemList)
+                                    .then(() => {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Servicio actualizado',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                        router.push('/servicios')
+                                    })
+                            })
+                    } catch (error) {
 
-                        })
+                    }
                 }}
             >
                 {({
@@ -124,7 +132,6 @@ const update = () => {
                     handleBlur,
                     handleSubmit,
                 }) => (
-                    console.log(service),
                     <form onSubmit={handleSubmit} id="form" >
                         <UpdateInput label="Nombre del servicio" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
                         {touched.name && errors.name && (
