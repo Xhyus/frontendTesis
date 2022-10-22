@@ -6,7 +6,7 @@ const FormInput = ({ label, handleChange, handleBlur, name, type, placeHolder, v
         <FormControl isRequired py={3}>
             <FormLabel>{label}</FormLabel>
             <Tooltip label={placeHolder} aria-label={placeHolder}>
-                <Input type={type} name={name} onChange={handleChange} values={values} onBlur={handleBlur} placeholder={placeHolder} />
+                <Input type={type} name={name} onChange={handleChange} value={values} onBlur={handleBlur} placeholder={placeHolder} />
             </Tooltip>
         </FormControl>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tooltip, HStack, FormControl, Input, Button, FormLabel } from '@chakra-ui/react'
 
-const Item = ({ id, lastItem, handleDeleteItem, handleChangeItem }) => {
+const Item = ({ id, lastItem, handleDeleteItem, handleChangeItem, value }) => {
     const removeItem = () => {
         if (id + 1 === lastItem && id !== 0) {
             return (
@@ -18,7 +18,7 @@ const Item = ({ id, lastItem, handleDeleteItem, handleChangeItem }) => {
             <FormLabel>Ítem {id + 1}</FormLabel>
             <HStack>
                 <Tooltip label="Ej: Diseño responsivo para teléfonos y tablets" aria-label="Ej: Diseño responsivo para teléfonos y tablets">
-                    <Input type="text" name={id} placeholder="Ej: Diseño responsivo para teléfonos y tablets" onChange={handleChangeItem} />
+                    <Input type="text" name={id} value={value} placeholder="Ej: Diseño responsivo para teléfonos y tablets" onChange={handleChangeItem} />
                 </Tooltip>
                 {removeItem()}
             </HStack>
