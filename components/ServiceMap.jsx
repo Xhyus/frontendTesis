@@ -1,9 +1,12 @@
-import React from 'react'
-import { Text, HStack, Button, Td, Tr, ListItem, List } from '@chakra-ui/react'
+import { useEffect, useState, useRef } from 'react'
+import { Text, HStack, Button, Td, Tr, ListItem, List, useDisclosure, FormControl, Input, FormLabel } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import deleteServices from '../data/deleteServices'
+import { useRouter } from 'next/router'
+import EditModal from './EditModal'
 
-const ServiceMap = ({ services, setServices }) => {
+const ServiceMap = ({ services }) => {
+    const router = useRouter()
 
     const deleteService = (id) => {
         Swal.fire({
@@ -21,12 +24,15 @@ const ServiceMap = ({ services, setServices }) => {
                             'El servicio ha sido borrado.',
                             'success'
                         ).then(() => {
-                            setServices(services.filter(service => service._id !== id))
-                            console.log(services.filter(service => service._id))
+                            window.location.reload()
                         })
                     })
             }
         })
+    }
+
+    const editService = (id) => {
+        router.push(`/servicios/${id}`)
     }
 
     return (
@@ -47,9 +53,11 @@ const ServiceMap = ({ services, setServices }) => {
                     </Td>
                     <Td>
                         <HStack>
-                            <Button colorScheme="blue">Editar</Button>
+                            {/* <Button colorScheme="yellow" onClick={() => deleteService(service._id)}>Ver más</Button> */}
+                            <Button colorScheme="blue" onClick={() => editService(service._id)}>Editar</Button>
                             <Button colorScheme="red" onClick={() => deleteService(service._id)}>Eliminar</Button>
                         </HStack>
+                        {/* <EditModal setIsOpen={setIsOpen} isOpen={isOpen} initialRef={initialRef} finalRef={finalRef} /> */}
                     </Td>
                 </Tr>
             )

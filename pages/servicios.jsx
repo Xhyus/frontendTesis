@@ -4,33 +4,30 @@ import { HStack, Button, Heading, Spinner, Center, Table, Tr, Thead, Th, Tbody, 
 import getServices from '../data/getServices'
 import ServiceMap from '../components/ServiceMap'
 import { AiOutlineClose, } from 'react-icons/ai'
-import Pagination from '../components/Pagination'
+// import Pagination from '../components/Pagination'
+// import calculatePagination from '../utils/calculatePagination'
 
 const servicios = () => {
 
     const [services, setServices] = useState([])
     const [filteredServices, setFilteredServices] = useState([])
-    const [status, setStatus] = useState({
-        loading: true,
-        filter: false
-    })
+    const [filter, setFilter] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState('')
-    const [currentPage, setCurrentPage] = useState(1);
-    const [servicesPerPage] = useState(4);
-    const indexOfLastRecord = currentPage * servicesPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - servicesPerPage;
-    const nPages = Math.ceil(services.length / servicesPerPage)
-    const currentRecords = services.slice(indexOfFirstRecord, indexOfLastRecord);
+    // const [currentPage, setCurrentPage] = useState(1)
+    // const [filteredCurrentPage, setFilteredCurrentPage] = useState(1)
+    // const [servicesPerPage] = useState(5)
+    // const [calculatedPagination, setCalculatedPagination] = useState({})
     const router = useRouter()
 
     useEffect(() => {
         getServices()
             .then((res) => {
                 setServices(res.data)
-                setStatus({
-                    loading: false,
-                    filter: false
-                })
+                // let pagination = calculatePagination(res.data, servicesPerPage)
+                // console.log(pagination)
+                // setCalculatedPagination(pagination)
+                setLoading(false)
             })
     }, [])
 
@@ -42,33 +39,32 @@ const servicios = () => {
                 service.price.toString().includes(searchTerm) ||
                 service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
             )
-        }).slice(indexOfFirstRecord, indexOfLastRecord)
+        })
         setFilteredServices(results)
     }, [searchTerm])
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
             setSearchTerm(e.target.value)
-            setStatus({
-                loading: false,
-                filter: true
-            })
+            setFilter(true)
         } else {
-            setStatus({
-                loading: false,
-                filter: false
-            })
+            setFilter(false)
         }
     }
 
     const renderInfo = () => {
-        if (status.filter === false) {
-            return <ServiceMap services={currentRecords} setServices={setServices} />
+        if (filter === true) {
+            return (
+                <ServiceMap services={filteredServices} />
+            )
+        } else {
+            return (
+                <ServiceMap services={services} />
+            )
         }
-        return <ServiceMap services={filteredServices} setServices={setServices} />
     }
 
-    if (status.loading === true) {
+    if (loading === true) {
         <Center h="92.5vh">
             <Spinner size="xl" />
         </Center>
@@ -98,7 +94,11 @@ const servicios = () => {
                     {renderInfo()}
                 </Tbody>
             </Table>
-            <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            {/* <Pagination
+                nPages={calculatedPagination.nPages}
+                currentPage={calculatedPagination.currentPage}
+                setCurrentPage={filter === true ? setFilteredCurrentPage : setCurrentPage}
+            /> */}
         </Container>
     )
 }
