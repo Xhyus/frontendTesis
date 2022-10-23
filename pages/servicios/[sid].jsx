@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heading, Button, Container, HStack, Text, Center, Spinner, Input } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Text } from '@chakra-ui/react';
 import getSpecificService from '../../data/getSpecificService';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
@@ -10,16 +10,41 @@ import { useRouter } from 'next/router'
 import updateServices from '../../data/updateServices';
 import updateManyItems from '../../data/updateManyItems';
 
-const update = () => {
-    const [loading, setLoading] = useState(true)
+export async function getServerSideProps(context) {
+    try {
+        const res = await getSpecificService(context.query, context.req.headers.cookie)
+        return {
+            props: {
+                data: res.data
+            }
+        }
+    } catch (error) {
+        if (error.status === 401) {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: false
+                }
+            }
+        } else {
+            return {
+                redirect: {
+                    destination: '/servicios',
+                    permanent: false
+                }
+            }
+        }
+    }
+}
+
+const update = ({ data }) => {
     const [items, setItems] = useState([])
-    const [service, setService] = useState([])
+    const [service] = useState(data)
     const router = useRouter()
     const { sid } = router.query // sid = service id
 
     useEffect(() => {
         (async () => {
-            const data = await getSpecificService(sid)
             data.item.map((item, index) => {
                 let values = {
                     description: item.description,
@@ -28,8 +53,6 @@ const update = () => {
                 }
                 setItems(items => [...items, values])
             })
-            setService(data)
-            setLoading(false)
         })();
     }, [sid])
 
@@ -83,14 +106,6 @@ const update = () => {
         })
     }
 
-    if (loading) {
-        return (
-            <Center h="92.5vh">
-                <Spinner size="xl" />
-            </Center>
-        )
-    }
-
     return (
         <Container maxW={"container.md"}>
             <HStack align={"center"} justify={"center"} mt={10}>
@@ -100,7 +115,6 @@ const update = () => {
                 initialValues={service}
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
-                    setLoading(true)
                     try {
                         updateServices(sid, values)
                             .then(() => {

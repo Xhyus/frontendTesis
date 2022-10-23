@@ -7,6 +7,25 @@ import Item from '../../components/Item';
 import FormInput from '../../components/FormInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
+import checkToken from '../../data/checkToken';
+
+export async function getServerSideProps(context) {
+    try {
+        const res = await checkToken(context.req.headers.cookie)
+        return {
+            props: {
+                data: res.data
+            }
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+}
 
 const crear = () => {
     const [loading, setLoading] = useState(false)

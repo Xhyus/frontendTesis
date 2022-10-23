@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex, Image } from '@chakra-ui/react';
+import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 import postLogin from '../data/postLogin';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
-import image from '../public/background.jpg'
 
 const Home = () => {
 
