@@ -56,7 +56,7 @@ const Home = () => {
 	};
 
 	return (
-		<Flex w={'full'} h={"100vh"} justify={"center"} align="center" backgroundImage="url('/background.jpg')" bgPos={"center"} filter='auto' >
+		<Flex w={'full'} h={"100vh"} justify={"center"} align="center" backgroundImage="url('/background.jpg')" bgPos={"bottom"} filter='auto' >
 			<Container maxW="container.md" justifyContent={"center"} alignItems={"center"} backdropFilter='auto' backdropContrast='85%' p={'14'} >
 				<Stack spacing={4} justify={"center"} >
 					<Heading as="h1" size="xl" textAlign={"center"} textShadow={'2px 2px black'}>Plataforma de Cotizaciones Estudio Fragua</Heading>
