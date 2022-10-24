@@ -4,6 +4,31 @@ import postLogin from '../data/postLogin';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
+import checkToken from '../data/checkToken';
+
+export const getServerSideProps = async (context) => {
+	try {
+		const res = await checkToken(context.req.headers.cookie)
+		if (res.status === 200) {
+			return {
+				redirect: {
+					destination: '/cotizaciones',
+					permanent: false
+				}
+			}
+		} else {
+			return {
+				props: {
+					data: res.data
+				}
+			}
+		}
+	} catch (error) {
+		return {
+			props: { data: null }
+		}
+	}
+}
 
 const Home = () => {
 

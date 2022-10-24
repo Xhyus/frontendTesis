@@ -2,6 +2,9 @@ import React from 'react';
 import { useRouter } from 'next/router'
 import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody } from "@chakra-ui/react"
 import { FaBars } from 'react-icons/fa';
+import Cookies from 'js-cookie'
+import axios from 'axios'
+
 const Navbar = () => {
 
 	const [isMobile] = useMediaQuery("(max-width: 600px)")
@@ -31,6 +34,14 @@ const Navbar = () => {
 		}
 	}
 
+	// delete the cookie with the name 'token' and redirect to the / page
+	const logout = async () => {
+		axios.get('http://localhost:3001/api/logout')
+		Cookies.remove('user')
+		Cookies.remove('token');
+		await router.push('/')
+	}
+
 	const desk = () => {
 		return (
 			<Box bgColor={"transparent"}>
@@ -39,7 +50,7 @@ const Navbar = () => {
 					<HStack spacing={8}>
 						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => window.location.href = "/servicios"}>Servicios</Link>
 						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => window.location.href = "/cotizaciones"} >Cotizaciones</Link>
-						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={() => router.push('/')} >Cerrar Sesión</Link>
+						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={logout}>Cerrar sesión</Link>
 					</HStack>
 				</HStack>
 			</Box>
@@ -68,7 +79,7 @@ const Navbar = () => {
 							</Stack>
 						</DrawerBody>
 						<DrawerFooter justifyContent={"center"}>
-							<Button colorScheme={"red"} fontWeight={"bold"} onClick={() => router.push('/')} >Cerrar Sesión</Button>
+							<Button colorScheme={"red"} fontWeight={"bold"} onClick={logout} >Cerrar Sesión</Button>
 						</DrawerFooter>
 					</DrawerContent>
 				</Drawer >

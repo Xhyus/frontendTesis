@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
 import checkToken from '../../data/checkToken';
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
     try {
         const res = await checkToken(context.req.headers.cookie)
         return {

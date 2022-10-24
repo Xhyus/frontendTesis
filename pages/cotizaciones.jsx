@@ -1,7 +1,7 @@
 import React from 'react'
 import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 
-import checkToken from '../../data/checkToken';
+import checkToken from '../data/checkToken';
 
 export async function getServerSideProps(context) {
     try {
