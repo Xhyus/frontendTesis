@@ -6,15 +6,50 @@ import Swal from 'sweetalert2'
 import FormikError from './FormikError';
 import constitutedValidation from '../utils/constitutedValidation';
 import unconstitutedValidation from '../utils/unconstitutedValidation';
+import createConstitutedCompany from '../data/createConstitutedCompany';
+import createUnconstitutedCompany from '../data/createUnconstitutedCompany';
+import createContact from '../data/createContact';
+import { useRouter } from 'next/router'
 
 const Constituted = ({ state }) => {
+    const router = useRouter()
     if (state) {
         return (
             <Formik
                 initialValues={{ name: '', socialReason: '', rut: '', email: '', phone: '', address: '', contactName: '', contactEmail: '', contactPhone: '', contactPosition: '', contactRut: '' }}
                 validationSchema={constitutedValidation}
                 onSubmit={(values) => {
-                    console.log('constituida', values)
+                    createConstitutedCompany(values)
+                        .then(res => {
+                            if (res.status === 201) {
+                                createContact(res.data._id, values)
+                                    .then(res => {
+                                        if (res.status === 201) {
+                                            Swal.fire({
+                                                title: 'Empresa registrada',
+                                                text: 'Su empresa ha sido registrada con exito',
+                                                icon: 'success',
+                                                confirmButtonText: 'Aceptar'
+                                            })
+                                            router.push('/')
+                                        } else {
+                                            Swal.fire({
+                                                title: 'Error',
+                                                text: 'Ha ocurrido un error al registrar su empresa',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            })
+                                        }
+                                    })
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al registrar su empresa',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                })
+                            }
+                        })
                 }}
             >
                 {({
@@ -102,7 +137,37 @@ const Constituted = ({ state }) => {
                 initialValues={{ name: '', rut: '', email: '', phone: '', contactName: '', contactEmail: '', contactPhone: '', contactPosition: '', contactRut: '' }}
                 validationSchema={unconstitutedValidation}
                 onSubmit={(values) => {
-                    console.log('constituida', values)
+                    createUnconstitutedCompany(values)
+                        .then(res => {
+                            if (res.status === 200) {
+                                createContact(res.data._id, values)
+                                    .then(res => {
+                                        if (res.status === 200) {
+                                            Swal.fire({
+                                                title: 'Empresa creada',
+                                                text: 'La empresa ha sido creada con éxito',
+                                                icon: 'success',
+                                                confirmButtonText: 'Aceptar'
+                                            })
+                                            router.push('/')
+                                        } else {
+                                            Swal.fire({
+                                                title: 'Error',
+                                                text: 'Ha ocurrido un error al crear la empresa',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            })
+                                        }
+                                    })
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al registrar su empresa',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                })
+                            }
+                        })
                 }}
             >
                 {({

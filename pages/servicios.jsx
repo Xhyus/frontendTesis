@@ -25,8 +25,6 @@ export async function getServerSideProps(context) {
     }
 }
 const servicios = ({ data }) => {
-    console.log(data)
-
     const [services] = useState(data)
     const [filteredServices, setFilteredServices] = useState([])
     const [filter, setFilter] = useState(false)

@@ -5,9 +5,9 @@ import { useRouter } from 'next/router'
 
 const empresa = () => {
     const [loading, setLoading] = useState(false)
-    const [constitutedCompany, setConstitutedCompany] = useState(false)
+    const [constitutedCompany, setConstitutedCompany] = useState(true)
     const router = useRouter()
-    const { empresa } = router.query
+    // const { empresa } = router.query
 
     if (loading) {
         return (
