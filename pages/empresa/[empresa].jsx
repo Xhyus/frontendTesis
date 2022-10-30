@@ -1,13 +1,39 @@
 import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
-import Constituted from '../components/Constituted';
+import Constituted from '../../components/Constituted';
 import { useRouter } from 'next/router'
+import signedPage from '../../data/getSignedPage';
+
+export const getServerSideProps = async (context) => {
+    try {
+        const res = await signedPage(context.query)
+        if (res.status === 200 && res.data.use === 'company') {
+            return {
+                props: {
+                    data: res.data
+                }
+            }
+        } else {
+            return {
+                redirect: {
+                    destination: '/login',
+                    permanent: false,
+                },
+            }
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+}
 
 const empresa = () => {
     const [loading, setLoading] = useState(false)
     const [constitutedCompany, setConstitutedCompany] = useState(true)
-    const router = useRouter()
-    // const { empresa } = router.query
 
     if (loading) {
         return (

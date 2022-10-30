@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, HStack, Text, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex, Image, Stack } from '@chakra-ui/react';
+import { Heading, HStack, Button, Stack } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import FormInput from './FormInput';
 import Swal from 'sweetalert2'
@@ -10,9 +10,12 @@ import createConstitutedCompany from '../data/createConstitutedCompany';
 import createUnconstitutedCompany from '../data/createUnconstitutedCompany';
 import createContact from '../data/createContact';
 import { useRouter } from 'next/router'
+import signPage from '../../data/signPage';
+
 
 const Constituted = ({ state }) => {
     const router = useRouter()
+    const { empresa } = router.query
     if (state) {
         return (
             <Formik
@@ -31,6 +34,7 @@ const Constituted = ({ state }) => {
                                                 icon: 'success',
                                                 confirmButtonText: 'Aceptar'
                                             })
+                                            signPage(empresa)
                                             router.push('/')
                                         } else {
                                             Swal.fire({
@@ -149,6 +153,7 @@ const Constituted = ({ state }) => {
                                                 icon: 'success',
                                                 confirmButtonText: 'Aceptar'
                                             })
+                                            signPage(empresa)
                                             router.push('/')
                                         } else {
                                             Swal.fire({
