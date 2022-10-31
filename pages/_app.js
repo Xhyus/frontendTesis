@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter()
 	axios.defaults.withCredentials = true
 	const useNavbar = () => {
-		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/empresa') {
+		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/empresa/[empresa]') {
 			return <Component {...pageProps} />
 		} else {
 			return <>
