@@ -3,7 +3,6 @@ import { Text, HStack, Button, Td, Tr, ListItem, List, useDisclosure, FormContro
 import Swal from 'sweetalert2'
 import deleteServices from '../data/deleteServices'
 import { useRouter } from 'next/router'
-import EditModal from './EditModal'
 
 const ServiceMap = ({ services }) => {
     const router = useRouter()
