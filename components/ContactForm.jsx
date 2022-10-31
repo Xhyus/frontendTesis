@@ -1,17 +1,16 @@
-import { Heading, HStack, Button, Stack } from '@chakra-ui/react';
-import { Formik } from 'formik';
-import FormInput from './FormInput';
-import FormikError from './FormikError';
-import constitutedValidation from '../utils/constitutedValidation';
+import React from 'react'
+import { Heading, HStack, Stack, Button } from '@chakra-ui/react'
+import { Formik } from 'formik'
+import FormikError from './FormikError'
+import FormInput from './FormInput'
 
-const Constituted = ({ setStep, company, setCompany }) => {
+const ContactForm = ({ company, setStep, setContact, contact }) => {
     return (
         <Formik
-            initialValues={company}
-            // validationSchema={constitutedValidation}
+            initialValues={contact}
             onSubmit={(values) => {
-                setCompany(values)
-                setStep(2)
+                console.log('Contact values: ', values)
+                console.log('Company values: ', company)
             }}
         >
             {({
@@ -23,14 +22,10 @@ const Constituted = ({ setStep, company, setCompany }) => {
                 handleSubmit,
             }) => (
                 <form onSubmit={handleSubmit} id="form" >
-                    <Heading as="h2" size="lg" mb={4} color="white">Datos de la empresa</Heading>
-                    <FormInput label="Nombre de la empresa" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Estudio Fragua" />
+                    <Heading as="h2" size="lg" mb={4} color="white">Datos del contacto</Heading>
+                    <FormInput label="Nombre" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Pérez" />
                     {touched.name && errors.name && (
                         <FormikError error={errors.name} />
-                    )}
-                    <FormInput label="Razón social" handleChange={handleChange} values={values.socialReason} handleBlur={handleBlur} name="socialReason" type="text" placeHolder="Ej: Restaurantes McDonald's S.A." />
-                    {touched.socialReason && errors.socialReason && (
-                        <FormikError error={errors.socialReason} />
                     )}
                     <FormInput label="Email" handleChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
                     {touched.email && errors.email && (
@@ -38,7 +33,7 @@ const Constituted = ({ setStep, company, setCompany }) => {
                     )}
                     <HStack>
                         <Stack w={'full'}>
-                            <FormInput label="RUT empresa" handleChange={handleChange} values={values.rut} handleBlur={handleBlur} name="rut" type="text" placeHolder="Ej: 11.111.111-1" />
+                            <FormInput label="RUT" handleChange={handleChange} values={values.rut} handleBlur={handleBlur} name="rut" type="text" placeHolder="Ej: 11.111.111-1" />
                         </Stack>
                         <Stack w={'full'}>
                             <FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: +569 1234 5678" />
@@ -52,12 +47,13 @@ const Constituted = ({ setStep, company, setCompany }) => {
                             <FormikError error={errors.phone} />
                         )}
                     </HStack>
-                    <FormInput label="Dirección" handleChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" />
-                    {touched.address && errors.address && (
-                        <FormikError error={errors.address} />
+                    <FormInput label="Rol" handleChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder="Ej: Socio, asesor, etc." />
+                    {touched.position && errors.position && (
+                        <FormikError error={errors.position} />
                     )}
                     <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-                        <Button colorScheme={"green"} type="submit" w="full"> Siguiente paso </Button>
+                        <Button colorScheme={"green"} type="submit" w="full"> Crear Empresa </Button>
+                        <Button colorScheme={"red"} w="full" onClick={() => { setContact(values), setStep(1) }}> Volver </Button>
                     </HStack>
                 </form>
             )}
@@ -65,4 +61,4 @@ const Constituted = ({ setStep, company, setCompany }) => {
     )
 }
 
-export default Constituted
+export default ContactForm

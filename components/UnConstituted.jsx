@@ -2,13 +2,14 @@ import { Heading, HStack, Button, Stack } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import FormInput from './FormInput';
 import FormikError from './FormikError';
-import constitutedValidation from '../utils/constitutedValidation';
+import unconstitutedValidation from '../utils/unconstitutedValidation';
 
-const Constituted = ({ setStep, company, setCompany }) => {
+
+const UnConstituted = ({ setStep, setCompany, company }) => {
     return (
         <Formik
             initialValues={company}
-            // validationSchema={constitutedValidation}
+            // validationSchema={unconstitutedValidation}
             onSubmit={(values) => {
                 setCompany(values)
                 setStep(2)
@@ -23,14 +24,10 @@ const Constituted = ({ setStep, company, setCompany }) => {
                 handleSubmit,
             }) => (
                 <form onSubmit={handleSubmit} id="form" >
-                    <Heading as="h2" size="lg" mb={4} color="white">Datos de la empresa</Heading>
-                    <FormInput label="Nombre de la empresa" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Estudio Fragua" />
+                    <Heading as="h2" size="lg" mb={4} color="white">Datos del cliente</Heading>
+                    <FormInput label="Nombre del cliente" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Gomez" />
                     {touched.name && errors.name && (
                         <FormikError error={errors.name} />
-                    )}
-                    <FormInput label="Razón social" handleChange={handleChange} values={values.socialReason} handleBlur={handleBlur} name="socialReason" type="text" placeHolder="Ej: Restaurantes McDonald's S.A." />
-                    {touched.socialReason && errors.socialReason && (
-                        <FormikError error={errors.socialReason} />
                     )}
                     <FormInput label="Email" handleChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
                     {touched.email && errors.email && (
@@ -38,7 +35,7 @@ const Constituted = ({ setStep, company, setCompany }) => {
                     )}
                     <HStack>
                         <Stack w={'full'}>
-                            <FormInput label="RUT empresa" handleChange={handleChange} values={values.rut} handleBlur={handleBlur} name="rut" type="text" placeHolder="Ej: 11.111.111-1" />
+                            <FormInput label="RUT" handleChange={handleChange} values={values.rut} handleBlur={handleBlur} name="rut" type="text" placeHolder="Ej: 11.111.111-1" />
                         </Stack>
                         <Stack w={'full'}>
                             <FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: +569 1234 5678" />
@@ -65,4 +62,4 @@ const Constituted = ({ setStep, company, setCompany }) => {
     )
 }
 
-export default Constituted
+export default UnConstituted
