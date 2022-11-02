@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Heading, Button, Container, HStack, Text } from '@chakra-ui/react';
-import getSpecificService from '../../data/getSpecificService';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
 import ItemUpdate from '../../components/ItemUpdate';
 import FormInput from '../../components/FormInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import updateServices from '../../data/updateServices';
-import updateManyItems from '../../data/updateManyItems';
+import { getSpecificService, updateServices, updateManyItems } from '../../data/services'
 
 export async function getServerSideProps(context) {
     try {

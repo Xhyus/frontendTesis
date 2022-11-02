@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
-import { Text, HStack, Button, Td, Tr, ListItem, List, useDisclosure, FormControl, Input, FormLabel } from '@chakra-ui/react'
+import { Text, HStack, Button, Td, Tr, ListItem, List } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
-import deleteServices from '../data/deleteServices'
+import { deleteServices } from '../data/services'
 import { useRouter } from 'next/router'
 
 const ServiceMap = ({ services }) => {
@@ -30,8 +29,14 @@ const ServiceMap = ({ services }) => {
         })
     }
 
-    const editService = (id) => {
-        router.push(`/servicios/${id}`)
+    if (services.length === 0) {
+        return (
+            <Tr>
+                <Td colSpan="5">
+                    <Text fontSize="xl" textAlign="center">No se ha encontrado ningún servicio con los datos ingresados</Text>
+                </Td>
+            </Tr>
+        )
     }
 
     return (
@@ -53,10 +58,9 @@ const ServiceMap = ({ services }) => {
                     <Td>
                         <HStack>
                             {/* <Button colorScheme="yellow" onClick={() => deleteService(service._id)}>Ver más</Button> */}
-                            <Button colorScheme="blue" onClick={() => editService(service._id)}>Editar</Button>
+                            <Button colorScheme="blue" onClick={() => router.push(`/servicios/${service._id}`)}>Editar</Button>
                             <Button colorScheme="red" onClick={() => deleteService(service._id)}>Eliminar</Button>
                         </HStack>
-                        {/* <EditModal setIsOpen={setIsOpen} isOpen={isOpen} initialRef={initialRef} finalRef={finalRef} /> */}
                     </Td>
                 </Tr>
             )

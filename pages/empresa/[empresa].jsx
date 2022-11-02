@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
 import Company from '../../components/Company';
 import { useRouter } from 'next/router'
-import signedPage from '../../data/getSignedPage';
+import { getSignedPage } from '../../data/signed'
 
 // export const getServerSideProps = async (context) => {
 //     try {

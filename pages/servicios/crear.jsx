@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
-import postService from '../../data/postService';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
 import Item from '../../components/Item';
 import FormInput from '../../components/FormInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import checkToken from '../../data/checkToken';
+import { checkToken } from '../../data/user'
+import { postService } from '../../data/services'
 
 export const getServerSideProps = async (context) => {
     try {

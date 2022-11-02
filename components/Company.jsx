@@ -32,7 +32,7 @@ const Company = ({ state, step, setStep }) => {
     }
     if (step === 2) {
         return (
-            <ContactForm company={company} setStep={setStep} setContact={setContact} contact={contact} />
+            <ContactForm company={company} setStep={setStep} setContact={setContact} contact={contact} state={state} />
         )
     }
 }

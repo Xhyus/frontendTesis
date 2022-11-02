@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
-import postLogin from '../data/postLogin';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
-import checkToken from '../data/checkToken';
+import { checkToken, postLogin } from '../data/user';
 
 export const getServerSideProps = async (context) => {
 	try {
