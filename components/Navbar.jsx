@@ -4,6 +4,8 @@ import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, Drawer
 import { FaBars } from 'react-icons/fa';
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import { createSignedPage } from '../data/signed'
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
 
@@ -42,6 +44,21 @@ const Navbar = () => {
 		await router.push('/')
 	}
 
+	const generateSignedPage = async () => {
+		const response = await createSignedPage('company')
+		console.log(response)
+		if (response.status === 200) {
+			const url = `http://localhost:3000/empresa/${response.data._id}`
+			Swal.fire({
+				title: 'Página firmada',
+				text: `La página firmada se ha generado correctamente y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
+				icon: 'success',
+				confirmButtonText: 'Ok'
+			})
+			navigator.clipboard.writeText(url)
+		}
+	}
+
 	const desk = () => {
 		return (
 			<Box bgColor={"transparent"}>
@@ -50,6 +67,8 @@ const Navbar = () => {
 					<HStack spacing={8}>
 						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => window.location.href = "/servicios"}>Servicios</Link>
 						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => window.location.href = "/cotizaciones"} >Cotizaciones</Link>
+						{/* Button for create a signed page for company */}
+						<Button colorScheme="orange" onClick={() => generateSignedPage()}>Crear</Button>
 						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={logout}>Cerrar sesión</Link>
 					</HStack>
 				</HStack>

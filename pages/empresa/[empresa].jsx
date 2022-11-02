@@ -2,34 +2,34 @@ import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
 import Company from '../../components/Company';
 import { useRouter } from 'next/router'
-import { getSignedPage } from '../../data/signed'
+import { signedPage } from '../../data/signed'
 
-// export const getServerSideProps = async (context) => {
-//     try {
-//         const res = await signedPage(context.query)
-//         if (res.status === 200 && res.data.use === 'company') {
-//             return {
-//                 props: {
-//                     data: res.data
-//                 }
-//             }
-//         } else {
-//             return {
-//                 redirect: {
-//                     destination: '/login',
-//                     permanent: false,
-//                 },
-//             }
-//         }
-//     } catch (error) {
-//         return {
-//             redirect: {
-//                 destination: '/',
-//                 permanent: false
-//             }
-//         }
-//     }
-// }
+export const getServerSideProps = async (context) => {
+    try {
+        const res = await signedPage(context.query)
+        if (res.status === 200 && res.data.use === 'company') {
+            return {
+                props: {
+                    data: res.data
+                }
+            }
+        } else {
+            return {
+                redirect: {
+                    destination: '/login',
+                    permanent: false,
+                },
+            }
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+}
 
 const empresa = () => {
     const [loading, setLoading] = useState(false)

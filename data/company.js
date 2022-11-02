@@ -9,12 +9,16 @@ const createCompany = (company, contact, state) => {
         address: company.address,
         socialReason: company.socialReason,
         state: state === true ? 'constituted' : 'unconstituted',
-        contactName: contact.contactName,
-        contactRut: contact.contactRut,
-        contactPhone: contact.contactPhone,
-        contactEmail: contact.contactEmail,
-        contactRole: contact.contactRole,
-    });
+        contactName: contact.name,
+        contactRut: contact.rut,
+        contactPhone: contact.phone,
+        contactEmail: contact.email,
+        contactRole: contact.position,
+    })
+        .then((response) => {
+            console.log(response)
+        })
+
     return response;
 }
 

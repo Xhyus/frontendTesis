@@ -40,8 +40,8 @@ const updateManyItems = async (id, itemList) => {
     return response;
 }
 
-const updateServices = (id, data) => {
-    const response = axios.put(`http://localhost:3001/api/service/update/${id}`, data)
+const updateService = (id, data) => {
+    const response = axios.put(`${process.env.SERVIDOR}/service/update/${id}`, data)
     return response
 }
 
@@ -52,5 +52,5 @@ module.exports = {
     deleteManyItems,
     postService,
     updateManyItems,
-    updateServices,
+    updateService,
 }

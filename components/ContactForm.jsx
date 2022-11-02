@@ -16,22 +16,32 @@ const ContactForm = ({ company, setStep, setContact, contact, state }) => {
 			onSubmit={async (values) => {
 				try {
 					const response = await createCompany(company, values, state)
-					if (response.status === 201) {
-						Swal.fire(
-							'¡Creado!',
-							'El contacto ha sido creado.',
-							'success'
-						).then(() => {
-							router.push('/')
+					if (response.status === 200) {
+						Swal.fire({
+							title: '¡Excelente!',
+							text: 'Tu empresa ha sido registrada con éxito',
+							icon: 'success',
+							confirmButtonText: 'Ok'
 						})
+						router.push('/')
 					}
 				} catch (error) {
-					Swal.fire({
-						title: 'Error',
-						text: 'Ha ocurrido un error al registrar su empresa',
-						icon: 'error',
-						confirmButtonText: 'Aceptar'
-					})
+					if (error.response.status === 400) {
+						Swal.fire({
+							title: 'Error',
+							text: 'Ha ocurrido un error al registrar su empresa',
+							icon: 'error',
+							confirmButtonText: 'Aceptar'
+						})
+					}
+					if (error.response.status) {
+						Swal.fire({
+							title: 'Error',
+							text: 'Ese rut ya se encuentra registrado, favor contactese con Estudio Fragua',
+							icon: 'error',
+							confirmButtonText: 'Aceptar'
+						})
+					}
 				}
 			}}
 		>

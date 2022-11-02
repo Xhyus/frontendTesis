@@ -10,7 +10,15 @@ const signedPage = (id) => {
     return response;
 }
 
+const createSignedPage = (use) => {
+    const response = axios.post(`${process.env.SERVIDOR}/signed`, {
+        use: use
+    })
+    return response;
+}
+
 module.exports = {
     updateSignedPage,
     signedPage,
+    createSignedPage,
 }

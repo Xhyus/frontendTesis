@@ -6,7 +6,7 @@ import ItemUpdate from '../../components/ItemUpdate';
 import FormInput from '../../components/FormInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import { getSpecificService, updateServices, updateManyItems } from '../../data/services'
+import { getSpecificService, updateService, updateManyItems } from '../../data/services'
 
 export async function getServerSideProps(context) {
     try {
