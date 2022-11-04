@@ -11,7 +11,7 @@ export const getServerSideProps = async (context) => {
 		if (res.status === 200) {
 			return {
 				redirect: {
-					destination: '/cotizaciones',
+					destination: '/servicios',
 					permanent: false
 				}
 			}
