@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { getServices } from '../data/services'
-import ServiceMap from '../components/ServiceMap'
+import ServicesTable from '../components/ServicesTable'
 import { AiOutlineClose, } from 'react-icons/ai'
 // import Pagination from '../components/Pagination'
 // import calculatePagination from '../utils/calculatePagination'
@@ -77,7 +77,7 @@ const servicios = ({ data }) => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {filter === true ? <ServiceMap services={filteredServices} /> : <ServiceMap services={services} />}
+                    {filter === true ? <ServicesTable services={filteredServices} /> : <ServicesTable services={services} />}
                 </Tbody>
             </Table>
             {/* <Pagination
