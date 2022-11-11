@@ -1,12 +1,12 @@
-import { Text, HStack, Button, Td, Tr, ListItem, List } from '@chakra-ui/react'
+import { Text, HStack, Button, Td, Tr } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
-import { deleteServices } from '../data/services'
+import { deleteCompany } from '../data/company'
 import { useRouter } from 'next/router'
 
-const ServicesTable = ({ companies }) => {
+const CompanyTable = ({ companies }) => {
     const router = useRouter()
 
-    const deleteService = (id) => {
+    const delete_Company = (id) => {
         Swal.fire({
             title: '¿Estás seguro?',
             text: "¡No podrás revertir esto!",
@@ -15,7 +15,7 @@ const ServicesTable = ({ companies }) => {
             confirmButtonText: '¡Sí, bórralo!'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteServices(id)
+                deleteCompany(id)
                     .then(() => {
                         Swal.fire(
                             '¡Borrado!',
@@ -42,7 +42,6 @@ const ServicesTable = ({ companies }) => {
     return (
         companies.map(company => {
             return (
-                console.log(company),
                 <Tr key={company._id}>
                     <Td>{company.name}</Td>
                     <Td>{company.rut}</Td>
@@ -50,9 +49,8 @@ const ServicesTable = ({ companies }) => {
                     <Td>{company.contact.email}</Td>
                     <Td>
                         <HStack>
-                            {/* <Button colorScheme="yellow" onClick={() => deleteService(service._id)}>Ver más</Button> */}
                             <Button colorScheme="blue" onClick={() => console.log("VER MAS")}>Ver detalles</Button>
-                            <Button colorScheme="red" onClick={() => deleteService(service._id)}>Eliminar</Button>
+                            <Button colorScheme="red" onClick={() => delete_Company(company._id)}>Eliminar</Button>
                         </HStack>
                     </Td>
                 </Tr>
@@ -61,4 +59,4 @@ const ServicesTable = ({ companies }) => {
     )
 }
 
-export default ServicesTable
+export default CompanyTable
