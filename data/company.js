@@ -15,13 +15,27 @@ const createCompany = (company, contact, state) => {
         contactEmail: contact.email,
         contactRole: contact.position,
     })
-        .then((response) => {
-            console.log(response)
-        })
+    return response;
+}
 
+const getCompanies = (token) => {
+    const response = axios.get(`${process.env.SERVIDOR}/companies`, { headers: { cookie: token } })
+    return response;
+}
+
+const getCompany = (id, token) => {
+    const response = axios.get(`${process.env.SERVIDOR}/company/search/${id}`, { headers: { cookie: token } })
+    return response;
+}
+
+const deleteCompany = (id, token) => {
+    const response = axios.delete(`${process.env.SERVIDOR}/company/delete/${id}`, { headers: { cookie: token } })
     return response;
 }
 
 module.exports = {
     createCompany,
+    getCompanies,
+    getCompany,
+    deleteCompany,
 }
