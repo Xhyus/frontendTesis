@@ -4,7 +4,6 @@ import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, Drawer
 import { FaBars } from 'react-icons/fa';
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import { createSignedPage } from '../data/signed'
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
@@ -15,48 +14,39 @@ const Navbar = () => {
 	const currentPage = (boton) => {
 		if (path[1] === 'servicios' && boton === 'servicios') {
 			return "orange.300"
-		} else {
-			if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
-				return "orange.300"
-			} else {
-				return "white"
-			}
 		}
+		if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
+			return "orange.300"
+		}
+		if (path[1] === 'empresas' && boton === 'empresas') {
+			return "orange.300"
+		}
+		return "white"
+
 	}
+
 
 	const currentPageMobile = (boton) => {
 		if (path[1] === 'servicios' && boton === 'servicios') {
 			return "orange"
-		} else {
-			if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
-				return "orange"
-			} else {
-				return "black"
-			}
 		}
+		if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
+			return "orange"
+		}
+		if (path[1] === 'empresas' && boton === 'empresas') {
+			return "orange"
+		}
+		return "black"
+
+
 	}
 
 	// delete the cookie with the name 'token' and redirect to the / page
 	const logout = async () => {
-		axios.get('http://localhost:3001/api/logout')
+		await axios.get(`${process.env.SERVIDOR}/logout`)
 		Cookies.remove('user')
 		Cookies.remove('token');
-		await router.push('/')
-	}
-
-	const generateSignedPage = async () => {
-		const response = await createSignedPage('company')
-		console.log(response)
-		if (response.status === 200) {
-			const url = `http://localhost:3000/empresa/${response.data._id}`
-			Swal.fire({
-				title: 'Página firmada',
-				text: `La página firmada se ha generado correctamente y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
-				icon: 'success',
-				confirmButtonText: 'Ok'
-			})
-			navigator.clipboard.writeText(url)
-		}
+		router.push('/')
 	}
 
 	const desk = () => {
@@ -67,8 +57,7 @@ const Navbar = () => {
 					<HStack spacing={8}>
 						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => window.location.href = "/servicios"}>Servicios</Link>
 						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => window.location.href = "/cotizaciones"} >Cotizaciones</Link>
-						{/* Button for create a signed page for company */}
-						<Button colorScheme="orange" onClick={() => generateSignedPage()}>Crear</Button>
+						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => window.location.href = "/empresas"} >Empresas</Link>
 						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={logout}>Cerrar sesión</Link>
 					</HStack>
 				</HStack>
@@ -95,6 +84,7 @@ const Navbar = () => {
 							<Stack>
 								<Link color={currentPageMobile("servicios")} fontWeight={"bold"} onClick={() => window.location.href = "/servicios"} >Servicios</Link>
 								<Link color={currentPageMobile("cotizaciones")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => window.location.href = "/cotizaciones"} >Cotizaciones</Link>
+								<Link color={currentPageMobile("empresas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => window.location.href = "/empresas"} >Empresas</Link>
 							</Stack>
 						</DrawerBody>
 						<DrawerFooter justifyContent={"center"}>
