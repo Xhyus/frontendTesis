@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import { deleteServices } from '../data/services'
 import { useRouter } from 'next/router'
 
-const ServiceMap = ({ services }) => {
+const ServicesTable = ({ companies }) => {
     const router = useRouter()
 
     const deleteService = (id) => {
@@ -29,7 +29,7 @@ const ServiceMap = ({ services }) => {
         })
     }
 
-    if (services.length === 0) {
+    if (companies.length === 0) {
         return (
             <Tr>
                 <Td colSpan="5">
@@ -40,25 +40,18 @@ const ServiceMap = ({ services }) => {
     }
 
     return (
-        services.map(service => {
+        companies.map(company => {
             return (
-                <Tr key={service._id}>
-                    <Td>{service.name}</Td>
-                    <Td>{service.description}</Td>
-                    <Td>${service.price}</Td>
-                    <Td>
-                        <List>{service.item.map(item => {
-                            return (
-                                <ListItem key={item._id}>
-                                    <Text>{item.description}</Text>
-                                </ListItem>
-                            )
-                        })}</List>
-                    </Td>
+                console.log(company),
+                <Tr key={company._id}>
+                    <Td>{company.name}</Td>
+                    <Td>{company.rut}</Td>
+                    <Td>{company.contact.phone}</Td>
+                    <Td>{company.contact.email}</Td>
                     <Td>
                         <HStack>
                             {/* <Button colorScheme="yellow" onClick={() => deleteService(service._id)}>Ver más</Button> */}
-                            <Button colorScheme="blue" onClick={() => router.push(`/servicios/${service._id}`)}>Editar</Button>
+                            <Button colorScheme="blue" onClick={() => console.log("VER MAS")}>Ver detalles</Button>
                             <Button colorScheme="red" onClick={() => deleteService(service._id)}>Eliminar</Button>
                         </HStack>
                     </Td>
@@ -68,4 +61,4 @@ const ServiceMap = ({ services }) => {
     )
 }
 
-export default ServiceMap
+export default ServicesTable
