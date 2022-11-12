@@ -82,7 +82,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 							</FormControl>
 						</Stack>
 						<Stack w={'full'}>
-							<FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: +569 1234 5678" />
+							<FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
 						</Stack>
 					</HStack>
 					<HStack>
