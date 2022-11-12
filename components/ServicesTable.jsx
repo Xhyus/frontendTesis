@@ -33,7 +33,7 @@ const ServicesTable = ({ services }) => {
         return (
             <Tr>
                 <Td colSpan="5">
-                    <Text fontSize="xl" textAlign="center">No se ha encontrado ningún servicio con los datos ingresados</Text>
+                    <Text fontSize="xl" textAlign="center">No se ha encontrado ningún servicio</Text>
                 </Td>
             </Tr>
         )

@@ -16,7 +16,7 @@ const Navbar = () => {
 		if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
 			return "orange.300"
 		}
-		if (path[1] === 'empresas' && boton === 'empresas') {
+		if (path[1] === 'empresas' && boton === 'empresas' || path[1] === 'empresa' && boton === 'empresas') {
 			return "orange.300"
 		}
 		return "white"
@@ -29,7 +29,7 @@ const Navbar = () => {
 		if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
 			return "orange"
 		}
-		if (path[1] === 'empresas' && boton === 'empresas') {
+		if (path[1] === 'empresas' && boton === 'empresas' || path[1] === 'empresa' && boton === 'empresas') {
 			return "orange"
 		}
 		return "black"

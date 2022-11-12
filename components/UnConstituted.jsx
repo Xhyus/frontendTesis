@@ -50,7 +50,8 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
                                 <Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
                                     <Input type={"text"} name={companyRUT} maxLength={12} onChange={handleChangeRUT} value={companyRUT} placeholder={"11.111.111-1"} />
                                 </Tooltip>
-                            </FormControl>                        </Stack>
+                            </FormControl>
+                        </Stack>
                         <Stack w={'full'}>
                             <FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: +569 1234 5678" />
                         </Stack>
