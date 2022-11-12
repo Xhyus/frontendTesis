@@ -49,7 +49,7 @@ const CompanyTable = ({ companies }) => {
                     <Td>{company.contact.email}</Td>
                     <Td>
                         <HStack>
-                            <Button colorScheme="blue" onClick={() => console.log("VER MAS")}>Detalles</Button>
+                            <Button colorScheme="blue" onClick={() => router.push("/empresa/ver/" + company._id)}>Detalles</Button>
                             <Button colorScheme="red" onClick={() => delete_Company(company._id)}>Eliminar</Button>
                         </HStack>
                     </Td>
