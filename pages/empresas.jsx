@@ -63,7 +63,7 @@ const empresas = ({ data }) => {
         const response = await createSignedPage('company')
         console.log(response)
         if (response.status === 200) {
-            const url = `http://localhost:3000/empresa/${response.data._id}`
+            const url = `${process.env.FRONTEND}empresa/${response.data._id}`
             Swal.fire({
                 title: 'Página firmada',
                 text: `La página firmada se ha generado correctamente y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
@@ -78,7 +78,7 @@ const empresas = ({ data }) => {
         <Container maxW={"container.lg"} centerContent>
             <Heading mt={10}>Empresas</Heading>
             <HStack w={"full"} my={5}>
-                <Button w={"full"} colorScheme="blue" onClick={() => generateSignedPage()}>Crear página firmada</Button>
+                <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear página firmada</Button>
                 <InputGroup w={"full"} >
                     <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
                     <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
