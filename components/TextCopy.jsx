@@ -3,7 +3,6 @@ import { Text, HStack, IconButton } from "@chakra-ui/react";
 import { IoCopy } from "react-icons/io5";
 
 const TextCopy = ({ prefix, data }) => {
-    console.log(prefix, data);
 
     const copyToClipboard = (e) => {
         navigator.clipboard.writeText(data)
@@ -16,6 +15,7 @@ const TextCopy = ({ prefix, data }) => {
                 aria-label="Copy to clipboard"
                 icon={<IoCopy />}
                 onClick={copyToClipboard}
+                size="sm"
             />
         </HStack>
     )
