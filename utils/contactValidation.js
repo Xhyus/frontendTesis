@@ -10,7 +10,7 @@ const contactValidation = yup.object({
         .email("El email debe ser valido")
         .required("El email es obligatorio"),
     phone: yup.string()
-        .matches(/^(\+56|56)?(\s?)(0?9)(\s?)[9876543]\d{7}$/, "El telefono debe ser valido")
+        .matches(/^[0-9]{8}$/, "El telefono debe contener 8 numeros")
         .required("El telefono es obligatorio"),
     position: yup.string()
         .min(2, "El cargo debe contener al menos 2 caracteres")

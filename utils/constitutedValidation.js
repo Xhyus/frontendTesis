@@ -17,9 +17,7 @@ const constitutedValidation = yup.object({
         .matches(/^[a-zA-Z0-9\s\.\,\#\(\)\[\]\{\}]{3,}$/, "La direccion solo debe contener letras, espacios, numeros y algunos caracteres")
         .required("La direccion es obligatoria"),
     phone: yup.string()
-        .min(12, "El telefono debe contener 12 caracteres")
-        .max(12, "El telefono debe contener 12 caracteres")
-        .matches(/^(\+56|56)?(\s?)(0?9)(\s?)[9876543]\d{7}$/, "El telefono debe ser valido")
+        .matches(/^[0-9]{8}$/, "El telefono debe contener 8 numeros")
         .required("El telefono es obligatorio"),
     email: yup.string()
         .email("El email debe tener un formato valido")
