@@ -42,7 +42,7 @@ const Navbar = () => {
 		router.push('/')
 	}
 
-	const desk = () => {
+	const Desk = () => {
 		return (
 			<Box bgColor={"transparent"}>
 				<HStack justify={"space-between"} my={5} mx={10}>
@@ -91,7 +91,7 @@ const Navbar = () => {
 
 	return (
 		<ChakraProvider>
-			{isMobile ? <DrawerMobile /> : desk()}
+			{isMobile ? <DrawerMobile /> : <Desk />}
 		</ChakraProvider>
 	)
 }
