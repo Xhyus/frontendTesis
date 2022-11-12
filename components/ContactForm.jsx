@@ -1,21 +1,30 @@
-import React from 'react'
-import { Heading, HStack, Stack, Button } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Heading, HStack, Stack, Button, FormControl, Input, FormLabel, Tooltip } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import FormikError from './FormikError'
 import FormInput from './FormInput'
 import { createCompany } from '../data/company'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
+import { formatRut } from 'rutlib'
 
-const ContactForm = ({ company, setStep, setContact, contact, state }) => {
+const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT, setContactRUT, companyRUT }) => {
 	const router = useRouter()
+	const handleChangeRUT = (e) => {
+		if (e.target.value === '-') {
+			setContactRUT('')
+		}
+		if (e.target.value.length > 0 && e.target.value !== '-') {
+			setContactRUT(formatRut(e.target.value))
+		}
+	}
 
 	return (
 		<Formik
 			initialValues={contact}
 			onSubmit={async (values) => {
 				try {
-					const response = await createCompany(company, values, state)
+					const response = await createCompany(company, values, companyRUT, contactRUT, state)
 					if (response.status === 200) {
 						Swal.fire({
 							title: '¡Excelente!',
@@ -65,7 +74,12 @@ const ContactForm = ({ company, setStep, setContact, contact, state }) => {
 					)}
 					<HStack>
 						<Stack w={'full'}>
-							<FormInput label="RUT" handleChange={handleChange} values={values.rut} handleBlur={handleBlur} name="rut" type="text" placeHolder="Ej: 11.111.111-1" />
+							<FormControl isRequired py={3}>
+								<FormLabel>RUT de Contacto</FormLabel>
+								<Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
+									<Input type={"text"} name={contactRUT} maxLength={12} onChange={handleChangeRUT} value={contactRUT} placeholder={"11.111.111-1"} />
+								</Tooltip>
+							</FormControl>
 						</Stack>
 						<Stack w={'full'}>
 							<FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: +569 1234 5678" />

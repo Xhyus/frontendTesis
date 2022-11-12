@@ -10,7 +10,6 @@ const Company = ({ state, step, setStep }) => {
     const [company, setCompany] = useState({
         name: '',
         socialReason: '',
-        rut: '',
         email: '',
         phone: '',
         address: ''
@@ -19,20 +18,21 @@ const Company = ({ state, step, setStep }) => {
         name: '',
         email: '',
         phone: '',
-        position: '',
-        rut: ''
+        position: ''
     })
+    const [companyRUT, setCompanyRUT] = useState('')
+    const [contactRUT, setContactRUT] = useState('')
     if (step === 1) {
         if (state === true) {
-            return <Constituted company={company} setCompany={setCompany} setStep={setStep} />
+            return <Constituted company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />
         }
         if (state === false) {
-            return <UnConstituted company={company} setCompany={setCompany} setStep={setStep} />
+            return <UnConstituted company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />
         }
     }
     if (step === 2) {
         return (
-            <ContactForm company={company} setStep={setStep} setContact={setContact} contact={contact} state={state} />
+            <ContactForm company={company} setStep={setStep} setContact={setContact} contact={contact} state={state} companyRUT={companyRUT} contactRUT={contactRUT} setContactRUT={setContactRUT} />
         )
     }
 }

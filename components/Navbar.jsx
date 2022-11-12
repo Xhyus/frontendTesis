@@ -4,10 +4,8 @@ import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, Drawer
 import { FaBars } from 'react-icons/fa';
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import Swal from 'sweetalert2';
 
 const Navbar = () => {
-
 	const [isMobile] = useMediaQuery("(max-width: 600px)")
 	const router = useRouter()
 	const path = router.pathname.split('/')
@@ -22,9 +20,7 @@ const Navbar = () => {
 			return "orange.300"
 		}
 		return "white"
-
 	}
-
 
 	const currentPageMobile = (boton) => {
 		if (path[1] === 'servicios' && boton === 'servicios') {
@@ -37,11 +33,8 @@ const Navbar = () => {
 			return "orange"
 		}
 		return "black"
-
-
 	}
 
-	// delete the cookie with the name 'token' and redirect to the / page
 	const logout = async () => {
 		await axios.get(`${process.env.SERVIDOR}/logout`)
 		Cookies.remove('user')
@@ -102,4 +95,5 @@ const Navbar = () => {
 		</ChakraProvider>
 	)
 }
+
 export default Navbar

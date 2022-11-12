@@ -1,14 +1,24 @@
-import { Heading, HStack, Button, Stack } from '@chakra-ui/react';
+import { Heading, HStack, Button, Stack, FormLabel, Input, FormControl, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import FormInput from './FormInput';
 import FormikError from './FormikError';
 import constitutedValidation from '../utils/constitutedValidation';
+import { formatRut } from 'rutlib'
 
-const Constituted = ({ setStep, company, setCompany }) => {
+const Constituted = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }) => {
+
+    const handleChangeRUT = (e) => {
+        if (e.target.value === '-') {
+            setCompanyRUT('')
+        }
+        if (e.target.value.length > 0 && e.target.value !== '-') {
+            setCompanyRUT(formatRut(e.target.value))
+        }
+    }
     return (
         <Formik
             initialValues={company}
-            // validationSchema={constitutedValidation}
+            validationSchema={constitutedValidation}
             onSubmit={(values) => {
                 setCompany(values)
                 setStep(2)
@@ -38,16 +48,18 @@ const Constituted = ({ setStep, company, setCompany }) => {
                     )}
                     <HStack>
                         <Stack w={'full'}>
-                            <FormInput label="RUT empresa" handleChange={handleChange} values={values.rut} handleBlur={handleBlur} name="rut" type="text" placeHolder="Ej: 11.111.111-1" />
+                            <FormControl isRequired py={3}>
+                                <FormLabel>RUT de Empresa</FormLabel>
+                                <Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
+                                    <Input type={"text"} name={companyRUT} maxLength={12} onChange={handleChangeRUT} value={companyRUT} placeholder={"11.111.111-1"} />
+                                </Tooltip>
+                            </FormControl>
                         </Stack>
                         <Stack w={'full'}>
                             <FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: +569 1234 5678" />
                         </Stack>
                     </HStack>
                     <HStack>
-                        {touched.rut && errors.rut && (
-                            <FormikError error={errors.rut} />
-                        )}
                         {touched.phone && errors.phone && (
                             <FormikError error={errors.phone} />
                         )}
