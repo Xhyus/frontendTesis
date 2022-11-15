@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServicesTable from '../components/ServicesTable'
 import { AiOutlineClose, } from 'react-icons/ai'
-// import Pagination from '../components/Pagination'
+import Pagination from '../components/Pagination'
 // import calculatePagination from '../utils/calculatePagination'
 
 export async function getServerSideProps(context) {
@@ -25,6 +25,7 @@ export async function getServerSideProps(context) {
     }
 }
 const servicios = ({ data }) => {
+    console.log(data)
     const [services] = useState(data)
     const [filteredServices, setFilteredServices] = useState([])
     const [filter, setFilter] = useState(false)
@@ -52,6 +53,7 @@ const servicios = ({ data }) => {
             setSearchTerm(e.target.value)
             setFilter(true)
         } else {
+            setSearchTerm('')
             setFilter(false)
         }
     }
@@ -62,7 +64,7 @@ const servicios = ({ data }) => {
             <HStack w={"full"} my={5}>
                 <Button w={"full"} colorScheme="blue" onClick={() => router.push('/servicios/crear')}>Crear</Button>
                 <InputGroup w={"full"} >
-                    <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
+                    <Input w={"full"} focusBorderColor={"yellow.600"} value={searchTerm} type="text" placeholder="Buscar" onChange={setSearch} />
                     <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
                 </InputGroup>
             </HStack>
@@ -80,11 +82,11 @@ const servicios = ({ data }) => {
                     {filter === true ? <ServicesTable services={filteredServices} /> : <ServicesTable services={services} />}
                 </Tbody>
             </Table>
-            {/* <Pagination
-                nPages={calculatedPagination.nPages}
-                currentPage={calculatedPagination.currentPage}
-                setCurrentPage={filter === true ? setFilteredCurrentPage : setCurrentPage}
-            /> */}
+            <Pagination
+            // nPages={calculatedPagination.nPages}
+            // currentPage={calculatedPagination.currentPage}
+            // setCurrentPage={filter === true ? setFilteredCurrentPage : setCurrentPage}
+            />
         </Container>
     )
 }

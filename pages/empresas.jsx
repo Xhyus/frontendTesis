@@ -63,7 +63,7 @@ const empresas = ({ data }) => {
         const response = await createSignedPage('company')
         console.log(response)
         if (response.status === 200) {
-            const url = `${process.env.FRONTEND}empresa/${response.data._id}`
+            const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({
                 title: 'Página firmada',
                 text: `La página firmada se ha generado correctamente y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,

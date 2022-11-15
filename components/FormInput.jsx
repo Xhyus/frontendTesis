@@ -9,7 +9,7 @@ const FormInput = ({ label, handleChange, handleBlur, name, type, placeHolder, v
                 <Tooltip label={placeHolder} aria-label={label}>
                     <InputGroup>
                         <InputLeftAddon children='+569' />
-                        <Input type={type} placeholder={placeHolder} maxLength={8} />
+                        <Input type={type} placeholder={placeHolder} maxLength={8} onChange={handleChange} onBlur={handleBlur} name={name} value={values} />
                     </InputGroup>
                 </Tooltip>
             </FormControl>

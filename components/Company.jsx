@@ -22,11 +22,12 @@ const Company = ({ state, step, setStep }) => {
     })
     const [companyRUT, setCompanyRUT] = useState('')
     const [contactRUT, setContactRUT] = useState('')
+
     if (step === 1) {
-        if (state === true) {
+        if (state) {
             return <Constituted company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />
         }
-        if (state === false) {
+        if (!state) {
             return <UnConstituted company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />
         }
     }
