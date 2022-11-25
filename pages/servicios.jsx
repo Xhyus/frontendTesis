@@ -55,7 +55,7 @@ const servicios = ({ data }) => {
     const cardList = (data) => {
         return data.map(service => {
             return (
-                <WrapItem>
+                <WrapItem key={service._id}>
                     <ServiceCard id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} />
                 </WrapItem>
             )
