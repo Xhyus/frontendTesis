@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Button, Heading, Container, Input, InputGroup, InputRightElement, Card, CardHeader, CardBody, CardFooter, Text, Stack, Tag, TagLeftIcon, TagLabel, Wrap, WrapItem, Box, Flex } from '@chakra-ui/react'
+import { HStack, Button, Heading, Container, Input, InputGroup, InputRightElement, Card, CardHeader, CardBody, CardFooter, Text, Stack, Tag, TagLeftIcon, TagLabel, Wrap, WrapItem, Box, Flex, InputLeftAddon, InputLeftElement } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
-import { AiOutlineClose } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai'
 
 export async function getServerSideProps(context) {
     try {
@@ -64,15 +64,16 @@ const servicios = ({ data }) => {
 
     return (
         <Container maxW={"container.xl"} centerContent>
-            <Heading mt={10}>Servicios</Heading>
-            <HStack w={"full"} my={5}>
-                <Button w={"full"} colorScheme="blue" onClick={() => router.push('/servicios/crear')}>Crear</Button>
-                <InputGroup w={"full"} >
-                    <Input w={"full"} focusBorderColor={"yellow.600"} value={searchTerm} type="text" placeholder="Buscar" onChange={setSearch} />
+            <Heading mt={10} fontSize={'6xl'}>Servicios</Heading>
+            <Box w={"full"} my={5} flexDirection={{ base: "column", md: "row" }} align={"center"}>
+                <Button w={{ base: "full", md: "20%" }} fontSize={'2xl'} borderRadius={"3xl"} color={"white"} bgColor={"#7ABC63"} onClick={() => router.push('/servicios/crear')}>Crear</Button>
+                <InputGroup w={{ base: "full", md: "40%" }} >
+                    <InputLeftElement children={<AiOutlineSearch />} />
+                    <Input w={"full"} borderRadius={'3xl'} focusBorderColor={"yellow.600"} value={searchTerm} type="text" placeholder="Buscar" onChange={setSearch} />
                     <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
                 </InputGroup>
-            </HStack>
-            <Wrap spacing={10}>
+            </Box>
+            <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
                 {cardList(filter ? filteredServices : services)}
             </Wrap>
         </Container >

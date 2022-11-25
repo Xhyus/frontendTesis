@@ -5,9 +5,9 @@ import { formatDescription, formatPrice, formatTitle, formatType } from '../util
 
 const ServiceCard = ({ id, title, price, description, type, items }) => {
     return (
-        <Card w={"sm"} borderRadius={20}>
+        <Card w={{ base: "full", md: "sm" }} borderRadius={20}>
             <Flex flexDirection={"column"} p={'10'}>
-                <Heading as={"h2"} fontWeight={'semibold'}>{formatTitle(title)}</Heading>
+                <Heading as={"h2"} fontWeight={'semibold'} fontSize={'3xl'}>{formatTitle(title)}</Heading>
                 <Box mb={3} mt={2}>
                     <Tag size="lg" borderRadius={'3xl'} py={2} px={3} w={"fit-content"} bgColor={"#FF9F0F"} color={"white"}>
                         <TagLabel fontWeight={'bold'}>$ {formatPrice(price)}</TagLabel>
