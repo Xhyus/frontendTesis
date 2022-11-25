@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
+import { HStack, Button, Heading, Container, Input, InputGroup, InputRightElement, Card, CardHeader, CardBody, CardFooter, Text, Stack, Tag, TagLeftIcon, TagLabel, Wrap, WrapItem, Box, Flex } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServicesTable from '../components/ServicesTable'
-import { AiOutlineClose, } from 'react-icons/ai'
+import { AiOutlineClose, AiFillMoneyCollect } from 'react-icons/ai'
 import Pagination from '../components/Pagination'
 // import calculatePagination from '../utils/calculatePagination'
 
@@ -25,15 +25,10 @@ export async function getServerSideProps(context) {
     }
 }
 const servicios = ({ data }) => {
-    console.log(data)
     const [services] = useState(data)
     const [filteredServices, setFilteredServices] = useState([])
     const [filter, setFilter] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    // const [currentPage, setCurrentPage] = useState(1)
-    // const [filteredCurrentPage, setFilteredCurrentPage] = useState(1)
-    // const [servicesPerPage] = useState(5)
-    // const [calculatedPagination, setCalculatedPagination] = useState({})
     const router = useRouter()
 
     useEffect(() => {
@@ -59,7 +54,7 @@ const servicios = ({ data }) => {
     }
 
     return (
-        <Container maxW={"container.lg"} centerContent>
+        <Container maxW={"container.xl"} centerContent>
             <Heading mt={10}>Servicios</Heading>
             <HStack w={"full"} my={5}>
                 <Button w={"full"} colorScheme="blue" onClick={() => router.push('/servicios/crear')}>Crear</Button>
@@ -68,26 +63,28 @@ const servicios = ({ data }) => {
                     <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
                 </InputGroup>
             </HStack>
-            <Table variant="striped">
-                <Thead>
-                    <Tr textAlign={"center"}>
-                        <Th>Nombre</Th>
-                        <Th>Descripción</Th>
-                        <Th>Precio</Th>
-                        <Th>Items</Th>
-                        <Th>Acciones</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {filter === true ? <ServicesTable services={filteredServices} /> : <ServicesTable services={services} />}
-                </Tbody>
-            </Table>
-            <Pagination
-            // nPages={calculatedPagination.nPages}
-            // currentPage={calculatedPagination.currentPage}
-            // setCurrentPage={filter === true ? setFilteredCurrentPage : setCurrentPage}
-            />
-        </Container>
+            <Wrap spacing={10} justify={"center"}>
+                <WrapItem>
+                    <Card w={"sm"} borderRadius={20}>
+                        <Flex flexDirection={"column"} p={'10'}>
+                            <Heading as={"h2"} fontWeight={'semibold'}>Plan Inicia</Heading>
+                            <Box mb={3} mt={2}>
+                                <Tag size="lg" borderRadius={'3xl'} py={2} px={3} w={"fit-content"} bgColor={"#FF9F0F"} color={"white"}>
+                                    <TagLabel fontWeight={'bold'}>$ 12.345.678</TagLabel>
+                                </Tag>
+                            </Box>
+                            <Text >Lorem ipsum dolor sit amet consectetur. In faucibus nisl dictum sed tortor elit pretium hac. Donec proin vitae et nibh. Vitae massa in eu nec ullamcorper magna.</Text>
+                            <HStack justify={"space-between"} pt={5}>
+                                <Text>Diseño | 6 items</Text>
+                                <Button borderRadius={10} colorScheme="blue" color={"white"}>Detalles</Button>
+                            </HStack>
+                        </Flex>
+                    </Card>
+                </WrapItem>
+
+            </Wrap>
+
+        </Container >
     )
 }
 
