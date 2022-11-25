@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Flex, Text, Button, Heading, Box, Tag, TagLabel } from '@chakra-ui/react'
+import { Card, Flex, Text, Button, Heading, Box, Tag, TagLabel, HStack } from '@chakra-ui/react'
 import { Router } from 'next/router'
 
 const ServiceCard = ({ id, title, price, description, type, items }) => {
