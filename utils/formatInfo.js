@@ -1,5 +1,5 @@
 const formatTitle = (title) => {
-    return title.charAt(0).toUpperCase() + title.slice(1) + (title.length > 10 ? '...' : '');
+    return title.length > 15 ? title.charAt(0).toUpperCase() + title.slice(1, 15) + '...' : title.charAt(0).toUpperCase() + title.slice(1);
 }
 
 const formatDescription = (description) => {
@@ -11,7 +11,6 @@ const formatPrice = (price) => {
 }
 
 const formatType = (type) => {
-    console.log(type)
     if (type === undefined) {
         return 'No Definido'
     }
