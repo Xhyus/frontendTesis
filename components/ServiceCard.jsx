@@ -1,9 +1,10 @@
 import React from 'react'
 import { Card, Flex, Text, Button, Heading, Box, Tag, TagLabel, HStack } from '@chakra-ui/react'
-import { Router } from 'next/router'
+import { useRouter } from 'next/router'
 import { formatDescription, formatPrice, formatTitle, formatType } from '../utils/formatInfo'
 
 const ServiceCard = ({ id, title, price, description, type, items }) => {
+    const router = useRouter()
     return (
         <Card w={{ base: "full", md: "sm" }} borderRadius={20}>
             <Flex flexDirection={"column"} p={'10'}>
@@ -16,7 +17,7 @@ const ServiceCard = ({ id, title, price, description, type, items }) => {
                 <Text >{formatDescription(description)}</Text>
                 <HStack justify={"space-between"} pt={5}>
                     <Text>{formatType(type)} | {items} Items</Text>
-                    <Button borderRadius={10} colorScheme="blue" color={"white"} onClick={() => Router.push('/')}>Detalles</Button>
+                    <Button borderRadius={10} colorScheme="blue" color={"white"} onClick={() => router.push(`/servicios/ver/${id}`)}>Ver</Button>
                 </HStack>
             </Flex>
         </Card>
