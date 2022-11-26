@@ -31,18 +31,37 @@ const verServicio = (data) => {
             </HStack>
             <Stack spacing={10} mt={10}>
 
-                <Box spacing={5} flexDirection="column" justify="space-between">
-                    <HStack>
-                        <Text>Nombre: {service.name}</Text>
-                        <Text>Precio: {service.price}</Text>
-                        <Text>Tipo: {service.type}</Text>
-                    </HStack>
-                    <HStack>
-                        <Text>Descripción: {service.description}</Text>
-                        <Text>Fecha de creación: {service.createdAt}</Text>
-                        <Text>Fecha de actualización: {service.updatedAt}</Text>
-                    </HStack>
-                </Box>
+                <HStack spacing={5} flexDirection="column" justify="space-between">
+                    <Stack>
+                        <HStack>
+                            <Text>Nombre: </Text>
+                            <Text>{service.name}</Text>
+                        </HStack>
+                        <HStack>
+                            <Text>Precio: </Text>
+                            <Text>{service.price}</Text>
+                        </HStack>
+                        <HStack>
+                            <Text>Descripción: </Text>
+                            <Text>{service.description}</Text>
+                        </HStack>
+                    </Stack>
+                    <Stack>
+                        <HStack>
+                            <Text>Fecha de creación: </Text>
+                            <Text>{service.createdAt}</Text>
+                        </HStack>
+                        <HStack>
+                            <Text>Fecha de actualización: </Text>
+                            <Text>{service.updatedAt}</Text>
+                        </HStack>
+                        <HStack>
+                            <Text>Tipo: </Text>
+                            <Text>{service.type}</Text>
+                        </HStack>
+
+                    </Stack>
+                </HStack>
 
                 <Stack spacing={5}>
                     {service.item.map((item, index) => (
