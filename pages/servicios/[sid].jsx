@@ -10,7 +10,7 @@ import { getSpecificService, updateService, updateManyItems } from '../../data/s
 
 export async function getServerSideProps(context) {
     try {
-        const res = await getSpecificService(context.query, context.req.headers.cookie)
+        const res = await getSpecificService(context.query.sid, context.req.headers.cookie)
         return {
             props: {
                 data: res.data
