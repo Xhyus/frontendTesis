@@ -11,7 +11,7 @@ const getServices = async (token) => {
 }
 
 const getSpecificService = async (id, token) => {
-    const response = await axios.get(`${process.env.SERVIDOR}/service/search/${id.sid}`, { headers: { cookie: token } });
+    const response = await axios.get(`${process.env.SERVIDOR}/service/search/${id}`, { headers: { cookie: token } });
     return response
 }
 
