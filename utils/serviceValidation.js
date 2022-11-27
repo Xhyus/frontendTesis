@@ -14,7 +14,10 @@ const serviceValidation = yup.object({
     price: yup.number()
         .min(1000, "El precio debe ser mayor o igual a $1.000 pesos")
         .max(1000000000, "El precio debe ser menor o igual a $1.000.000.000")
-        .required("El precio es obligatorio")
+        .required("El precio es obligatorio"),
+    type: yup.string()
+        .required("El tipo de servicio es obligatorio"),
+
 })
 
 export default serviceValidation
