@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Text, Center, Spinner, Select, FormControl, FormLabel, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
 import Item from '../../components/Item';
@@ -84,11 +84,11 @@ const crear = () => {
                 <Heading>Crear Servicio</Heading>
             </HStack>
             <Formik
-                initialValues={{ name: '', description: '', price: '' }}
+                initialValues={{ name: '', description: '', price: '', type: '' }}
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
                     setLoading(true)
-                    postService(values.name, values.description, values.price, items)
+                    postService(values.name, values.description, values.price, values.type, items)
                         .then((res) => {
                             if (res.status === 200) {
                                 Swal.fire({
@@ -100,7 +100,16 @@ const crear = () => {
                                     router.replace('/servicios')
                                 })
                             }
-
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ha ocurrido un error',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                            })
+                            setLoading(false)
                         })
                 }}
             >
@@ -121,10 +130,28 @@ const crear = () => {
                         {touched.description && errors.description && (
                             <Text color={"red"}>{errors.description}</Text>
                         )}
-                        <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
-                        {touched.price && errors.price && (
-                            <Text color={"red"}>{errors.price}</Text>
-                        )}
+                        <HStack>
+                            <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
+
+                            <FormControl isRequired py={3}>
+                                <FormLabel>Tipo de servicio</FormLabel>
+                                <Tooltip label="Seleccione el tipo de servicio" aria-label="Seleccione el tipo de servicio">
+                                    <Select placeholder="Seleccione el tipo de servicio" name="type" onChange={handleChange} onBlur={handleBlur} value={values.type}>
+                                        <option value="Diseño">Diseño</option>
+                                        <option value="Desarrollo">Desarrollo Web</option>
+                                    </Select>
+                                </Tooltip>
+                            </FormControl>
+
+                        </HStack>
+                        <HStack justify={"space-between"}>
+                            {touched.price && errors.price && (
+                                <Text color={"red"}>{errors.price}</Text>
+                            )}
+                            {touched.type && errors.type && (
+                                <Text color={"red"}>{errors.type}</Text>
+                            )}
+                        </HStack>
                         <Heading fontSize={20} pt="5">Lista de Ítems</Heading>
                         {items.map((item, index) => {
                             return <Item key={index} id={item.id} handleDeleteItem={handleDeleteItem} handleChangeItem={handleChangeItem} lastItem={items.length} />
