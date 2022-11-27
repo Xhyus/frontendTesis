@@ -69,7 +69,7 @@ const servicios = ({ data }) => {
     return (
         <Container maxW={"container.xl"} centerContent>
             <Heading mt={10} fontSize={'6xl'}>Servicios</Heading>
-            <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} />
+            <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
             <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
                 {cardList(filter ? filteredServices : services)}
             </Wrap>

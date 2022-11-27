@@ -48,9 +48,9 @@ const Navbar = () => {
 				<HStack justify={"space-between"} my={5} mx={10}>
 					<Image src="/logo.png" width={'32'} height={'8'} />
 					<HStack spacing={8}>
-						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => window.location.href = "/servicios"}>Servicios</Link>
-						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => window.location.href = "/cotizaciones"} >Cotizaciones</Link>
-						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => window.location.href = "/empresas"} >Empresas</Link>
+						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
+						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
+						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => router.push('/empresas')}>Empresas</Link>
 						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={logout}>Cerrar sesión</Link>
 					</HStack>
 				</HStack>
@@ -75,9 +75,9 @@ const Navbar = () => {
 						</DrawerHeader>
 						<DrawerBody justifyContent={"center"}>
 							<Stack>
-								<Link color={currentPageMobile("servicios")} fontWeight={"bold"} onClick={() => window.location.href = "/servicios"} >Servicios</Link>
-								<Link color={currentPageMobile("cotizaciones")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => window.location.href = "/cotizaciones"} >Cotizaciones</Link>
-								<Link color={currentPageMobile("empresas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => window.location.href = "/empresas"} >Empresas</Link>
+								<Link color={currentPageMobile("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
+								<Link color={currentPageMobile("cotizaciones")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
+								<Link color={currentPageMobile("empresas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/empresas')}>Empresas</Link>
 							</Stack>
 						</DrawerBody>
 						<DrawerFooter justifyContent={"center"}>
