@@ -165,7 +165,7 @@ const update = ({ data }) => {
                         <Button onClick={handleAddItem} colorScheme="orange" mt="5" w="full">Agregar Ítem</Button>
                         <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
                             <Button colorScheme={"green"} type="submit" w="full">Modificar</Button>
-                            <Button colorScheme={"red"} type="reset" w="full" onClick={() => router.push('/servicios')}>Cancelar</Button>
+                            <Button colorScheme={"red"} type="reset" w="full" onClick={() => router.push(`/servicios/ver/${service._id}`)}>Cancelar</Button>
                         </HStack>
                     </form>
                 )}
