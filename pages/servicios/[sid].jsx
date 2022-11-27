@@ -158,6 +158,8 @@ const update = ({ data }) => {
                                     <Select placeholder="Seleccione el tipo de servicio" name="type" onChange={handleChange} onBlur={handleBlur} value={values.type}>
                                         <option value="Diseño">Diseño</option>
                                         <option value="Desarrollo">Desarrollo Web</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Otros">Otros</option>
                                     </Select>
                                 </Tooltip>
                             </FormControl>
