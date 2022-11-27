@@ -41,8 +41,17 @@ const updateManyItems = async (id, itemList) => {
     return response;
 }
 
-const updateService = (id, data) => {
-    const response = axios.put(`${process.env.SERVIDOR}/service/update/${id}`, data)
+const updateService = (id, data, itemList) => {
+    itemList = itemList.map((item) => {
+        return item.description
+    })
+    const response = axios.put(`${process.env.SERVIDOR}/service/update/${id}`, {
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        type: data.type,
+        itemList: itemList
+    })
     return response
 }
 
