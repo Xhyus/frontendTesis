@@ -17,9 +17,15 @@ const formatType = (type) => {
     return type.charAt(0).toUpperCase() + type.slice(1);
 }
 
+const formatDate = (date) => {
+    let newDate = new Date(date);
+    return newDate.toLocaleString();
+}
+
 module.exports = {
     formatTitle,
     formatDescription,
     formatPrice,
-    formatType
+    formatType,
+    formatDate,
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { InputGroup, InputLeftElement, Input, InputRightElement, HStack, Button } from '@chakra-ui/react'
 import { AiOutlineClose, AiOutlineSearch, AiOutlinePlus } from 'react-icons/ai'
-import { BsPlusLg } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 
 const SearchButton = ({ searchTerm, goToPage, setSearchTerm, setSearch, text }) => {
