@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Heading, Button, Container, HStack, Text } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Text, FormControl, FormLabel, Tooltip, Select } from '@chakra-ui/react';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
 import ItemUpdate from '../../components/ItemUpdate';
 import FormInput from '../../components/FormInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import { getSpecificService, updateService, updateManyItems } from '../../data/services'
+import { getSpecificService, updateService } from '../../data/services'
 
 export async function getServerSideProps(context) {
     try {
@@ -114,25 +114,22 @@ const update = ({ data }) => {
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
                     try {
-                        updateServices(sid, values)
-                            .then(() => {
-                                let itemList = []
-                                items.map(item => {
-                                    itemList.push(item.description)
-                                })
-                                updateManyItems(sid, itemList)
-                                    .then(() => {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Servicio actualizado',
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        })
-                                        router.push('/servicios')
-                                    })
+                        updateService(sid, values, items).then(() => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Servicio actualizado',
+                                text: 'El servicio se ha actualizado correctamente',
+                                showConfirmButton: true
+                            }).then(() => {
+                                router.push(`/servicios/ver/${service._id}`)
                             })
+                        })
                     } catch (error) {
-
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Algo salió mal',
+                        })
                     }
                 }}
             >
@@ -153,10 +150,26 @@ const update = ({ data }) => {
                         {touched.description && errors.description && (
                             <Text color={"red"}>{errors.description}</Text>
                         )}
-                        <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
-                        {touched.price && errors.price && (
-                            <Text color={"red"}>{errors.price}</Text>
-                        )}
+                        <HStack>
+                            <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
+                            <FormControl isRequired py={3}>
+                                <FormLabel>Tipo de servicio</FormLabel>
+                                <Tooltip label="Seleccione el tipo de servicio" aria-label="Seleccione el tipo de servicio">
+                                    <Select placeholder="Seleccione el tipo de servicio" name="type" onChange={handleChange} onBlur={handleBlur} value={values.type}>
+                                        <option value="Diseño">Diseño</option>
+                                        <option value="Desarrollo">Desarrollo Web</option>
+                                    </Select>
+                                </Tooltip>
+                            </FormControl>
+                        </HStack>
+                        <HStack justify={"space-between"}>
+                            {touched.price && errors.price && (
+                                <Text color={"red"}>{errors.price}</Text>
+                            )}
+                            {touched.type && errors.type && (
+                                <Text color={"red"}>{errors.type}</Text>
+                            )}
+                        </HStack>
                         <Heading fontSize={20} pt="5">Lista de Ítems</Heading>
                         {items.map((item, index) => {
                             return <ItemUpdate key={index} id={item.id} handleDeleteItem={handleDeleteItem} value={item.description} handleChangeItem={handleChangeItem} lastItem={items.length} />
