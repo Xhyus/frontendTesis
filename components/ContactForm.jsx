@@ -25,7 +25,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 			onSubmit={async (values) => {
 				try {
 					const response = await createCompany(company, values, companyRUT, contactRUT, state)
-					if (response.status === 200) {
+					if (response.status === 201) {
 						Swal.fire({
 							title: '¡Excelente!',
 							text: 'Tu empresa ha sido registrada con éxito',
