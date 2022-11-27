@@ -36,6 +36,7 @@ const servicios = ({ data }) => {
                 service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 service.price.toString().includes(searchTerm) ||
+                service.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
             )
         })
