@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heading, Wrap, Container, WrapItem } from '@chakra-ui/react';
+import { Heading, Wrap, Container, WrapItem, FormControl, Stack, FormLabel, Select, Input } from '@chakra-ui/react';
 import { getServices } from '../../data/services';
 import { useRouter } from 'next/router';
 import SearchButton from '../../components/SearchButton';
@@ -80,9 +80,12 @@ const crearCotizaciones = ({ data }) => {
         <Container maxW={"container.xl"} centerContent>
             <Heading mt={10} fontSize={'6xl'}>Crear Cotización</Heading>
             <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
-            <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
+            {/* <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
                 {cardList(filter ? filteredServices : services)}
-            </Wrap>
+            </Wrap> */}
+            <Stack spacing={10} justify={{ base: "center", md: "normal" }}>
+
+            </Stack>
         </Container >
     )
 }
