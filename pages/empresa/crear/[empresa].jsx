@@ -6,24 +6,24 @@ import { signedPage } from '../../../data/signed'
 
 export const getServerSideProps = async (context) => {
     try {
-        // const res = await signedPage(context.query)
-        // if (res.status === 200 && res.data.use === 'company') {
-        //     return {
-        //         props: {
-        //             data: res.data
-        //         }
-        //     }
-        // } else {
-        return {
-            props: {
-                data: null
+        const res = await signedPage(context.query)
+        if (res.status === 200 && res.data.use === 'company') {
+            return {
+                props: {
+                    data: res.data
+                }
             }
-            // redirect: {
-            //     destination: '/',
-            //     permanent: false,
-            // },
+        } else {
+            return {
+                props: {
+                    data: null
+                },
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
+            }
         }
-        // }
     } catch (error) {
         return {
             redirect: {
