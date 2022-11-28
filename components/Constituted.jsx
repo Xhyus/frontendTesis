@@ -61,7 +61,6 @@ const Constituted = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }
                     </HStack>
                     <HStack>
                         {touched.phone && errors.phone && (
-                            console.log(values.phone),
                             <FormikError error={errors.phone} />
                         )}
                     </HStack>
