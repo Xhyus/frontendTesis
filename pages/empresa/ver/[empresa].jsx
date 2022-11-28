@@ -25,8 +25,12 @@ const verEmpresa = (data) => {
     const [company] = useState(data.data)
     return (
         <Container maxW={"container.lg"}>
-            <HStack align={"center"} justify={"center"} mt={10}>
+            <HStack align={"center"} justify={"center"} my={10}>
                 <Heading as={"h1"} >Empresa: {company.name}</Heading>
+            </HStack>
+            <HStack >
+                <Button w={"full"} colorScheme={"blue"}>Editar</Button>
+                <Button w={"full"} colorScheme={"red"}>Eliminar</Button>
             </HStack>
             <HStack justify={"center"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} mt={10} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }}>
@@ -44,7 +48,7 @@ const verEmpresa = (data) => {
                     <TextCopy prefix={"Rut"} data={company.contact.rut} />
                     <TextCopy prefix={"Teléfono"} data={company.contact.phone} />
                     <TextCopy prefix={"Email"} data={company.contact.email} />
-                    {company.contact.socialReason ? <TextCopy prefix={"Cargo"} data={company.contact.role} /> : <TextCopy prefix={"Rol"} data={company.contact.role} />}
+                    {company.contact.socialReason ? <Text>Cargo : {company.contact.role} </Text> : <Text>Rol : {company.contact.role} </Text>}
                 </Stack>
             </HStack>
             <Stack justify={"center"} mt={'10'}>
