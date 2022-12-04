@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Center, Spinner } from '@chakra-ui/react';
-import Company from '../../../components/Company';
-import { useRouter } from 'next/router'
+import { Heading, Container, HStack, Center, Spinner } from '@chakra-ui/react';
 import { getCompany } from '../../../data/company'
 import EditCompany from '../../../components/EditCompany';
 
@@ -25,7 +23,6 @@ export async function getServerSideProps(context) {
 
 const empresa = ({ data }) => {
     const [loading, setLoading] = useState(false)
-    const [constitutedCompany, setConstitutedCompany] = useState(true)
     const [step, setStep] = useState(1)
     const [company, setCompany] = useState(data)
     if (loading) {
@@ -40,7 +37,7 @@ const empresa = ({ data }) => {
             <HStack align={"center"} justify={"center"} my={10}>
                 <Heading>Editar Empresa: {company.name}</Heading>
             </HStack>
-            <EditCompany state={constitutedCompany} step={step} setStep={setStep} company={company} setCompany={setCompany} />
+            <EditCompany step={step} setStep={setStep} company={company} setCompany={setCompany} />
         </Container >
     )
 }
