@@ -69,7 +69,7 @@ const Constituted = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }
                         <FormikError error={errors.address} />
                     )}
                     <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-                        <Button colorScheme={"green"} type="submit" w="full"> Siguiente paso </Button>
+                        <Button colorScheme={"green"} type="submit" w="full"> Siguiente paso</Button>
                     </HStack>
                 </form>
             )}

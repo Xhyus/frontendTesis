@@ -18,6 +18,7 @@ const ContactFormEdit = ({ company, setStep, setContact, contact, state, contact
             setContactRUT(formatRut(e.target.value))
         }
     }
+    console.log(contact)
 
     return (
         <Formik
@@ -93,9 +94,9 @@ const ContactFormEdit = ({ company, setStep, setContact, contact, state, contact
                             <FormikError error={errors.phone} />
                         )}
                     </HStack>
-                    <FormInput label="Rol" handleChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder="Ej: Socio, asesor, etc." />
-                    {touched.position && errors.position && (
-                        <FormikError error={errors.position} />
+                    <FormInput label="Rol" handleChange={handleChange} values={values.role} handleBlur={handleBlur} name="role" type="text" placeHolder="Ej: Socio, asesor, etc." />
+                    {touched.role && errors.role && (
+                        <FormikError error={errors.role} />
                     )}
                     <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
                         <Button colorScheme={"green"} type="submit" w="full"> Crear Empresa </Button>
