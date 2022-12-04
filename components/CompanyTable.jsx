@@ -1,33 +1,8 @@
-import { Text, HStack, Button, Td, Tr } from '@chakra-ui/react'
-import Swal from 'sweetalert2'
-import { deleteCompany } from '../data/company'
+import { Text, Button, Td, Tr } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const CompanyTable = ({ companies }) => {
     const router = useRouter()
-
-    const delete_Company = (id) => {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '¡Sí, bórralo!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteCompany(id)
-                    .then(() => {
-                        Swal.fire(
-                            '¡Borrado!',
-                            'El servicio ha sido borrado.',
-                            'success'
-                        ).then(() => {
-                            window.location.reload()
-                        })
-                    })
-            }
-        })
-    }
 
     if (companies.length === 0) {
         return (
@@ -43,15 +18,13 @@ const CompanyTable = ({ companies }) => {
         companies.map(company => {
             return (
                 <Tr key={company._id}>
-                    <Td>{company.name}</Td>
-                    <Td>{company.rut}</Td>
-                    <Td>{company.contact.phone}</Td>
-                    <Td>{company.contact.email}</Td>
-                    <Td>
-                        <HStack>
-                            <Button colorScheme="blue" onClick={() => router.push("/empresa/ver/" + company._id)}>Detalles</Button>
-                            <Button colorScheme="red" onClick={() => delete_Company(company._id)}>Eliminar</Button>
-                        </HStack>
+                    <Td fontSize={'small'}>{company.name}</Td>
+                    <Td fontSize={'small'}>{company.rut}</Td>
+                    <Td fontSize={'small'}>{company.contact.name}</Td>
+                    <Td fontSize={'small'}>{company.contact.phone}</Td>
+                    <Td fontSize={'small'}>{company.contact.email}</Td>
+                    <Td fontSize={'small'}>
+                        <Button colorScheme="blue" onClick={() => router.push("/empresa/ver/" + company._id)} fontSize={'small'}>Detalles</Button>
                     </Td>
                 </Tr>
             )
