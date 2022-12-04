@@ -6,7 +6,6 @@ import constitutedValidation from '../utils/constitutedValidation';
 import { formatRut } from 'rutlib'
 
 const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }) => {
-    console.log(company)
     const handleChangeRUT = (e) => {
         if (e.target.value === '-') {
             setCompanyRUT('')
@@ -18,7 +17,7 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
     return (
         <Formik
             initialValues={company}
-            validationSchema={constitutedValidation}
+            // validationSchema={constitutedValidation}
             onSubmit={(values) => {
                 setCompany(values)
                 setStep(2)
