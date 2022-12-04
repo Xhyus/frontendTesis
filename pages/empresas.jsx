@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
 import { getCompanies } from '../data/company'
 import CompanyTable from '../components/CompanyTable'
 import { AiOutlineClose, } from 'react-icons/ai'
 import { createSignedPage } from '../data/signed'
 import Swal from 'sweetalert2'
-
-// import Pagination from '../components/Pagination'
-// import calculatePagination from '../utils/calculatePagination'
 
 export async function getServerSideProps(context) {
     try {
@@ -32,10 +29,6 @@ const empresas = ({ data }) => {
     const [filteredCompany, setFilteredCompany] = useState([])
     const [filter, setFilter] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    // const [currentPage, setCurrentPage] = useState(1)
-    // const [filteredCurrentPage, setFilteredCurrentPage] = useState(1)
-    // const [CompanyPerPage] = useState(5)
-    // const [calculatedPagination, setCalculatedPagination] = useState({})
     const router = useRouter()
 
     useEffect(() => {
@@ -84,25 +77,23 @@ const empresas = ({ data }) => {
                     <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
                 </InputGroup>
             </HStack>
-            <Table variant="striped">
-                <Thead>
-                    <Tr textAlign={"center"}>
-                        <Th>Nombre Empresa</Th>
-                        <Th>RUT Empresa</Th>
-                        <Th>Telefono contacto</Th>
-                        <Th>Correo contacto</Th>
-                        <Th>Acciones</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {filter === true ? <CompanyTable companies={filteredCompany} /> : <CompanyTable companies={companies} />}
-                </Tbody>
-            </Table>
-            {/* <Pagination
-                nPages={calculatedPagination.nPages}
-                currentPage={calculatedPagination.currentPage}
-                setCurrentPage={filter === true ? setFilteredCurrentPage : setCurrentPage}
-            /> */}
+            <TableContainer>
+                <Table variant="striped">
+                    <Thead>
+                        <Tr textAlign={"center"}>
+                            <Th>Nombre Empresa</Th>
+                            <Th>RUT Empresa</Th>
+                            <Th>Contacto</Th>
+                            <Th>Telefono</Th>
+                            <Th>Correo</Th>
+                            <Th>Acciones</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {filter === true ? <CompanyTable companies={filteredCompany} /> : <CompanyTable companies={companies} />}
+                    </Tbody>
+                </Table>
+            </TableContainer>
         </Container>
     )
 }
