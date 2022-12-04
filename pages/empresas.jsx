@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
 import { getCompanies } from '../data/company'
 import CompanyTable from '../components/CompanyTable'
@@ -29,7 +28,6 @@ const empresas = ({ data }) => {
     const [filteredCompany, setFilteredCompany] = useState([])
     const [filter, setFilter] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    const router = useRouter()
 
     useEffect(() => {
         const results = companies.filter(company => {
@@ -54,16 +52,15 @@ const empresas = ({ data }) => {
 
     const generateSignedPage = async () => {
         const response = await createSignedPage('company')
-        console.log(response)
         if (response.status === 200) {
             const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({
                 title: 'Página firmada',
-                text: `La página firmada se ha generado correctamente y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
+                text: ` y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
                 icon: 'success',
+                html: `<p>La página firmada se ha generado correctamente.</p> <p>Puede copiar el siguiente enlace:</p><p style="font-size: 0.8rem; font-weight: 600; color: #000;">${url}</p>`,
                 confirmButtonText: 'Ok'
             })
-            navigator.clipboard.writeText(url)
         }
     }
 
@@ -71,13 +68,13 @@ const empresas = ({ data }) => {
         <Container maxW={"container.lg"} centerContent>
             <Heading mt={10}>Empresas</Heading>
             <HStack w={"full"} my={5}>
-                <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear página firmada</Button>
+                <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear empresa</Button>
                 <InputGroup w={"full"} >
                     <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
                     <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
                 </InputGroup>
             </HStack>
-            <TableContainer>
+            <TableContainer w={"full"}>
                 <Table variant="striped">
                     <Thead>
                         <Tr textAlign={"center"}>
