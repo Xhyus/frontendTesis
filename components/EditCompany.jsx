@@ -2,12 +2,12 @@ import { useState } from 'react'
 import ContactFormEdit from './ContactFormEdit';
 import CompanyFormEdit from './CompanyFormEdit';
 
-const EditCompany = ({ step, setStep, company, setCompany }) => {
+const EditCompany = ({ step, setStep, company, setCompany, constituted, setConstituted }) => {
     const [companyRUT, setCompanyRUT] = useState(company.rut)
     const [contactRUT, setContactRUT] = useState(company.contact.rut)
 
     if (step === 1) {
-        return <CompanyFormEdit company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />
+        return <CompanyFormEdit company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} constituted={constituted} setConstituted={setConstituted} />
     }
     if (step === 2) {
         return (
