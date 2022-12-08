@@ -20,8 +20,18 @@ const recoverPassword = async (email) => {
     return response;
 }
 
+const changePassword = async (password, token) => {
+    const response = await axios.post(`${process.env.SERVIDOR}/changePassword`, {
+        password: password.password,
+        newPassword: password.newPassword,
+        rePassword: password.rePassword,
+    }, { headers: { cookie: token } });
+    return response;
+}
+
 module.exports = {
     checkToken,
     postLogin,
     recoverPassword,
+    changePassword,
 }
