@@ -13,7 +13,15 @@ const postLogin = async (email, password) => {
     return response;
 }
 
+const recoverPassword = async (email) => {
+    const response = await axios.post(`${process.env.SERVIDOR}/recoverPassword`, {
+        email
+    });
+    return response;
+}
+
 module.exports = {
     checkToken,
     postLogin,
+    recoverPassword,
 }
