@@ -4,7 +4,6 @@ const serviceValidation = yup.object({
     name: yup.string()
         .min(2, "El nombre debe contener al menos 2 caracteres")
         .max(50, "El nombre debe contener como maximo 50 caracteres")
-        // the name can containt letters, numbers, spaces, and the following characters: ñÑáéíóúÁÉÍÓÚ
         .matches(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/, "El nombre solo puede contener letras, numeros y espacios")
         .required("El nombre es obligatorio"),
     description: yup.string()
