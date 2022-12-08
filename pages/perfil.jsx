@@ -4,6 +4,26 @@ import { HStack, Text, Heading, Input, Container, Stack, Button, FormControl, Fo
 import Swal from 'sweetalert2'
 import { changePassword } from '../data/user'
 import jsCookie from 'js-cookie'
+import PasswordInput from '../components/PasswordInput'
+import { checkToken } from '../data/user'
+
+export const getServerSideProps = async (context) => {
+    try {
+        const res = await checkToken(context.req.headers.cookie)
+        return {
+            props: {
+                data: res.data
+            }
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+}
 
 const perfil = () => {
     const [show, setShow] = useState(false)
@@ -22,6 +42,13 @@ const perfil = () => {
             [e.target.name]: e.target.value
         })
     }
+
+    const enterKeyHandler = event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSubmit(event);
+        }
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -57,57 +84,9 @@ const perfil = () => {
             <Heading my={10} textAlign={"center"}>Perfil</Heading>
             <Heading size='md' my={10}>Cambiar contraseña</Heading>
             <Stack>
-                <FormControl id="password">
-                    <FormLabel>Contraseña actual</FormLabel>
-                    <InputGroup size='md'>
-                        <Input
-                            pr='4.5rem'
-                            type={show ? 'text' : 'password'}
-                            placeholder='Contraseña actual'
-                            name='password'
-                            onChange={handleChange}
-                        />
-                        <InputRightElement width='4.5rem'>
-                            <Button h='1.75rem' size='sm' onClick={handleClick}>
-                                {show ? 'Hide' : 'Show'}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                </FormControl>
-                <FormControl id="newPassword">
-                    <FormLabel>Nueva contraseña</FormLabel>
-                    <InputGroup size='md'>
-                        <Input
-                            pr='4.5rem'
-                            name='newPassword'
-                            type={show ? 'text' : 'password'}
-                            placeholder='Contraseña nueva'
-                            onChange={handleChange}
-                        />
-                        <InputRightElement width='4.5rem'>
-                            <Button h='1.75rem' size='sm' onClick={handleClick}>
-                                {show ? 'Hide' : 'Show'}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                </FormControl>
-                <FormControl id="rePassword">
-                    <FormLabel>Repetir nueva contraseña</FormLabel>
-                    <InputGroup size='md'>
-                        <Input
-                            pr='4.5rem'
-                            type={show ? 'text' : 'password'}
-                            placeholder='Repetir contraseña nueva'
-                            onChange={handleChange}
-                            name='rePassword'
-                        />
-                        <InputRightElement width='4.5rem'>
-                            <Button h='1.75rem' size='sm' onClick={handleClick}>
-                                {show ? 'Hide' : 'Show'}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                </FormControl>
+                <PasswordInput id="password" label="Contraseña actual" name="password" placeholder="Contraseña actual" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
+                <PasswordInput id="newPassword" label="Nueva contraseña" name="newPassword" placeholder="Nueva contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
+                <PasswordInput id="rePassword" label="Repetir contraseña" name="rePassword" placeholder="Repetir contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
             </Stack>
             <HStack w={"full"} my={10}>
                 <Button w="full" colorScheme={'green'} onClick={onSubmit}>Cambiar contraseña</Button>

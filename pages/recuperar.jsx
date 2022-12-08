@@ -4,6 +4,30 @@ import { useRouter } from 'next/router';
 import { recoverPassword } from '../data/user';
 import Swal from 'sweetalert2';
 
+export const getServerSideProps = async (context) => {
+    try {
+        const res = await checkToken(context.req.headers.cookie)
+        if (res.status === 200) {
+            return {
+                redirect: {
+                    destination: '/servicios',
+                    permanent: false
+                }
+            }
+        } else {
+            return {
+                props: {
+                    data: res.data
+                }
+            }
+        }
+    } catch (error) {
+        return {
+            props: { data: null }
+        }
+    }
+}
+
 const recuperar = () => {
     const [user, setUser] = useState({
         email: ''
