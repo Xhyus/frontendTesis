@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
-import { FaBars } from 'react-icons/fa';
+import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react"
+import { FaBars, FaAngleDown } from 'react-icons/fa';
 import Cookies from 'js-cookie'
 import axios from 'axios'
 
@@ -60,11 +60,16 @@ const Navbar = () => {
 						<Link _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
 						<Link _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => router.push('/empresas')}>Empresas</Link>
 						<Menu>
-							<MenuButton _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("perfil")}>{user}</MenuButton>
+							<MenuButton _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("perfil")} w={"fit-content"}>
+								<HStack spacing={1}>
+									<Text>{user}</Text>
+									<FaAngleDown />
+								</HStack>
+							</MenuButton>
 							<MenuList>
-								<MenuItem>Perfil</MenuItem>
-								<MenuItem>Crear cuenta</MenuItem>
-								<MenuItem onClick={logout}>Cerrar sesion</MenuItem>
+								<MenuItem onClick={() => router.push('/perfil')}>Perfil</MenuItem>
+								<MenuItem onClick={() => router.push('/crear/cuentas')}>Crear cuenta</MenuItem>
+								<MenuItem onClick={logout} color={"red"}>Cerrar sesion</MenuItem>
 							</MenuList>
 						</Menu>
 					</HStack>
