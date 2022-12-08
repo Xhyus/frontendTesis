@@ -5,7 +5,7 @@ import FormikError from './FormikError';
 import constitutedValidation from '../utils/constitutedValidation';
 import { formatRut } from 'rutlib'
 
-const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }) => {
+const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyRUT, constituted, setConstituted }) => {
     const handleChangeRUT = (e) => {
         if (e.target.value === '-') {
             setCompanyRUT('')
@@ -14,6 +14,19 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
             setCompanyRUT(formatRut(e.target.value))
         }
     }
+
+    const setButtonColor = () => {
+        if (constituted) {
+            return 'green'
+        } else {
+            return 'red'
+        }
+    }
+
+
+    console.log(constituted)
+
+
     return (
         <Formik
             initialValues={company}
@@ -33,11 +46,16 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
             }) => (
                 <form onSubmit={handleSubmit} id="form" >
                     <Heading as="h2" size="lg" mb={4} color="white">Datos de la empresa</Heading>
+                    <HStack spacing={4} mb={4}>
+                        <Button colorScheme={setButtonColor} variant="outline" onClick={() => setConstituted(!constituted)}>{constituted === true ? "La empresa ya no esta constituida" : "¿Ha constituido su empresa?"}</Button>
+                    </HStack>
                     <FormInput label="Nombre de la empresa" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Estudio Fragua" />
                     {touched.name && errors.name && (
                         <FormikError error={errors.name} />
                     )}
-                    <FormInput label="Razón social" handleChange={handleChange} values={values.socialReason} handleBlur={handleBlur} name="socialReason" type="text" placeHolder="Ej: Restaurantes McDonald's S.A." />
+                    {constituted && (
+                        <FormInput label="Razón social" handleChange={handleChange} values={values.socialReason} handleBlur={handleBlur} name="socialReason" type="text" placeHolder="Ej: Restaurantes McDonald's S.A." />
+                    )}
                     {touched.socialReason && errors.socialReason && (
                         <FormikError error={errors.socialReason} />
                     )}
@@ -72,7 +90,7 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
                     </HStack>
                 </form>
             )}
-        </Formik>
+        </Formik >
     )
 }
 
