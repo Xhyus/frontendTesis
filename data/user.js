@@ -21,11 +21,11 @@ const recoverPassword = async (email) => {
 }
 
 const changePassword = async (password, token) => {
-    const response = await axios.post(`${process.env.SERVIDOR}/changePassword`, {
+    const response = await axios.put(`${process.env.SERVIDOR}/changePassword`, {
         password: password.password,
         newPassword: password.newPassword,
         rePassword: password.rePassword,
-    }, { headers: { cookie: token } });
+    });
     return response;
 }
 
