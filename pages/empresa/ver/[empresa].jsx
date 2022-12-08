@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react';
 import { getCompany } from '../../../data/company'
 import TextCopy from '../../../components/TextCopy';
+import { useRouter } from 'next/router'
 
 export async function getServerSideProps(context) {
     try {
@@ -22,23 +23,23 @@ export async function getServerSideProps(context) {
 }
 
 const verEmpresa = (data) => {
+    console.log(data)
     const [company] = useState(data.data)
+    const router = useRouter()
+
     return (
         <Container maxW={"container.lg"}>
             <HStack align={"center"} justify={"center"} my={10}>
                 <Heading as={"h1"} >Empresa: {company.name}</Heading>
             </HStack>
-            <HStack >
-                <Button w={"full"} colorScheme={"blue"}>Editar</Button>
-                <Button w={"full"} colorScheme={"red"}>Eliminar</Button>
-            </HStack>
-            <HStack justify={"center"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} mt={10} w={"full"}>
-                <Stack justify={"center"} w={{ base: "100%", md: "50%" }}>
+            <Button colorScheme={"orange"} mb={10} onClick={() => router.push('/empresa/editar/' + company._id)}>Editar datos</Button>
+            <HStack justify={"center"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
+                <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                     <Heading size={"md"}>Datos de la empresa</Heading>
                     <TextCopy prefix={"Nombre"} data={company.name} />
                     <TextCopy prefix={"Rut"} data={company.rut} />
                     {company.socialReason && <TextCopy prefix={"Razón social"} data={company.socialReason} />}
-                    <TextCopy prefix={"Dirección"} data={company.address} />
+                    {company.address && <TextCopy prefix={"Dirección"} data={company.address} />}
                     <TextCopy prefix={"Teléfono"} data={company.contact.phone} />
                     <TextCopy prefix={"Email"} data={company.contact.email} />
                 </Stack>
@@ -55,15 +56,15 @@ const verEmpresa = (data) => {
                 <Heading as={"h2"} size={"md"} textAlign={"center"} mb={5}>Cotizaciones</Heading>
                 <Tabs isFitted orientation={{ base: "horizontal", md: "horizontal" }} variant="solid-rounded">
                     <TabList>
-                        <Tab>Cotizaciones activas</Tab>
-                        <Tab>Cotizaciones vencidas</Tab>
+                        <Tab>Activas</Tab>
+                        <Tab>Vencidas</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <Text>Cotizaciones activas</Text>
+                            <Text>Activas</Text>
                         </TabPanel>
                         <TabPanel>
-                            <Text>Cotizaciones vencidas</Text>
+                            <Text>Vencidas</Text>
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
@@ -72,20 +73,19 @@ const verEmpresa = (data) => {
                 <Heading as={"h2"} size={"md"} textAlign={"center"} mb={5}>Proyectos</Heading>
                 <Tabs isFitted orientation={{ base: "horizontal", md: "horizontal" }} variant="solid-rounded">
                     <TabList>
-                        <Tab>Proyectos activos</Tab>
-                        <Tab>Proyectos terminados</Tab>
+                        <Tab>Activos</Tab>
+                        <Tab>Terminados</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <Text>Proyectos activos</Text>
+                            <Text>Activos</Text>
                         </TabPanel>
                         <TabPanel>
-                            <Text>Proyectos terminados</Text>
+                            <Text>Terminados</Text>
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
             </Stack>
-
         </Container>
     )
 }
