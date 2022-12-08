@@ -30,7 +30,6 @@ export const getServerSideProps = async (context) => {
 }
 
 const Home = () => {
-
 	const [showInput, setShowInput] = useState(true);
 	const handleClick = () => setShowInput(!showInput);
 	const [user, setUser] = useState({
@@ -38,7 +37,6 @@ const Home = () => {
 		password: '',
 	})
 	const Router = useRouter();
-
 	const handleChange = (e) => {
 		setUser({
 			...user,
@@ -46,22 +44,15 @@ const Home = () => {
 		})
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			postLogin(user.email, user.password)
-				.then((res) => {
-					Cookies.set("token", res.data.token, { expires: 1 })
-					Cookies.set("user", res.data.user, { expires: 1 })
-					Router.push('/servicios')
-				})
-				.catch((err) => {
-					Swal.fire({
-						icon: 'error',
-						title: 'Oops...',
-						text: 'Usuario o contraseña incorrectos',
-					})
-				})
+			const response = await postLogin(user.email, user.password)
+			if (response.status === 200) {
+				Cookies.set("token", response.data.token, { expires: 1 })
+				Cookies.set("user", response.data.user, { expires: 1 })
+				Router.push('/servicios')
+			}
 		} catch (error) {
 			Swal.fire({
 				icon: 'error',
@@ -102,7 +93,7 @@ const Home = () => {
 						</Tooltip>
 					</FormControl>
 					<Button colorScheme="orange" size="md" w={'full'} onClick={handleSubmit}>Iniciar Sesión</Button>
-					<Link onClick={() => Router.push("./newPassword")} color="orange.500" textAlign={"center"}>¿Olvidaste tu contraseña?</Link>
+					<Link onClick={() => Router.push("./recuperar")} color="orange.500" textAlign={"center"}>¿Olvidaste tu contraseña?</Link>
 				</Stack>
 			</Container>
 		</Flex>

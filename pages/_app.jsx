@@ -1,4 +1,4 @@
-import { ChakraProvider, Stack } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import axios from 'axios'
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter()
 	axios.defaults.withCredentials = true
 	const useNavbar = () => {
-		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/empresa/crear/[empresa]') {
+		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/empresa/crear/[empresa]' || router.pathname == '/recuperar') {
 			return <Component {...pageProps} />
 		} else {
 			return <>
