@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody } from "@chakra-ui/react"
+import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
 import { FaBars } from 'react-icons/fa';
 import Cookies from 'js-cookie'
 import axios from 'axios'
@@ -9,6 +9,14 @@ const Navbar = () => {
 	const [isMobile] = useMediaQuery("(max-width: 600px)")
 	const router = useRouter()
 	const path = router.pathname.split('/')
+	const [user, setUser] = useState('Usuario')
+
+	useEffect(() => {
+		if (Cookies.get('user')) {
+			setUser(Cookies.get('user'))
+		}
+	}, [Cookies.get('user')])
+
 	const currentPage = (boton) => {
 		if (path[1] === 'servicios' && boton === 'servicios') {
 			return "orange.300"
@@ -48,13 +56,20 @@ const Navbar = () => {
 				<HStack justify={"space-between"} my={5} mx={10}>
 					<Image src="/logo.png" width={'32'} height={'8'} />
 					<HStack spacing={8}>
-						<Link _hover={{ color: "none" }} color={"white"} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
-						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
-						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => router.push('/empresas')}>Empresas</Link>
-						<Link _hover={{ color: "none" }} color={"white"} fontWeight={"bold"} onClick={logout}>Cerrar sesión</Link>
+						<Link _hover={{ color: "none" }} borderBottom={"2px"} borderColor={currentPage("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
+						<Link _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
+						<Link _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => router.push('/empresas')}>Empresas</Link>
+						<Menu>
+							<MenuButton _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("perfil")}>{user}</MenuButton>
+							<MenuList>
+								<MenuItem>Perfil</MenuItem>
+								<MenuItem>Crear cuenta</MenuItem>
+								<MenuItem onClick={logout}>Cerrar sesion</MenuItem>
+							</MenuList>
+						</Menu>
 					</HStack>
 				</HStack>
-			</Box>
+			</Box >
 		)
 	}
 
