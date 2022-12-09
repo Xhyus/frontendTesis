@@ -29,12 +29,12 @@ const changePassword = async (password, token) => {
     return response;
 }
 
-const createUser = async (user) => {
+const createUser = async (name, email, password, rePassword) => {
     const response = await axios.post(`${process.env.SERVIDOR}/user`, {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        rePassword: user.rePassword,
+        name,
+        email,
+        password,
+        rePassword,
     });
     return response;
 }

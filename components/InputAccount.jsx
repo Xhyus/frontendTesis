@@ -4,7 +4,7 @@ const InputAccount = ({ name, label, placeholder, handlechange, type, enterKeyHa
     return (
         <FormControl id={name} isRequired>
             <FormLabel>{label}</FormLabel>
-            <Input type={type} placeholder={placeholder} handlechange={handlechange} name={name} onKeyDown={enterKeyHandler} />
+            <Input type={type} placeholder={placeholder} onChange={handlechange} name={name} onKeyDown={enterKeyHandler} />
         </FormControl>
     )
 }
