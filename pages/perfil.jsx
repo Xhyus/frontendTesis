@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Text, Heading, Input, Container, Stack, Button, FormControl, FormLabel, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { HStack, Heading, Container, Stack, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { changePassword } from '../data/user'
 import jsCookie from 'js-cookie'
