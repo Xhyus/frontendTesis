@@ -16,7 +16,7 @@ const cuentas = () => {
     const enterKeyHandler = event => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            handleSubmit(event);
+            onSubmit(event);
         }
     };
     const handleChange = (e) => {
@@ -27,6 +27,7 @@ const cuentas = () => {
     }
     const onSubmit = async (e) => {
         e.preventDefault();
+        console.log(account)
         if (account.password !== account.confirmPassword) {
             return Swal.fire({
                 icon: 'error',
@@ -36,13 +37,13 @@ const cuentas = () => {
         }
         try {
             const response = await createUser(account.name, account.email, account.password, account.confirmPassword)
-            if (response.status === 200) {
+            if (response.status === 201) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Cuenta creada',
                     text: 'Se ha creado la cuenta correctamente',
                 }).then(() => {
-                    Router.push("/")
+                    router.push("/")
                 })
             }
         } catch (error) {
