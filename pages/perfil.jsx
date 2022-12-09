@@ -80,7 +80,7 @@ const perfil = () => {
     }
 
     return (
-        <Container maxW='container.xl'>
+        <Container maxW='container.md'>
             <Heading my={10} textAlign={"center"}>Perfil</Heading>
             <Heading size='md' my={10}>Cambiar contraseña</Heading>
             <Stack>

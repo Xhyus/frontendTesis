@@ -4,7 +4,7 @@ import { formatDescription, formatPrice, formatTitle, formatType } from '../util
 
 const ServiceCard = ({ id, title, price, description, type, items, message, func }) => {
     return (
-        <Card w={{ base: "full", md: "sm" }} borderRadius={20}>
+        <Card w={{ base: "full", md: "sm" }} h="full" borderRadius={20}>
             <Flex flexDirection={"column"} p={'10'}>
                 <Heading as={"h2"} fontWeight={'semibold'} fontSize={'3xl'}>{formatTitle(title)}</Heading>
                 <Box mb={3} mt={2}>
