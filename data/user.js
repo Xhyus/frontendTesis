@@ -29,9 +29,20 @@ const changePassword = async (password, token) => {
     return response;
 }
 
+const createUser = async (user) => {
+    const response = await axios.post(`${process.env.SERVIDOR}/user`, {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        rePassword: user.rePassword,
+    });
+    return response;
+}
+
 module.exports = {
     checkToken,
     postLogin,
     recoverPassword,
     changePassword,
+    createUser,
 }
