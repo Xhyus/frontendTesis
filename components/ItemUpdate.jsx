@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tooltip, HStack, FormControl, Input, Button, FormLabel } from '@chakra-ui/react'
 
-const ItemUpdate = ({ id, lastItem, handleDeleteItem, handleChangeItem, value }) => {
+const ItemUpdate = ({ id, handleDeleteItem, handleChangeItem, value }) => {
 
     return (
         <FormControl id={id} isRequired py={2}>
