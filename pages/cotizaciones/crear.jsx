@@ -4,6 +4,7 @@ import { getServices } from '../../data/services';
 import { useRouter } from 'next/router';
 import AddServices from '../../components/AddServices';
 import ServiceQuote from '../../components/ServiceQuote';
+import QuoteForm from '../../components/QuoteForm';
 
 export async function getServerSideProps(context) {
     try {
@@ -79,30 +80,14 @@ const crearCotizaciones = ({ data }) => {
         })
     }
 
-    if (step === 1) {
+    if (step === 2) {
         return (
             <AddServices services={services} selectedServices={selectedServices} cardList={cardList} setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} setStep={setStep} step={step} filter={filter} filteredServices={filteredServices} />
         )
     }
-    if (step === 2) {
+    if (step === 1) {
         return (
-            <Container maxW={"container.md"} centerContent>
-                <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
-                <Stack w={"full"}>
-                    <FormControl id="name" isRequired>
-                        <FormLabel>Nombre</FormLabel>
-                        <Input type="text" />
-                    </FormControl>
-                    <FormControl id="email" isRequired>
-                        <FormLabel>Correo</FormLabel>
-                        <Input type="email" />
-                    </FormControl>
-                </Stack>
-                <HStack my={5}>
-                    <Button color={"white"} bgColor={"#7ABC63"}>Ir al siguiente paso</Button>
-                    <Button color={"white"} bgColor={"#DE1A1A"} onClick={() => setStep(1)}>Atras</Button>
-                </HStack>
-            </Container >
+            <QuoteForm quote={quote} setQuote={setQuote} setStep={setStep} />
         )
     }
     if (step === 3) {
