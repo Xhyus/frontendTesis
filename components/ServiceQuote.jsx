@@ -26,14 +26,14 @@ const ServiceQuote = ({ id, title, price, description, type, items, setSelectedS
                 <HStack justify={"space-between"} pt={5}>
                     <Text>{formatType(type)} | {items} Items</Text>
                     {selectedServices.some(item => item === id) ?
-                        <Button borderRadius={10} colorScheme="red" color={"white"} onClick={() => removeFromSelected()}>
+                        <Button borderRadius={"3xl"} bgColor={"#DE1A1A"} color="white" onClick={() => removeFromSelected()}>
                             <HStack align={"center"}>
                                 <AiOutlineDelete size={"20"} fontWeight={"bold"} />
                                 <Text fontWeight={"bold"}>Quitar</Text>
                             </HStack>
                         </Button>
                         :
-                        <Button borderRadius={10} colorScheme="blue" color={"white"} onClick={() => addToSelected()}>
+                        <Button borderRadius={"3xl"} bgColor={"#53B6EE"} color={"white"} onClick={() => addToSelected()}>
                             <HStack align={"center"}>
                                 <AiOutlinePlus size={"20"} fontWeight={"bold"} />
                                 <Text fontWeight={"bold"}>Agregar</Text>
