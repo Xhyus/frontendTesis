@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Heading, Wrap, Container, WrapItem, FormControl, Stack, FormLabel, Select, Input } from '@chakra-ui/react';
+import { Heading, Wrap, Container, WrapItem, FormControl, Stack, FormLabel, Select, Input, Text, HStack, Button } from '@chakra-ui/react';
 import { getServices } from '../../data/services';
 import { useRouter } from 'next/router';
 import SearchButton from '../../components/SearchButton';
-import ServiceCard from '../../components/ServiceCard';
+import ServiceQuote from '../../components/ServiceQuote';
 
 export async function getServerSideProps(context) {
     try {
@@ -54,14 +54,6 @@ const crearCotizaciones = ({ data }) => {
         }
     }
 
-    const addToSelected = (service) => {
-        setSelectedServices([...selectedServices, service])
-    }
-
-    const removeFromSelected = (service) => {
-        setSelectedServices(selectedServices.filter(item => item._id !== service._id))
-    }
-
     useEffect(() => {
         console.log(selectedServices)
     }, [selectedServices])
@@ -70,23 +62,30 @@ const crearCotizaciones = ({ data }) => {
         return data.map(service => {
             return (
                 <WrapItem key={service._id}>
-                    <ServiceCard id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} message={service._id === selectedServices.find(item => item._id === service._id) ? 'Quitar' : 'Agregar'} func={service._id === selectedServices.find(item => item._id === service._id) ? removeFromSelected : addToSelected} />
+                    <ServiceQuote id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} setSelectedServices={setSelectedServices} selectedServices={selectedServices} />
                 </WrapItem>
             )
         })
     }
 
     return (
-        <Container maxW={"container.xl"} centerContent>
-            <Heading mt={10} fontSize={'6xl'}>Crear Cotización</Heading>
-            <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
-            {/* <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
-                {cardList(filter ? filteredServices : services)}
-            </Wrap> */}
-            <Stack spacing={10} justify={{ base: "center", md: "normal" }}>
-
-            </Stack>
-        </Container >
+        <>
+            <Container maxW={"container.xl"} centerContent>
+                <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
+                <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
+                <Wrap spacing={10} justify={{ base: "center", md: "normal" }} pb={20}>
+                    {cardList(filter ? filteredServices : services)}
+                </Wrap>
+            </Container >
+            {selectedServices.length > 0 &&
+                <Stack position="sticky" bottom={0} w="full" p={4} bg="blue.800">
+                    <HStack justify={"space-around"}>
+                        <Text fontWeight={"bold"}>Se han añadido {selectedServices.length} servicios a la cotizacion </Text>
+                        <Button colorScheme={"green"}>Ir al siguiente paso</Button>
+                    </HStack>
+                </Stack>
+            }
+        </>
     )
 }
 
