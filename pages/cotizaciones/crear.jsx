@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Heading, Wrap, Container, WrapItem, FormControl, Stack, FormLabel, Select, Input, Text, HStack, Button } from '@chakra-ui/react';
 import { getServices } from '../../data/services';
 import { useRouter } from 'next/router';
-import SearchButton from '../../components/SearchButton';
+import AddServices from '../../components/AddServices';
 import ServiceQuote from '../../components/ServiceQuote';
 
 export async function getServerSideProps(context) {
@@ -29,7 +29,18 @@ const crearCotizaciones = ({ data }) => {
     const [filter, setFilter] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedServices, setSelectedServices] = useState([])
-    const router = useRouter()
+    const [quote, setQuote] = useState({
+        name: '',
+        description: '',
+        quoteServices: services.filter(service => selectedServices.includes(service._id)),
+        formalization: '',
+        payment: '',
+        paymentMethod: '',
+        documents: '',
+        company: ''
+    })
+
+    const [step, setStep] = useState(1)
 
     useEffect(() => {
         const results = services.filter(service => {
@@ -68,25 +79,41 @@ const crearCotizaciones = ({ data }) => {
         })
     }
 
-    return (
-        <>
+    if (step === 1) {
+        return (
+            <AddServices services={services} selectedServices={selectedServices} cardList={cardList} setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} setStep={setStep} step={step} filter={filter} filteredServices={filteredServices} />
+        )
+    }
+    if (step === 2) {
+        return (
+            <Container maxW={"container.md"} centerContent>
+                <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
+                <Stack w={"full"}>
+                    <FormControl id="name" isRequired>
+                        <FormLabel>Nombre</FormLabel>
+                        <Input type="text" />
+                    </FormControl>
+                    <FormControl id="email" isRequired>
+                        <FormLabel>Correo</FormLabel>
+                        <Input type="email" />
+                    </FormControl>
+                </Stack>
+                <HStack my={5}>
+                    <Button color={"white"} bgColor={"#7ABC63"}>Ir al siguiente paso</Button>
+                    <Button color={"white"} bgColor={"#DE1A1A"} onClick={() => setStep(1)}>Atras</Button>
+                </HStack>
+            </Container >
+        )
+    }
+    if (step === 3) {
+        return (
             <Container maxW={"container.xl"} centerContent>
                 <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
-                <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
-                <Wrap spacing={10} justify={{ base: "center", md: "normal" }} pb={20}>
-                    {cardList(filter ? filteredServices : services)}
-                </Wrap>
+                <Text>Nombre de la cotizacion:{quote.name}</Text>
+                <Button color={"white"} bgColor={"#7ABC63"} borderRadius={'3xl'} onClick={() => setStep(1)}>Atras</Button>
             </Container >
-            {selectedServices.length > 0 &&
-                <Stack position="sticky" bottom={0} w="full" p={4} bg="blue.800">
-                    <HStack justify={"space-around"}>
-                        <Text fontWeight={"bold"}>Se han añadido {selectedServices.length} servicios a la cotizacion </Text>
-                        <Button colorScheme={"green"}>Ir al siguiente paso</Button>
-                    </HStack>
-                </Stack>
-            }
-        </>
-    )
+        )
+    }
 }
 
 export default crearCotizaciones
