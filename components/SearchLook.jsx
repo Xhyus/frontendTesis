@@ -1,9 +1,8 @@
 import React from 'react'
 import { InputGroup, InputLeftElement, Input, InputRightElement, HStack, Button } from '@chakra-ui/react'
 import { AiOutlineClose, AiOutlineSearch, AiOutlineEye } from 'react-icons/ai'
-import { useRouter } from 'next/router'
 
-const SearchLook = ({ searchTerm, setSearchTerm, setSearch, text, setStep, step }) => {
+const SearchLook = ({ searchTerm, setFilter, text, setStep, step, setSearch }) => {
     if (step !== 3) {
         return (
             <HStack w={"full"} my={5} align={"center"}>
@@ -11,7 +10,7 @@ const SearchLook = ({ searchTerm, setSearchTerm, setSearch, text, setStep, step 
                 <InputGroup w={{ base: "full", md: "40%" }} >
                     <InputLeftElement children={<AiOutlineSearch />} />
                     <Input w={"full"} borderRadius={'3xl'} focusBorderColor={"yellow.600"} value={searchTerm} type="text" placeholder="Buscar" onChange={setSearch} />
-                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
+                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ status: false, searchTerm: '', filteredServices: [] })} />
                 </InputGroup>
             </HStack>
         )
