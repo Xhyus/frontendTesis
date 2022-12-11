@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik } from 'formik'
 import { Container, Heading, Stack, FormControl, FormLabel, Input, Button, HStack, Select, Textarea } from '@chakra-ui/react'
 import quoteValidation from '../utils/quoteValidation'
@@ -9,28 +9,37 @@ import FormikError from './FormikError'
 const QuoteForm = ({ setStep, quote, setQuote }) => {
 
     const options = [
-        { value: '1', label: 'Cliente 1' },
-        { value: '2', label: 'Cliente 2' },
+        { value: '1', label: 'Cliente 1', name: "company" },
+        { value: '2', label: 'Cliente 2', name: "company" },
     ]
 
     const formalizationOptions = [
-        { value: 'Firmar', label: 'Firma del presente contrato' },
-        { value: 'Contrato', label: 'Firma de contrato de servicio' },
-        { value: 'Confidencialidad', label: 'Firma de contrato de servicio y confidencialidad' },
+        { value: 'Firmar', label: 'Firma del presente contrato', name: "formalization" },
+        { value: 'Contrato', label: 'Firma de contrato de servicio', name: "formalization" },
+        { value: 'Confidencialidad', label: 'Firma de contrato de servicio y confidencialidad', name: "formalization" },
     ]
 
     const paymentOptions = [
-        { value: 'Efectivo', label: 'Efectivo' },
-        { value: 'Transferencia', label: 'Transferencia' },
-        { value: 'Credito', label: 'Credito' },
-        { value: 'Debito', label: 'Debito' },
-        { value: 'Otros', label: 'Otros' },
+        { value: 'Efectivo', label: 'Efectivo', name: "payment" },
+        { value: 'Transferencia', label: 'Transferencia', name: "payment" },
+        { value: 'Credito', label: 'Credito', name: "payment" },
+        { value: 'Debito', label: 'Debito', name: "payment" },
+        { value: 'Otros', label: 'Otros', name: "payment" },
     ]
 
     const documentOptions = [
-        { value: "Afecta", label: "Afecta" },
-        { value: "Exenta", label: "Exenta" },
+        { value: "Afecta", label: "Afecta", name: "documents" },
+        { value: "Exenta", label: "Exenta", name: "documents" },
     ]
+
+    const handleChangeSelects = (choise) => {
+        setQuote({ ...quote, [choise.name]: choise.value })
+    }
+
+    useEffect(() => {
+        console.log(quote)
+    }, [quote])
+
 
     return (
         <Container maxW={"container.md"}>
@@ -38,8 +47,8 @@ const QuoteForm = ({ setStep, quote, setQuote }) => {
                 initialValues={quote}
                 // validationSchema={quoteValidation}
                 onSubmit={(values) => {
-                    console.log(values)
-                    // setQuote(...quote, values)
+                    setQuote(...quote, values)
+                    console.log(quote)
                     // setStep(2)
                 }}
             >
@@ -53,11 +62,11 @@ const QuoteForm = ({ setStep, quote, setQuote }) => {
                             <Textarea w={"full"} type="text" placeholder="Ingrese una descripción de la cotización" name="description" onChange={handleChange} onBlur={handleBlur} value={values.description} />
                         </FormControl>
                         <FormikError touched={touched.description} message={errors.description} />
-                        <ReactSelect label="Cliente" name="company" type="text" value={values.company} onChange={handleChange} onBlur={handleBlur} options={options} placeholder="Seleccione una empresa" />
-                        <ReactSelect label="Formalización" name="formalization" type="text" value={values.formalization} onChange={handleChange} onBlur={handleBlur} options={formalizationOptions} placeholder="Seleccione una opción" />
+                        <ReactSelect label="Cliente" name="company" type="text" value={values.company} onChange={handleChangeSelects} onBlur={handleBlur} options={options} placeholder="Seleccione una empresa" />
+                        <ReactSelect label="Formalización" name="formalization" type="text" value={values.formalization} onChange={handleChangeSelects} onBlur={handleBlur} options={formalizationOptions} placeholder="Seleccione una opción" />
                         <HStack my={5} w="full">
-                            <ReactSelect label="Pago" name="payment" type="text" value={values.payment} onChange={handleChange} onBlur={handleBlur} options={paymentOptions} placeholder="Seleccione una opción" />
-                            <ReactSelect label="Documento" name="documents" type="text" value={values.documents} onChange={handleChange} onBlur={handleBlur} options={documentOptions} placeholder="Seleccione una opción" />
+                            <ReactSelect label="Pago" name="payment" type="text" value={values.payment} onChange={handleChangeSelects} onBlur={handleBlur} options={paymentOptions} placeholder="Seleccione una opción" />
+                            <ReactSelect label="Documento" name="documents" type="text" value={values.documents} onChange={handleChangeSelects} onBlur={handleBlur} options={documentOptions} placeholder="Seleccione una opción" />
                         </HStack>
                         <FormControl id="paymentMethod" isRequired>
                             <FormLabel>Metodo de pago</FormLabel>
