@@ -26,9 +26,6 @@ export async function getServerSideProps(context) {
 
 const crearCotizaciones = ({ data }) => {
     const [services] = useState(data)
-    const [filteredServices, setFilteredServices] = useState([])
-    const [filter, setFilter] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
     const [selectedServices, setSelectedServices] = useState([])
     const [quote, setQuote] = useState({
         name: '',
@@ -40,31 +37,7 @@ const crearCotizaciones = ({ data }) => {
         documents: '',
         company: ''
     })
-
     const [step, setStep] = useState(1)
-
-    useEffect(() => {
-        const results = services.filter(service => {
-            return (
-                service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                service.price.toString().includes(searchTerm) ||
-                service.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
-            )
-        })
-        setFilteredServices(results)
-    }, [searchTerm])
-
-    const setSearch = (e) => {
-        if (e.target.value.length > 0) {
-            setSearchTerm(e.target.value)
-            setFilter(true)
-        } else {
-            setSearchTerm('')
-            setFilter(false)
-        }
-    }
 
     useEffect(() => {
         console.log(selectedServices)
@@ -80,12 +53,12 @@ const crearCotizaciones = ({ data }) => {
         })
     }
 
-    if (step === 2) {
+    if (step === 1) {
         return (
-            <AddServices services={services} selectedServices={selectedServices} cardList={cardList} setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} setStep={setStep} step={step} filter={filter} filteredServices={filteredServices} />
+            <AddServices services={services} selectedServices={selectedServices} cardList={cardList} setStep={setStep} step={step} />
         )
     }
-    if (step === 1) {
+    if (step === 2) {
         return (
             <QuoteForm quote={quote} setQuote={setQuote} setStep={setStep} />
         )
