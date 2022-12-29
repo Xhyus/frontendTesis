@@ -6,7 +6,7 @@ const ReactSelect = ({ options, name, onChange, onBlur, value, label, placeholde
   return (
     <FormControl id={name} >
       <FormLabel>{label}</FormLabel>
-      <Select onChange={(choise) => onChange(choise)} w={"full"} placeholder={placeholder} onBlur={onBlur} inputValue={value} options={options} />
+      <Select onChange={(choise) => onChange(choise)} w={"full"} placeholder={placeholder} isClearable={(choise) => onChange({ name: "company", value: "" })} onBlur={onBlur} inputValue={value} options={options} />
     </FormControl>
   )
 }

@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Heading, Wrap, Container, WrapItem, FormControl, Stack, FormLabel, Select, Input, Text, HStack, Button } from '@chakra-ui/react';
+import { Heading, Container, WrapItem, Text, Button } from '@chakra-ui/react';
 import { getServices } from '../../data/services';
-import { useRouter } from 'next/router';
+import { getCompanies } from '../../data/company';
 import AddServices from '../../components/AddServices';
 import ServiceQuote from '../../components/ServiceQuote';
 import QuoteForm from '../../components/QuoteForm';
 
 export async function getServerSideProps(context) {
     try {
-        const res = await getServices(context.req.headers.cookie)
+        let services = await getServices(context.req.headers.cookie)
+        let companies = await getCompanies(context.req.headers.cookie)
         return {
             props: {
-                data: res.data
+                data: {
+                    services: services.data,
+                    company: companies.data
+                },
             }
         }
     } catch (error) {
@@ -25,17 +29,19 @@ export async function getServerSideProps(context) {
 }
 
 const crearCotizaciones = ({ data }) => {
-    const [services] = useState(data)
+    const [companiesList] = useState(data.company)
+    const [services] = useState(data.services)
     const [selectedServices, setSelectedServices] = useState([])
     const [quote, setQuote] = useState({
         name: '',
         description: '',
-        quoteServices: services.filter(service => selectedServices.includes(service._id)),
-        formalization: '',
-        payment: '',
         paymentMethod: '',
-        documents: '',
-        company: ''
+    })
+    const [selectedInfo, setSelectedInfo] = useState({
+        company: '',
+        payment: '',
+        formalization: '',
+        documents: ''
     })
     const [step, setStep] = useState(1)
 
@@ -60,7 +66,7 @@ const crearCotizaciones = ({ data }) => {
     }
     if (step === 2) {
         return (
-            <QuoteForm quote={quote} setQuote={setQuote} setStep={setStep} />
+            <QuoteForm quote={quote} setQuote={setQuote} setStep={setStep} companies={companiesList} selectedInfo={selectedInfo} setSelectedInfo={setSelectedInfo} />
         )
     }
     if (step === 3) {
