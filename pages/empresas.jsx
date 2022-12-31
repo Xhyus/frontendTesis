@@ -5,6 +5,7 @@ import CompanyTable from '../components/CompanyTable'
 import { AiOutlineClose, } from 'react-icons/ai'
 import { createSignedPage } from '../data/signed'
 import Swal from 'sweetalert2'
+import Pagination from '../components/Pagination'
 
 export async function getServerSideProps(context) {
     try {
@@ -25,28 +26,58 @@ export async function getServerSideProps(context) {
 }
 const empresas = ({ data }) => {
     const [companies] = useState(data)
-    const [filteredCompany, setFilteredCompany] = useState([])
-    const [filter, setFilter] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
+    const [filter, setFilter] = useState({
+        status: false,
+        filteredCompany: [],
+        searchTerm: ''
+    })
+    const rows = 2
+    const [page, setPage] = useState(1)
+    const results = companies.filter(company => {
+        return (
+            company.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+            company.rut.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+            company.contact.phone.toString().includes(filter.searchTerm) ||
+            company.contact.email.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+            company.contact.name.toLowerCase().includes(filter.searchTerm.toLowerCase())
+        )
+    })
+    const totalPages = Math.ceil(results.length / rows)
+    const currentPageData = results.slice((page - 1) * rows, page * rows)
+    console.log(currentPageData)
+    const handleChange = (page) => {
+        setPage(page)
+    }
 
-    useEffect(() => {
-        const results = companies.filter(company => {
-            return (
-                company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                company.rut.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                company.contact.phone.toString().includes(searchTerm) ||
-                company.contact.email.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-        })
-        setFilteredCompany(results)
-    }, [searchTerm])
+    // useEffect(() => {
+    //     const results = companies.filter(company => {
+    //         return (
+    //             company.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+    //             company.rut.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+    //             company.contact.phone.toString().includes(filter.searchTerm) ||
+    //             company.contact.email.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+    //             company.contact.name.toLowerCase().includes(filter.searchTerm.toLowerCase())
+    //         )
+    //     })
+    //     setFilter({
+    //         ...filter,
+    //         filteredCompany: results
+    //     })
+    // }, [filter.searchTerm])
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
-            setSearchTerm(e.target.value)
-            setFilter(true)
+            setFilter({
+                ...filter,
+                status: true,
+                searchTerm: e.target.value
+            })
         } else {
-            setFilter(false)
+            setFilter({
+                ...filter,
+                status: false,
+                searchTerm: ''
+            })
         }
     }
 
@@ -71,7 +102,7 @@ const empresas = ({ data }) => {
                 <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear empresa</Button>
                 <InputGroup w={"full"} >
                     <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
-                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setSearchTerm('')} />
+                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ filteredCompany: [], status: false, searchTerm: '' })} />
                 </InputGroup>
             </HStack>
             <TableContainer w={"full"}>
@@ -87,10 +118,11 @@ const empresas = ({ data }) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {filter === true ? <CompanyTable companies={filteredCompany} /> : <CompanyTable companies={companies} />}
+                        <CompanyTable companies={currentPageData} />
                     </Tbody>
                 </Table>
             </TableContainer>
+            <Pagination page={page} count={totalPages} handleChange={handleChange} />
         </Container>
     )
 }

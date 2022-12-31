@@ -7,7 +7,7 @@ const CompanyTable = ({ companies }) => {
     if (companies.length === 0) {
         return (
             <Tr>
-                <Td colSpan="5">
+                <Td colSpan="6">
                     <Text fontSize="xl" textAlign="center">No se ha encontrado ningúna empresa</Text>
                 </Td>
             </Tr>
