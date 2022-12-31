@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Heading, Wrap, Container } from '@chakra-ui/react';
-import { checkToken } from '../data/user';
-import { useRouter } from 'next/router';
-import SearchButton from '../components/SearchButton';
+import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
+import { getQuotes } from '../data/quotes'
+import QuotesTable from '../components/QuotesTable'
+import { AiOutlineClose, } from 'react-icons/ai'
+import Pagination from '../components/Pagination'
 
 export async function getServerSideProps(context) {
     try {
-        const res = await checkToken(context.req.headers.cookie)
+        const res = await getQuotes(context.req.headers.cookie)
         return {
             props: {
                 data: res.data
@@ -21,57 +22,72 @@ export async function getServerSideProps(context) {
         }
     }
 }
-
 const cotizaciones = ({ data }) => {
-    const [services] = useState(data)
-    const [filteredServices, setFilteredServices] = useState([])
-    const [filter, setFilter] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
-    const router = useRouter()
-
-    useEffect(() => {
-        // const results = services.filter(service => {
-        //     return (
-        //         service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        //         service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        //         service.price.toString().includes(searchTerm) ||
-        //         service.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        //         service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
-        //     )
-        // })
-        // setFilteredServices(results)
-    }, [searchTerm])
+    const [quotes] = useState(data)
+    const [filter, setFilter] = useState({
+        status: false,
+        filteredQuotes: [],
+        searchTerm: ''
+    })
+    const rows = 10
+    const [page, setPage] = useState(1)
+    const results = quotes.filter(quote => {
+        return (
+            quote.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+            quote.company.rut.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+            quote.company.contact.name.toString().includes(filter.searchTerm)
+        )
+    })
+    const totalPages = Math.ceil(results.length / rows)
+    const currentPageData = results.slice((page - 1) * rows, page * rows)
+    const handleChange = (page) => {
+        setPage(page)
+    }
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
-            setSearchTerm(e.target.value)
-            setFilter(true)
+            setFilter({
+                ...filter,
+                status: true,
+                searchTerm: e.target.value
+            })
         } else {
-            setSearchTerm('')
-            setFilter(false)
+            setFilter({
+                ...filter,
+                status: false,
+                searchTerm: ''
+            })
         }
     }
 
-
-
-    // const cardList = (data) => {
-    //     return data.map(service => {
-    //         return (
-    //             <WrapItem key={service._id}>
-    //                 <ServiceCard id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} message="Detalles" func={sendToService} />
-    //             </WrapItem>
-    //         )
-    //     })
-    // }
-
     return (
-        <Container maxW={"container.xl"} centerContent>
-            <Heading mt={10} fontSize={'6xl'}>Cotizaciones</Heading>
-            <SearchButton goToPage="/cotizaciones/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
-            <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
-                {/* {cardList(filter ? filteredServices : services)} */}
-            </Wrap>
-        </Container >
+        <Container maxW={"container.lg"} centerContent>
+            <Heading mt={10}>Cotizaciones</Heading>
+            <HStack w={"full"} my={5}>
+                <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear empresa</Button>
+                <InputGroup w={"full"} >
+                    <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
+                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ filteredQuotes: [], status: false, searchTerm: '' })} />
+                </InputGroup>
+            </HStack>
+            <TableContainer w={"full"}>
+                <Table variant="striped">
+                    <Thead>
+                        <Tr textAlign={"center"}>
+                            <Th>Nombre Cotización</Th>
+                            <Th>RUT Empresa</Th>
+                            <Th>Contacto</Th>
+                            <Th>Valida hasta</Th>
+                            <Th>Acciones</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        <QuotesTable quotes={currentPageData} />
+                    </Tbody>
+                </Table>
+            </TableContainer>
+            <Pagination page={page} count={totalPages} handleChange={handleChange} />
+        </Container>
     )
 }
 
