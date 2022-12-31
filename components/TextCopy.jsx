@@ -1,22 +1,27 @@
 import { Text, HStack, IconButton } from "@chakra-ui/react";
-// import IoCopy
 import { IoCopy } from "react-icons/io5";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Swal from "sweetalert2";
 
 const TextCopy = ({ prefix, data }) => {
-
-    const copyToClipboard = (e) => {
-        navigator.clipboard.writeText(data)
-    }
-
     return (
         <HStack >
             <Text>{prefix}: {data}</Text>
-            <IconButton
-                aria-label="Copy to clipboard"
-                icon={<IoCopy />}
-                onClick={copyToClipboard}
-                size="sm"
-            />
+            <CopyToClipboard
+                text={data}
+                onCopy={() => Swal.fire({
+                    icon: 'success',
+                    title: 'Copiado al portapapeles',
+                    showConfirmButton: false,
+                    timer: 1000
+                })}
+            >
+                <IconButton
+                    aria-label="Copiar al portapapeles"
+                    icon={<IoCopy />}
+                    size="sm"
+                />
+            </CopyToClipboard>
         </HStack>
     )
 }
