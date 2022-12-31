@@ -69,23 +69,6 @@ const verEmpresa = (data) => {
                     </TabPanels>
                 </Tabs>
             </Stack>
-            <Stack mt={10} mb={'28'}>
-                <Heading as={"h2"} size={"md"} textAlign={"center"} mb={5}>Proyectos</Heading>
-                <Tabs isFitted orientation={{ base: "horizontal", md: "horizontal" }} variant="solid-rounded">
-                    <TabList>
-                        <Tab>Activos</Tab>
-                        <Tab>Terminados</Tab>
-                    </TabList>
-                    <TabPanels>
-                        <TabPanel>
-                            <Text>Activos</Text>
-                        </TabPanel>
-                        <TabPanel>
-                            <Text>Terminados</Text>
-                        </TabPanel>
-                    </TabPanels>
-                </Tabs>
-            </Stack>
         </Container>
     )
 }

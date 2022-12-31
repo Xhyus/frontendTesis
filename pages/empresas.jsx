@@ -44,26 +44,9 @@ const empresas = ({ data }) => {
     })
     const totalPages = Math.ceil(results.length / rows)
     const currentPageData = results.slice((page - 1) * rows, page * rows)
-    console.log(currentPageData)
     const handleChange = (page) => {
         setPage(page)
     }
-
-    // useEffect(() => {
-    //     const results = companies.filter(company => {
-    //         return (
-    //             company.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-    //             company.rut.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-    //             company.contact.phone.toString().includes(filter.searchTerm) ||
-    //             company.contact.email.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-    //             company.contact.name.toLowerCase().includes(filter.searchTerm.toLowerCase())
-    //         )
-    //     })
-    //     setFilter({
-    //         ...filter,
-    //         filteredCompany: results
-    //     })
-    // }, [filter.searchTerm])
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
