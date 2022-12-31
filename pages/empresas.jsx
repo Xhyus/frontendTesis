@@ -31,7 +31,7 @@ const empresas = ({ data }) => {
         filteredCompany: [],
         searchTerm: ''
     })
-    const rows = 2
+    const rows = 10
     const [page, setPage] = useState(1)
     const results = companies.filter(company => {
         return (
