@@ -6,7 +6,10 @@ import Swal from "sweetalert2";
 const TextCopy = ({ prefix, data }) => {
     return (
         <HStack >
-            <Text>{prefix}: {data}</Text>
+            <HStack>
+                <Text mr={2} fontWeight={"bold"}>{prefix}:</Text>
+                <Text>{data}</Text>
+            </HStack>
             <CopyToClipboard
                 text={data}
                 onCopy={() => Swal.fire({
