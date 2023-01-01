@@ -1,6 +1,6 @@
 
 const formalizationOptions = [
-    { value: 'Firmar', label: 'Firma del presente contrato', name: "formalization" },
+    { value: 'Firma', label: 'Firma del presente contrato', name: "formalization" },
     { value: 'Contrato', label: 'Firma de contrato de servicio', name: "formalization" },
     { value: 'Confidencialidad', label: 'Firma de contrato de servicio y confidencialidad', name: "formalization" },
 ]
