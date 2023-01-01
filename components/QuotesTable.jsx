@@ -7,7 +7,7 @@ const QuotesTable = ({ quotes }) => {
         return (
             <Tr>
                 <Td colSpan="6">
-                    <Text fontSize="xl" textAlign="center">No se ha encontrado ningúna empresa</Text>
+                    <Text fontSize="xl" textAlign="center">No se ha encontrado ningúna cotización</Text>
                 </Td>
             </Tr>
         )
