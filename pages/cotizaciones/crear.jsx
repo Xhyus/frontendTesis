@@ -59,12 +59,12 @@ const crearCotizaciones = ({ data }) => {
         })
     }
 
-    if (step === 1) {
+    if (step === 2) {
         return (
             <AddServices services={services} selectedServices={selectedServices} cardList={cardList} setStep={setStep} step={step} />
         )
     }
-    if (step === 2) {
+    if (step === 1) {
         return (
             <QuoteForm quote={quote} setQuote={setQuote} setStep={setStep} companies={companiesList} selectedInfo={selectedInfo} setSelectedInfo={setSelectedInfo} />
         )
