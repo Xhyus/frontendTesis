@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
-import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
+import { useState } from 'react'
+import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer, InputLeftElement } from '@chakra-ui/react'
 import { getQuotes } from '../data/quotes'
 import QuotesTable from '../components/QuotesTable'
-import { AiOutlineClose, } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlinePlus, AiOutlineSearch, } from 'react-icons/ai'
 import Pagination from '../components/Pagination'
 
 export async function getServerSideProps(context) {
@@ -35,7 +35,7 @@ const cotizaciones = ({ data }) => {
         return (
             quote.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
             quote.company.rut.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-            quote.company.contact.name.toString().includes(filter.searchTerm)
+            quote.company.contact.name.toLowerCase().includes(filter.searchTerm.toLowerCase())
         )
     })
     const totalPages = Math.ceil(results.length / rows)
@@ -63,11 +63,12 @@ const cotizaciones = ({ data }) => {
     return (
         <Container maxW={"container.lg"} centerContent>
             <Heading mt={10}>Cotizaciones</Heading>
-            <HStack w={"full"} my={5}>
-                <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear empresa</Button>
-                <InputGroup w={"full"} >
-                    <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
-                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ filteredQuotes: [], status: false, searchTerm: '' })} />
+            <HStack w={"full"} my={5} align={"center"}>
+                <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "20%" }} fontSize={'2xl'} borderRadius={"3xl"} color={"white"} bgColor={"#7ABC63"} onClick={() => router.push("/cotizaciones/crear")}>Crear</Button>
+                <InputGroup w={{ base: "full", md: "40%" }} >
+                    <InputLeftElement children={<AiOutlineSearch />} />
+                    <Input w={"full"} borderRadius={'3xl'} focusBorderColor={"yellow.600"} value={filter.searchTerm} type="text" placeholder="Buscar" onChange={setSearch} />
+                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ ...filter, searchTerm: '', status: false })} />
                 </InputGroup>
             </HStack>
             <TableContainer w={"full"}>
