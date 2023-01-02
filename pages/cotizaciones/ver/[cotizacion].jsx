@@ -25,8 +25,6 @@ export async function getServerSideProps(context) {
 
 const verCotizacion = ({ quote }) => {
     const router = useRouter()
-    console.log(quote)
-
     return (
         <Container maxW={"container.lg"}>
             <HStack align={"center"} justify={"center"} my={10}>
@@ -93,7 +91,7 @@ const verCotizacion = ({ quote }) => {
                     </TabPanels>
                 </Tabs>
             </Stack>
-        </Container >
+        </Container>
     )
 }
 
