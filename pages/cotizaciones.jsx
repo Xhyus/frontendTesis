@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
         }
     }
 }
-const cotizaciones = ({ data }) => {
+const Cotizaciones = ({ data }) => {
     const [quotes] = useState(data)
     const [filter, setFilter] = useState({
         status: false,
@@ -92,4 +92,4 @@ const cotizaciones = ({ data }) => {
     )
 }
 
-export default cotizaciones
+export default Cotizaciones

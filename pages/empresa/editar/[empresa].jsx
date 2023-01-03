@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const empresa = ({ data }) => {
+const Empresa = ({ data }) => {
     const [loading, setLoading] = useState(false)
     const [step, setStep] = useState(1)
     const [company, setCompany] = useState(data)
@@ -54,4 +54,4 @@ const empresa = ({ data }) => {
     )
 }
 
-export default empresa
+export default Empresa

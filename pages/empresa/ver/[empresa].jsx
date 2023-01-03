@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const verEmpresa = (data) => {
+const VerEmpresa = (data) => {
     console.log(data)
     const [company] = useState(data.data)
     const router = useRouter()
@@ -73,4 +73,4 @@ const verEmpresa = (data) => {
     )
 }
 
-export default verEmpresa
+export default VerEmpresa

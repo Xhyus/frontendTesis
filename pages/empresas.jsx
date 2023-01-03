@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
         }
     }
 }
-const empresas = ({ data }) => {
+const Empresas = ({ data }) => {
     const [companies] = useState(data)
     const [filter, setFilter] = useState({
         status: false,
@@ -110,4 +110,4 @@ const empresas = ({ data }) => {
     )
 }
 
-export default empresas
+export default Empresas

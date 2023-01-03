@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { createUser } from '../../data/user';
 import InputAccount from '../../components/InputAccount';
 
-const cuentas = () => {
+const Cuentas = () => {
     const [account, setAccount] = useState({
         name: '',
         email: '',
@@ -72,4 +72,4 @@ const cuentas = () => {
     )
 }
 
-export default cuentas
+export default Cuentas

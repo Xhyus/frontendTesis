@@ -10,7 +10,7 @@ export async function getServerSideProps(context) {
         const res = await getQuote(context.query.cotizacion, context.req.headers.cookie)
         return {
             props: {
-                quote: res.data
+                quoteData: res.data
             }
         }
     } catch (error) {
@@ -23,8 +23,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const visualizarCotizacion = ({ quote }) => {
-    const [quoteData] = useState(quote)
+const VisualizarCotizacion = ({ quoteData }) => {
     const [dotsImage] = useState([
         '/dots.png',
         '/dots2.png',
@@ -50,7 +49,7 @@ const visualizarCotizacion = ({ quote }) => {
             </Stack>
             {quoteData.quoteServices.map((service, index) => {
                 return (
-                    <Service key={index} name={service.service.name} items={service.service.item} description={service.service.description} dots={dots[index]} />
+                    <Service key={index} index={index} name={service.service.name} items={service.service.item} description={service.service.description} dots={dots[index]} />
                 )
             })}
             <Resume quoteData={quoteData} />
@@ -60,4 +59,4 @@ const visualizarCotizacion = ({ quote }) => {
     )
 }
 
-export default visualizarCotizacion
+export default VisualizarCotizacion

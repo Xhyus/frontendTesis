@@ -27,7 +27,7 @@ export const getServerSideProps = async (context) => {
     }
 }
 
-const crear = () => {
+const Crear = () => {
     const [loading, setLoading] = useState(false)
     const [items, setItems] = useState([{
         id: 0,
@@ -169,4 +169,4 @@ const crear = () => {
     )
 }
 
-export default crear
+export default Crear

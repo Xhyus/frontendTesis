@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const verCotizacion = ({ quote }) => {
+const VerCotizacion = ({ quote }) => {
     const router = useRouter()
     return (
         <Container maxW={"container.lg"}>
@@ -95,4 +95,4 @@ const verCotizacion = ({ quote }) => {
     )
 }
 
-export default verCotizacion
+export default VerCotizacion

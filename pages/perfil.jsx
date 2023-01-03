@@ -25,7 +25,7 @@ export const getServerSideProps = async (context) => {
     }
 }
 
-const perfil = () => {
+const Perfil = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
     const router = useRouter()
@@ -96,4 +96,4 @@ const perfil = () => {
     )
 }
 
-export default perfil
+export default Perfil

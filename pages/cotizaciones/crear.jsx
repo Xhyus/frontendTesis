@@ -28,7 +28,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const crearCotizaciones = ({ data }) => {
+const CrearCotizaciones = ({ data }) => {
     const [companiesList] = useState(data.company)
     const [services] = useState(data.services)
     const [selectedServices, setSelectedServices] = useState([])
@@ -36,12 +36,17 @@ const crearCotizaciones = ({ data }) => {
         name: '',
         description: '',
         paymentMethod: '',
-    })
-    const [selectedInfo, setSelectedInfo] = useState({
         company: '',
         payment: '',
         formalization: '',
-        documents: ''
+        documents: '',
+        projectDelivery: '',
+    })
+    const [selectedInfo, setSelectedInfo] = useState({
+        company: null,
+        payment: null,
+        formalization: null,
+        documents: null
     })
     const [step, setStep] = useState(1)
 
@@ -59,12 +64,12 @@ const crearCotizaciones = ({ data }) => {
         })
     }
 
-    if (step === 2) {
+    if (step === 1) {
         return (
             <AddServices services={services} selectedServices={selectedServices} cardList={cardList} setStep={setStep} step={step} />
         )
     }
-    if (step === 1) {
+    if (step === 2) {
         return (
             <QuoteForm quote={quote} setQuote={setQuote} setStep={setStep} companies={companiesList} selectedInfo={selectedInfo} setSelectedInfo={setSelectedInfo} />
         )
@@ -80,4 +85,4 @@ const crearCotizaciones = ({ data }) => {
     }
 }
 
-export default crearCotizaciones
+export default CrearCotizaciones

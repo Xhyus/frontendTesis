@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const servicios = ({ data }) => {
+const Servicios = ({ data }) => {
     const [services] = useState(data)
     const [filteredServices, setFilteredServices] = useState([])
     const [filter, setFilter] = useState(false)
@@ -78,4 +78,4 @@ const servicios = ({ data }) => {
     )
 }
 
-export default servicios
+export default Servicios

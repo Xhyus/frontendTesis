@@ -1,7 +1,7 @@
 import React from 'react'
 import { Heading, Stack, Container } from '@chakra-ui/react'
 
-const error404 = () => {
+const Error404 = () => {
     return (
         <Container maxW="container.md" h={"full"} w={'full'} >
             <Stack spacing={4} align={"center"} justify={"center"}>
@@ -12,4 +12,4 @@ const error404 = () => {
     )
 }
 
-export default error404
+export default Error404

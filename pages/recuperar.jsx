@@ -28,7 +28,7 @@ export const getServerSideProps = async (context) => {
     }
 }
 
-const recuperar = () => {
+const Recuperar = () => {
     const [user, setUser] = useState({
         email: ''
     })
@@ -88,4 +88,4 @@ const recuperar = () => {
         </Flex>)
 }
 
-export default recuperar
+export default Recuperar

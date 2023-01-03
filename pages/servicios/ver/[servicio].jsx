@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const verServicio = (data) => {
+const VerServicio = (data) => {
     const [service] = useState(data.data)
     console.log(data)
     const router = useRouter()
@@ -113,4 +113,4 @@ const verServicio = (data) => {
     )
 }
 
-export default verServicio
+export default VerServicio

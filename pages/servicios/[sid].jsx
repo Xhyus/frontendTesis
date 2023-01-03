@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const update = ({ data }) => {
+const Update = ({ data }) => {
     const [items, setItems] = useState([])
     const [service] = useState(data)
     const router = useRouter()
@@ -189,4 +189,4 @@ const update = ({ data }) => {
     )
 }
 
-export default update
+export default Update
