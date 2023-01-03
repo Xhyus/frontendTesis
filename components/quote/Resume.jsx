@@ -1,45 +1,48 @@
-import { Heading, HStack, Image, Stack, Text } from "@chakra-ui/react"
+import { Box, Flex, Heading, HStack, Image, Stack, Text } from "@chakra-ui/react"
 
 const Resume = ({ quoteData }) => {
+
+    const Item = ({ children }) => (
+        <Flex w={"100%"} borderBottom="2px solid black" pb={4} pt={4} justify={"space-between"}>
+            <Text color={"black"}>
+                {children}
+            </Text>
+            <Text color={"black"}>
+                12 UF
+            </Text>
+
+        </Flex>
+    );
     return (
         <>
-            <Stack w={'full'} minH={"100vh"} justify={"center"} align="start" bgColor={"#FFFFFF"} bgSize={'cover'} px={'40'} pb={"28"} >
-                <HStack w={"full"} justify={'space-between'} align={"start"}>
-                    <Stack w={"20%"} >
-                        <Stack pb={'28'} >
-                            <Stack bgColor={"black"} w={"full"} py={3} mb={4} />
+            <Box bgColor="#fff" w="full" h="100vh" px="40" py={"20"}>
+                <Flex h="100%" gap={20}>
+                    <Flex flexDir="column" justifyContent="space-between" w={"15%"}>
+                        <Box borderTop="solid 15px black">
                             <Heading as="h1" size="2xl" fontWeight={"extrabold"} color="black">Resumen</Heading>
-                        </Stack>
-                        <Stack>
-                            <Image align={'self-end'} src={'/squaredots.png'} w={'full'} />
-                        </Stack>
-                    </Stack>
-                    <Stack w={"80%"} px={"28"}>
-                        <Stack bgColor={"#FF5122"} w={"full"} py={3} mb={'6'} />
-                        {quoteData.quoteServices.map((service, index) => {
-                            return (
-                                <>
-                                    <HStack justify={'space-between'} key={index}>
-                                        <Text fontSize={'2xl'} color="black">{service.service.name}</Text>
-                                        <Text fontSize={'2xl'} color="black">{service.price} UF</Text>
-                                    </HStack>
-                                    <Stack bgColor={"#000000"} w={"full"} h={"0.5"} my={2} />
-                                </>
-                            )
-                        })}
-                        <Stack bgColor={"#FF5122"} w={"full"} mb={'6'}>
-                            <HStack justify={'space-between'} px={10}>
-                                <Text fontSize={'4xl'} fontWeight={'extrabold'} color="black">Total</Text>
-                                <Text fontSize={'2xl'} fontWeight={'extrabold'} color="black">{quoteData.price} UF</Text>
-                            </HStack>
-                        </Stack>
-                    </Stack>
-                </HStack>
-            </Stack>
+                        </Box>
+                        <Image src="/squaredots.png" alt="dots" w="100%" />
+                    </Flex>
+                    <Flex borderTop="solid 15px #FF5122" w="70%" flexDir="column" justifyContent="space-between">
+                        <Box mt="5">
+                            <Item>Naming</Item>
+                            <Item>Plan inicial</Item>
+                            <Item>Plan avanzado</Item>
+                            <Item>Plan Senior</Item>
+                            <Item>Diseño web</Item>
+                            <Item>E-Commerce</Item>
+                        </Box>
+                        <Flex mt="5" justify={"space-between"} align="center" w={"full"} px={10} py={1.5} bgColor={"#FF5122"}>
+                            <Heading as="h1" size="2xl" fontWeight={"bold"} color="black">Total</Heading>
+                            <Text color={"black"} fontWeight={"bold"}>12 UF</Text>
+                        </Flex>
+                    </Flex>
+                </Flex>
+            </Box>
             <Stack w={'full'} py={6} justify={"center"} align="center" bgColor={"#000000"} bgSize={'cover'} >
                 <HStack justify={"space-between"} px={'16'}>
                     <Text>Esta cotización tiene una vigencia de 30 días desde su entrega.</Text>
-                    <Image src={'/logo-fragua-blanco.png'} w={'7%'} />
+                    <Image alt="logo-1" src={'/logo-fragua-blanco.png'} w={'7%'} />
                 </HStack>
             </Stack>
         </>
