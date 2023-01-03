@@ -1,12 +1,11 @@
 import { Select } from 'chakra-react-select'
 import { FormControl, FormLabel } from '@chakra-ui/react'
 
-const ReactSelect = ({ options, name, onChange, onBlur, value, label, placeholder }) => {
-
+const ReactSelect = ({ options, name, onChange, label, index }) => {
   return (
     <FormControl id={name} >
       <FormLabel>{label}</FormLabel>
-      <Select onChange={(choise) => onChange(choise)} w={"full"} placeholder={placeholder} isClearable={(choise) => onChange({ name: "company", value: "" })} onBlur={onBlur} inputValue={value} options={options} />
+      <Select options={options} onChange={onChange} defaultValue={options[index]} />
     </FormControl>
   )
 }
