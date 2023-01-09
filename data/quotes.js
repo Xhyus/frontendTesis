@@ -10,7 +10,15 @@ const getQuote = async (id, token) => {
     return response
 }
 
+const getClientQuote = async (url, token) => {
+    const response = await axios.get(`${process.env.SERVIDOR}/quote/search/client/${url}`, { headers: { cookie: token } });
+    return response
+}
+
+// TODO Create a new quote
+
 module.exports = {
     getQuotes,
-    getQuote
+    getQuote,
+    getClientQuote
 }

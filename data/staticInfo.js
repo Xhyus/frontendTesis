@@ -14,8 +14,8 @@ const paymentOptions = [
 ]
 
 const documentOptions = [
-    { value: "Afecta", label: "Afecta", name: "documents" },
-    { value: "Exenta", label: "Exenta", name: "documents" },
+    { value: "Afecta", label: "Afecta", name: "document" },
+    { value: "Exenta", label: "Exenta", name: "document" },
 ]
 
 export { formalizationOptions, paymentOptions, documentOptions }
