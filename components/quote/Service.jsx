@@ -1,13 +1,13 @@
 import { Heading, HStack, Image, Stack, Text } from "@chakra-ui/react"
 
-const Service = ({ name, items, description, dots }) => {
+const Service = ({ name, items, description, dots, index }) => {
     return (
         <>
             <Stack w={'full'} minH={"100vh"} justify={"center"} align="start" bgColor={"#FFFFFF"} bgSize={'cover'} px={'40'} pb={"28"} >
                 <HStack w={"full"} justify={'space-between'} align={"start"}>
                     <Stack w={"20%"}>
                         <Stack bgColor={"black"} w={"full"} py={3} mb={4} />
-                        <Image src={dots} w={'full'} />
+                        <Image src={dots} alt={`dots-${index + 1}`} w={'full'} />
                     </Stack>
                     <Stack w={"80%"} px={"28"}>
                         <Stack bgColor={"#FF5122"} w={"full"} py={3} mb={4} />
@@ -28,7 +28,7 @@ const Service = ({ name, items, description, dots }) => {
             <Stack w={'full'} py={6} justify={"center"} align="center" bgColor={"#000000"} bgSize={'cover'} >
                 <HStack justify={"space-between"} px={'16'}>
                     <Text>Esta cotización tiene una vigencia de 30 días desde su entrega.</Text>
-                    <Image src={'/logo-fragua-blanco.png'} w={'7%'} />
+                    <Image src={'/logo-fragua-blanco.png'} alt="logo-1" w={'7%'} />
                 </HStack>
             </Stack>
         </>
