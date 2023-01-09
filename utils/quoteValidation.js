@@ -15,7 +15,10 @@ const quoteValidation = yup.object({
         .required('El método de pago es obligatorio')
         .min(3, 'El método de pago debe tener al menos 3 caracteres')
         .max(150, 'El método de pago debe tener máximo 150 caracteres')
-        .matches(/^[a-zA-Z0-9áéíóúÁÉÍÓÚ\s\-\_\.\,\;\:\(\)\[\]\{\}\¿\?\¡\!\@\#\$\%\^\&\*\+\|\?\/\\]+$/, 'El método de pago no puede contener caracteres especiales')
+        .matches(/^[a-zA-Z0-9áéíóúÁÉÍÓÚ\s\-\_\.\,\;\:\(\)\[\]\{\}\¿\?\¡\!\@\#\$\%\^\&\*\+\|\?\/\\]+$/, 'El método de pago no puede contener caracteres especiales'),
+    projectDelivery: yup.string()
+        .required('La fecha de entrega es obligatoria')
+        .matches(/^[a-zA-Z0-9áéíóúÁÉÍÓÚ\s\-\_\.\,\;\:\(\)\[\]\{\}\¿\?\¡\!\@\#\$\%\^\&\*\+\|\?\/\\]+$/, 'La fecha de entrega no puede contener caracteres especiales'),
 })
 
 export default quoteValidation;
