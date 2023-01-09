@@ -64,11 +64,11 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 			}) => (
 				<form onSubmit={handleSubmit} id="form" >
 					<Heading as="h2" size="lg" my={5} color="white">Datos del contacto</Heading>
-					<FormInput label="Nombre" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Pérez" />
+					<FormInput label="Nombre" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Pérez" />
 					{touched.name && errors.name && (
 						<FormikError error={errors.name} />
 					)}
-					<FormInput label="Email" handleChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
+					<FormInput label="Email" onChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
 					{touched.email && errors.email && (
 						<FormikError error={errors.email} />
 					)}
@@ -82,7 +82,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 							</FormControl>
 						</Stack>
 						<Stack w={'full'}>
-							<FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
+							<FormInput label="Teléfono" onChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
 						</Stack>
 					</HStack>
 					<HStack>
@@ -93,7 +93,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 							<FormikError error={errors.phone} />
 						)}
 					</HStack>
-					<FormInput label="Rol" handleChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder="Ej: Socio, asesor, etc." />
+					<FormInput label="Rol" onChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder="Ej: Socio, asesor, etc." />
 					{touched.position && errors.position && (
 						<FormikError error={errors.position} />
 					)}

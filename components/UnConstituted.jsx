@@ -35,11 +35,11 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
             }) => (
                 <form onSubmit={handleSubmit} id="form" >
                     <Heading as="h2" size="lg" mb={4} color="white">Datos del cliente</Heading>
-                    <FormInput label="Nombre del cliente" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Gomez" />
+                    <FormInput label="Nombre del cliente" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Gomez" />
                     {touched.name && errors.name && (
                         <FormikError error={errors.name} />
                     )}
-                    <FormInput label="Email" handleChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
+                    <FormInput label="Email" onChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
                     {touched.email && errors.email && (
                         <FormikError error={errors.email} />
                     )}
@@ -53,7 +53,7 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
                             </FormControl>
                         </Stack>
                         <Stack w={'full'}>
-                            <FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
+                            <FormInput label="Teléfono" onChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
                         </Stack>
                     </HStack>
                     <HStack>
@@ -61,7 +61,7 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
                             <FormikError error={errors.phone} />
                         )}
                     </HStack>
-                    <FormInput label="Dirección" handleChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" />
+                    <FormInput label="Dirección" onChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" />
                     {touched.address && errors.address && (
                         <FormikError error={errors.address} />
                     )}
