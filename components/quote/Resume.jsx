@@ -1,18 +1,6 @@
 import { Box, Flex, Heading, HStack, Image, Stack, Text } from "@chakra-ui/react"
 
 const Resume = ({ quoteData }) => {
-
-    const Item = ({ children }) => (
-        <Flex w={"100%"} borderBottom="2px solid black" pb={4} pt={4} justify={"space-between"}>
-            <Text color={"black"}>
-                {children}
-            </Text>
-            <Text color={"black"}>
-                12 UF
-            </Text>
-
-        </Flex>
-    );
     return (
         <>
             <Box bgColor="#fff" w="full" h="100vh" px="40" py={"20"}>
@@ -25,16 +13,18 @@ const Resume = ({ quoteData }) => {
                     </Flex>
                     <Flex borderTop="solid 15px #FF5122" w="70%" flexDir="column" justifyContent="space-between">
                         <Box mt="5">
-                            <Item>Naming</Item>
-                            <Item>Plan inicial</Item>
-                            <Item>Plan avanzado</Item>
-                            <Item>Plan Senior</Item>
-                            <Item>Diseño web</Item>
-                            <Item>E-Commerce</Item>
+                            {quoteData.quoteServices.map((quotedService, index) => {
+                                return (
+                                    <HStack key={index} justify={"space-between"} align="center" py={3} borderBottom={"1px solid black"}>
+                                        <Text fontFamily="Open Sans" fontSize={'2xl'} color="black">{quotedService.service.name}</Text>
+                                        <Text fontFamily="Open Sans" fontSize={'2xl'} color="black">{quotedService.price} UF</Text>
+                                    </HStack>
+                                )
+                            })}
                         </Box>
                         <Flex mt="5" justify={"space-between"} align="center" w={"full"} px={10} py={1.5} bgColor={"#FF5122"}>
-                            <Heading as="h1" size="2xl" fontWeight={"bold"} color="black">Total</Heading>
-                            <Text color={"black"} fontWeight={"bold"}>12 UF</Text>
+                            <Heading as="h2" size="2xl" fontFamily="Open Sans" fontWeight={"bold"} color="black">Total</Heading>
+                            <Heading as="h2" size="2xl" fontFamily="Open Sans" fontWeight={"bold"} color="black">{quoteData.price} UF</Heading>
                         </Flex>
                     </Flex>
                 </Flex>

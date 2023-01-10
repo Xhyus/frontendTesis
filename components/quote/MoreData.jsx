@@ -15,33 +15,33 @@ const MoreData = ({ quoteData }) => {
                     <Box borderTop="solid 15px #FF5122" w="70%">
                         <Box mt="5">
                             <Stack w={"100%"}>
-                                <Stack borderBottom={"2px solid black"}>
-                                    <Text fontSize={'2xl'} color="black" fontWeight={'semibold'}>Plazo Entrega:</Text>
-                                    <Text fontSize={'2xl'} color="black">Cambiar por plazo de entrega </Text>
+                                <Stack borderBottom={"2px solid black"} py={2}>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Plazo Entrega:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{quoteData.projectDelivery}</Text>
                                 </Stack>
-                                <Stack borderBottom={"2px solid black"}>
-                                    <Text fontSize={'2xl'} color="black" fontWeight={'semibold'}>Formalizacion:</Text>
-                                    <Text fontSize={'2xl'} color="black">{formatFormalization(quoteData.formalization)} </Text>
+                                <Stack borderBottom={"2px solid black"} pb={2}>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Formalizacion:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{formatFormalization(quoteData.formalization)} </Text>
                                 </Stack>
-                                <Stack borderBottom={"2px solid black"}>
-                                    <Text fontSize={'2xl'} color="black" fontWeight={'semibold'}>Metodo de pago:</Text>
-                                    <Text fontSize={'2xl'} color="black">{quoteData.paymentMethod} </Text>
+                                <Stack borderBottom={"2px solid black"} pb={2}>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Metodo de pago:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{quoteData.paymentMethod} </Text>
                                 </Stack>
-                                <Stack borderBottom={"2px solid black"}>
-                                    <Text fontSize={'2xl'} color="black" fontWeight={'semibold'}>Formas de pago:</Text>
-                                    <Text fontSize={'2xl'} color="black">{quoteData.payment} </Text>
+                                <Stack borderBottom={"2px solid black"} pb={2}>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Formas de pago:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{quoteData.payment} </Text>
                                 </Stack>
-                                <Stack borderBottom={"2px solid black"}>
-                                    <Text fontSize={'2xl'} color="black" fontWeight={'semibold'}>Documentos:</Text>
-                                    <Text fontSize={'2xl'} color="black">{quoteData.documents} </Text>
+                                <Stack borderBottom={"2px solid black"} pb={2}>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Documentos:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{quoteData.documents} </Text>
                                 </Stack>
-                                <Stack borderBottom={"2px solid black"}>
-                                    <Text fontSize={'2xl'} color="black" fontWeight={'semibold'}>Cuenta Bancaria:</Text>
-                                    <Text fontSize={'2xl'} color="black">PryxLabs SpA</Text>
-                                    <Text fontSize={'2xl'} color="black">Rut 76.994.376-5</Text>
-                                    <Text fontSize={'2xl'} color="black">Cuenta Corriente Santander</Text>
-                                    <Text fontSize={'2xl'} color="black">0-000-8767731-1</Text>
-                                    <Text fontSize={'2xl'} color="black">Cnovoa@pryx.cl</Text>
+                                <Stack borderBottom={"2px solid black"} pb={2}>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Cuenta Bancaria:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">PryxLabs SpA</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">Rut 76.994.376-5</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">Cuenta Corriente Santander</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">0-000-8767731-1</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">Cnovoa@pryx.cl</Text>
                                 </Stack>
                             </Stack>
                         </Box>
