@@ -122,16 +122,16 @@ const Crear = () => {
                     handleSubmit,
                 }) => (
                     <form onSubmit={handleSubmit} id="form" >
-                        <FormInput label="Nombre del servicio" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
+                        <FormInput label="Nombre del servicio" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
                         {touched.name && errors.name && (
                             <Text color={"red"}>{errors.name}</Text>
                         )}
-                        <FormInput label="Descripción del servicio" handleChange={handleChange} values={values.description} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
+                        <FormInput label="Descripción del servicio" onChange={handleChange} values={values.description} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
                         {touched.description && errors.description && (
                             <Text color={"red"}>{errors.description}</Text>
                         )}
                         <HStack>
-                            <FormInput label="Precio del servicio" handleChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
+                            <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
 
                             <FormControl isRequired py={3}>
                                 <FormLabel>Tipo de servicio</FormLabel>
