@@ -4,6 +4,7 @@ import { getQuotes } from '../data/quotes'
 import QuotesTable from '../components/QuotesTable'
 import { AiOutlineClose, AiOutlinePlus, AiOutlineSearch, } from 'react-icons/ai'
 import Pagination from '../components/Pagination'
+import { useRouter } from 'next/router'
 
 export async function getServerSideProps(context) {
     try {
@@ -29,6 +30,7 @@ const Cotizaciones = ({ data }) => {
         filteredQuotes: [],
         searchTerm: ''
     })
+    const router = useRouter()
     const rows = 10
     const [page, setPage] = useState(1)
     const results = quotes.filter(quote => {
