@@ -83,9 +83,10 @@ const Navbar = () => {
 		const btnRef = React.useRef()
 		return (
 			<>
-				<Box m={5} borderBottom={'2px'} borderColor={"gray.300"} pb={2}>
+				<HStack m={5} pb={2} align="center" justify={"space-between"}>
 					<FaBars size={30} ref={btnRef} onClick={onOpen} />
-				</Box>
+					<Image src="/logo.png" alt="logo" w={'40%'} />
+				</HStack>
 				<Drawer isOpen={isOpen} placement='right' onClose={onClose} finalFocusRef={btnRef}>
 					<DrawerOverlay />
 					<DrawerContent>
