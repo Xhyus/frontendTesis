@@ -15,10 +15,16 @@ const getClientQuote = async (url, token) => {
     return response
 }
 
+const deleteQuote = async (id) => {
+    const response = await axios.delete(`${process.env.SERVIDOR}/quote/delete/${id}`);
+    return response
+}
+
 // TODO Create a new quote
 
 module.exports = {
     getQuotes,
     getQuote,
-    getClientQuote
+    getClientQuote,
+    deleteQuote
 }

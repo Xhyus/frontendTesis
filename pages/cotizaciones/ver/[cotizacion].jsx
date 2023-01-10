@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react'
-import { getQuote } from '../../../data/quotes'
+import { getQuote, deleteQuote } from '../../../data/quotes'
 import { useRouter } from 'next/router'
 import TextCopy from '../../../components/TextCopy'
 import { FaCalendarTimes, FaCalendarPlus } from 'react-icons/fa'
@@ -26,6 +26,19 @@ export async function getServerSideProps(context) {
 
 const VerCotizacion = ({ quote }) => {
     const router = useRouter()
+    const handleDelete = async () => {
+        const response = deleteQuote(quote._id)
+        if (response.status === 200) {
+            Swal.fire({
+                title: 'Cotización eliminada',
+                text: 'La cotización ha sido eliminada correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                router.push('/cotizaciones')
+            })
+        }
+    }
     return (
         <Container maxW={"container.lg"}>
             <HStack align={"center"} justify={"center"} my={10}>
@@ -41,7 +54,10 @@ const VerCotizacion = ({ quote }) => {
             <HStack align={"center"} justify={"center"} my={5}>
                 <Heading as={"h1"}>{formatTitleDetail(quote.name)}</Heading>
             </HStack>
-            <Button colorScheme={"gray"} mb={5} w="full" onClick={() => router.push('/cliente/cotizacion/' + quote.url)}>Ver cotización</Button>
+            <HStack mb={5}>
+                <Button colorScheme={"gray"} w="full" onClick={() => router.push('/cliente/cotizacion/' + quote.url)}>Ver cotización</Button>
+                <Button colorScheme={"red"} w="full" onClick={() => handleDelete()}>Eliminar cotización</Button>
+            </HStack>
             <HStack justify={"space-between"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                     <Heading size={"md"} color={"Orange"}>Datos de la empresa</Heading>
@@ -88,7 +104,7 @@ const VerCotizacion = ({ quote }) => {
                     <TabPanels>
                         {quote.quoteServices.map((quoteService, index) => (
                             <TabPanel key={index} >
-                                <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
+                                <Stack justify={"center"} w={{ base: "100%", md: "100%" }} >
                                     <TextCopy prefix={"Nombre"} data={formatText(quoteService.service.name)} />
                                     <TextCopy prefix={"Tipo de servicio"} data={formatText(quoteService.service.type)} />
                                     <TextCopy prefix={"Descripción"} data={formatText(quoteService.service.description)} />
