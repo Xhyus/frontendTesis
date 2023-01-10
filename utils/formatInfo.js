@@ -3,7 +3,7 @@ const formatTitle = (title) => {
 }
 
 const formatTitleDetail = (title) => {
-    return title.length > 30 ? title.charAt(0).toUpperCase() + title.slice(1, 30) + '...' : title.charAt(0).toUpperCase() + title.slice(1);
+    return title.length > 45 ? title.charAt(0).toUpperCase() + title.slice(1, 45) + '...' : title.charAt(0).toUpperCase() + title.slice(1);
 }
 
 const formatDescription = (description) => {

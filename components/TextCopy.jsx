@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const TextCopy = ({ prefix, data }) => {
     return (
         <HStack >
-            <HStack>
+            <HStack align={"start"}>
                 <Text mr={2} fontWeight={"bold"}>{prefix}:</Text>
                 <Text>{data}</Text>
             </HStack>
@@ -23,9 +23,10 @@ const TextCopy = ({ prefix, data }) => {
                     aria-label="Copiar al portapapeles"
                     icon={<IoCopy />}
                     size="sm"
+                    backgroundColor={"transparent"}
                 />
             </CopyToClipboard>
-        </HStack>
+        </HStack >
     )
 }
 
