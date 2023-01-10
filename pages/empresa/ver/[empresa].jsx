@@ -26,6 +26,7 @@ const VerEmpresa = (data) => {
     console.log(data)
     const [company] = useState(data.data)
     const router = useRouter()
+    console.log(company)
 
     return (
         <Container maxW={"container.lg"}>
@@ -54,17 +55,31 @@ const VerEmpresa = (data) => {
             </HStack>
             <Stack justify={"center"} mt={'10'}>
                 <Heading as={"h2"} size={"md"} textAlign={"center"} mb={5}>Cotizaciones</Heading>
-                <Tabs isFitted orientation={{ base: "horizontal", md: "horizontal" }} variant="solid-rounded">
+                <Tabs isFitted orientation={{ base: "horizontal", md: "horizontal" }} pb={10} variant="solid-rounded">
                     <TabList>
-                        <Tab>Activas</Tab>
-                        <Tab>Vencidas</Tab>
+                        <Tab bgColor={"green.500"} _hover={{ bgColor: "green.800" }}>Activas</Tab>
+                        <Tab bgColor={"red.500"} _hover={{ bgColor: "red.800" }} >Vencidas</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <Text>Activas</Text>
-                        </TabPanel>
+                            {company.validQuote.length === 0 && <Text py={5}>No hay cotizaciones vencidas</Text>}
+                            {company.validQuote.map((quote, index) => {
+                                return (
+                                    <HStack w={"full"} py={5}>
+                                        <Text w={"full"} key={index}>{quote.name}</Text>
+                                        <Button w={"30%"} bgColor={"green.500"} _hover={{ bgColor: "green.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
+                                    </HStack>
+                                )
+                            })}                        </TabPanel>
                         <TabPanel>
-                            <Text>Vencidas</Text>
+                            {company.expiredQuote.length === 0 && <Text py={5}>No hay cotizaciones vencidas</Text>}
+                            {company.expiredQuote.map((quote, index) => {
+                                return (
+                                    <HStack w={"full"} py={5}>
+                                        <Text w={"full"} key={index}>{quote.name}</Text>
+                                        <Button w={"30%"} bgColor={"red.500"} _hover={{ bgColor: "red.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
+                                    </HStack>)
+                            })}
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
