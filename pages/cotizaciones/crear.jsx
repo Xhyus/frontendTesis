@@ -39,20 +39,16 @@ const CrearCotizaciones = ({ data }) => {
         company: '',
         payment: '',
         formalization: '',
-        documents: '',
+        document: '',
         projectDelivery: '',
     })
     const [selectedInfo, setSelectedInfo] = useState({
         company: null,
         payment: null,
         formalization: null,
-        documents: null
+        document: null
     })
     const [step, setStep] = useState(1)
-
-    useEffect(() => {
-        console.log(selectedServices)
-    }, [selectedServices])
 
     const cardList = (data) => {
         return data.map(service => {
@@ -78,7 +74,20 @@ const CrearCotizaciones = ({ data }) => {
         return (
             <Container maxW={"container.xl"} centerContent>
                 <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
-                <Text>Nombre de la cotizacion:{quote.name}</Text>
+                <Text>Nombre de la cotización:{quote.name}</Text>
+                <Text>Descripción de la cotización: {quote.description}</Text>
+                <Text>Empresa cotizante: {quote.company}</Text>
+                <Text>Medio de pago: {quote.payment}</Text>
+                <Text>Formalización: {quote.formalization}</Text>
+                <Text>Tipo de factura: {quote.document}</Text>
+                <Text>Metodo de pago: {quote.paymentMethod}</Text>
+                <Text>Plazo de entrega: {quote.projectDelivery}</Text>
+                {selectedServices.map(service => {
+                    console.log(service)
+                    return (
+                        <Text>Servicio: {service}</Text>
+                    )
+                })}
                 <Button color={"white"} bgColor={"#7ABC63"} borderRadius={'3xl'} onClick={() => setStep(1)}>Atras</Button>
             </Container >
         )

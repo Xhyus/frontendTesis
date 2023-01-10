@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react'
+import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react'
 import { getQuote } from '../../../data/quotes'
 import { useRouter } from 'next/router'
 import TextCopy from '../../../components/TextCopy'
+import { FaCalendarTimes, FaCalendarPlus } from 'react-icons/fa'
 import { formatDate, formatFormalization, formatPrice, formatTitleDetail, formatText } from '../../../utils/formatInfo'
 
 export async function getServerSideProps(context) {
@@ -28,9 +29,19 @@ const VerCotizacion = ({ quote }) => {
     return (
         <Container maxW={"container.lg"}>
             <HStack align={"center"} justify={"center"} my={10}>
-                <Heading as={"h1"}>Cotización: {formatTitleDetail(quote.name)}</Heading>
+                <Tag size={"lg"} colorScheme={"green"} variant="solid">
+                    <TagLeftIcon as={FaCalendarPlus} boxSize="12px" />
+                    <TagLabel>{formatDate(quote.created)}</TagLabel>
+                </Tag>
+                <Tag size={"lg"} colorScheme={"red"} variant="solid">
+                    <TagLeftIcon as={FaCalendarTimes} boxSize="12px" />
+                    <TagLabel>{formatDate(quote.end)}</TagLabel>
+                </Tag>
             </HStack>
-            {/* <Button colorScheme={"orange"} mb={10} onClick={() => router.push('/empresa/editar/' + quote.company._id)}>Editar datos</Button> */}
+            <HStack align={"center"} justify={"center"} my={5}>
+                <Heading as={"h1"}>{formatTitleDetail(quote.name)}</Heading>
+            </HStack>
+            <Button colorScheme={"gray"} mb={5} w="full" onClick={() => router.push('/cliente/cotizacion/' + quote.url)}>Ver cotización</Button>
             <HStack justify={"space-between"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                     <Heading size={"md"} color={"Orange"}>Datos de la empresa</Heading>
@@ -54,18 +65,15 @@ const VerCotizacion = ({ quote }) => {
                 <Heading as={"h2"} size={"md"} color={"Orange"} my={5}>Datos de la cotización</Heading>
                 <HStack justify={"space-between"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                     <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
-                        <TextCopy prefix={"Servicios Cotizados"} data={quote.quoteServices.length} />
-                        <TextCopy prefix={"Total"} data={`$${quote.price} CLP`} />
+                        <TextCopy prefix={"Precio Total"} data={`${quote.price} UF`} />
                         <TextCopy prefix={"Formalización del contrato"} data={formatFormalization(quote.formalization)} />
-                        <TextCopy prefix={"Pago"} data={formatText(quote.payment)} />
                     </Stack>
                     <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                         <TextCopy prefix={"Factura"} data={quote.documents} />
-                        <TextCopy prefix={"Fecha de creación"} data={formatDate(quote.created)} />
-                        <TextCopy prefix={"Fecha de vencimiento"} data={formatDate(quote.end)} />
-                        <TextCopy prefix={"Última actualización"} data={formatDate(quote.updated)} />
+                        <TextCopy prefix={"Pago"} data={formatText(quote.payment)} />
                     </Stack>
                 </HStack>
+                <TextCopy prefix={"Plazo de entrega"} data={formatText(quote.projectDelivery)} />
                 <TextCopy prefix={"Metodo de pago"} data={formatText(quote.paymentMethod)} />
                 <TextCopy prefix={"Descripción"} data={formatText(quote.description)} />
             </Stack>
@@ -91,7 +99,7 @@ const VerCotizacion = ({ quote }) => {
                     </TabPanels>
                 </Tabs>
             </Stack>
-        </Container>
+        </Container >
     )
 }
 
