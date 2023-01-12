@@ -17,14 +17,29 @@ const getClientQuote = async (url, token) => {
 
 const deleteQuote = async (id) => {
     const response = await axios.delete(`${process.env.SERVIDOR}/quote/delete/${id}`);
+    console.log(response)
     return response
 }
 
-// TODO Create a new quote
+const createQuote = async (quote) => {
+    const response = await axios.post(`${process.env.SERVIDOR}/quote/create`, {
+        name: quote.name,
+        description: quote.description,
+        services: quote.services,
+        company: quote.company,
+        formalization: quote.formalization,
+        payment: quote.payment,
+        paymentMethod: quote.paymentMethod,
+        documents: quote.document,
+        projectDelivery: quote.projectDelivery
+    });
+    return response
+}
 
 module.exports = {
     getQuotes,
     getQuote,
     getClientQuote,
-    deleteQuote
+    deleteQuote,
+    createQuote
 }
