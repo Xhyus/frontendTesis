@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import TextCopy from '../../../components/TextCopy'
 import { FaCalendarTimes, FaCalendarPlus } from 'react-icons/fa'
 import { formatDate, formatFormalization, formatPrice, formatTitleDetail, formatText } from '../../../utils/formatInfo'
+import Swal from 'sweetalert2'
 
 export async function getServerSideProps(context) {
     try {
@@ -27,7 +28,7 @@ export async function getServerSideProps(context) {
 const VerCotizacion = ({ quote }) => {
     const router = useRouter()
     const handleDelete = async () => {
-        const response = deleteQuote(quote._id)
+        const response = await deleteQuote(quote._id)
         if (response.status === 200) {
             Swal.fire({
                 title: 'Cotización eliminada',
