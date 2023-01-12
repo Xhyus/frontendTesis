@@ -39,7 +39,7 @@ const Update = ({ data }) => {
     const [items, setItems] = useState([])
     const [service] = useState(data)
     const router = useRouter()
-    const { sid } = router.query // sid = service id
+    const { sid } = router.query
 
     useEffect(() => {
         (async () => {
@@ -151,7 +151,7 @@ const Update = ({ data }) => {
                             <Text color={"red"}>{errors.description}</Text>
                         )}
                         <HStack>
-                            <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
+                            <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 5 UF" />
                             <FormControl isRequired py={3}>
                                 <FormLabel>Tipo de servicio</FormLabel>
                                 <Tooltip label="Seleccione el tipo de servicio" aria-label="Seleccione el tipo de servicio">

@@ -102,7 +102,6 @@ const Crear = () => {
                             }
                         })
                         .catch((err) => {
-                            console.log(err)
                             Swal.fire({
                                 title: 'Error',
                                 text: 'Ha ocurrido un error',
@@ -131,18 +130,18 @@ const Crear = () => {
                             <Text color={"red"}>{errors.description}</Text>
                         )}
                         <HStack>
-                            <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 10000" />
-
+                            <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 5 UF" />
                             <FormControl isRequired py={3}>
                                 <FormLabel>Tipo de servicio</FormLabel>
                                 <Tooltip label="Seleccione el tipo de servicio" aria-label="Seleccione el tipo de servicio">
                                     <Select placeholder="Seleccione el tipo de servicio" name="type" onChange={handleChange} onBlur={handleBlur} value={values.type}>
                                         <option value="Diseño">Diseño</option>
                                         <option value="Desarrollo">Desarrollo Web</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Otros">Otros</option>
                                     </Select>
                                 </Tooltip>
                             </FormControl>
-
                         </HStack>
                         <HStack justify={"space-between"}>
                             {touched.price && errors.price && (

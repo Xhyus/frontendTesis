@@ -75,7 +75,7 @@ const VerServicio = (data) => {
                     </HStack>
                     <HStack>
                         <Text>Precio: </Text>
-                        <Text>$ {service.price}</Text>
+                        <Text>{service.price} UFs</Text>
                     </HStack>
                     <HStack>
                         <Text>Fecha de creación: </Text>
