@@ -85,7 +85,9 @@ const Empresas = ({ data }) => {
                 <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear empresa</Button>
                 <InputGroup w={"full"} >
                     <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
-                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ filteredCompany: [], status: false, searchTerm: '' })} />
+                    <InputRightElement _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ filteredCompany: [], status: false, searchTerm: '' })} >
+                        <AiOutlineClose />
+                    </InputRightElement>
                 </InputGroup>
             </HStack>
             <TableContainer w={"full"}>

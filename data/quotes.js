@@ -22,17 +22,8 @@ const deleteQuote = async (id) => {
 }
 
 const createQuote = async (quote) => {
-    const response = await axios.post(`${process.env.SERVIDOR}/quote/create`, {
-        name: quote.name,
-        description: quote.description,
-        services: quote.services,
-        company: quote.company,
-        formalization: quote.formalization,
-        payment: quote.payment,
-        paymentMethod: quote.paymentMethod,
-        documents: quote.document,
-        projectDelivery: quote.projectDelivery
-    });
+    console.log(quote)
+    const response = await axios.post(`${process.env.SERVIDOR}/quote`, quote);
     return response
 }
 

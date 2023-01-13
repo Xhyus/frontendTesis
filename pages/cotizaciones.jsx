@@ -68,9 +68,13 @@ const Cotizaciones = ({ data }) => {
             <HStack w={"full"} my={5} align={"center"}>
                 <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "20%" }} fontSize={'2xl'} borderRadius={"3xl"} color={"white"} bgColor={"#7ABC63"} onClick={() => router.push("/cotizaciones/crear")}>Crear</Button>
                 <InputGroup w={{ base: "full", md: "40%" }} >
-                    <InputLeftElement children={<AiOutlineSearch />} />
+                    <InputLeftElement>
+                        <AiOutlineSearch />
+                    </InputLeftElement>
                     <Input w={"full"} borderRadius={'3xl'} focusBorderColor={"yellow.600"} value={filter.searchTerm} type="text" placeholder="Buscar" onChange={setSearch} />
-                    <InputRightElement children={AiOutlineClose()} _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ ...filter, searchTerm: '', status: false })} />
+                    <InputRightElement _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ ...filter, searchTerm: '', status: false })} >
+                        <AiOutlineClose />
+                    </InputRightElement>
                 </InputGroup>
             </HStack>
             <TableContainer w={"full"}>

@@ -14,7 +14,7 @@ const Service = ({ name, items, description, dots, index }) => {
                         <Heading as="h1" size="4xl" fontFamily="AEOIK BLACK" fontWeight={"extrabold"} borderTop={"1.5rem solid #FF5122"} borderBottom={"2px solid black"} py={5} color="black">{formatText(name)}</Heading>
                         {items.map((item, index) => {
                             return (
-                                <Text fontFamily="Open Sans" fontSize={'2xl'} color="black" pb={2} borderBottom={"2px solid black"} > {index + 1}.- {formatText(item.description)}</Text>
+                                <Text key={index} fontFamily="Open Sans" fontSize={'2xl'} color="black" pb={2} borderBottom={"2px solid black"} > {index + 1}.- {formatText(item.description)}</Text>
                             )
                         })}
                         <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{formatText(description)}</Text>

@@ -65,8 +65,8 @@ const VerEmpresa = (data) => {
                             {company.validQuote.length === 0 && <Text py={5}>No hay cotizaciones vencidas</Text>}
                             {company.validQuote.map((quote, index) => {
                                 return (
-                                    <HStack w={"full"} py={5}>
-                                        <Text w={"full"} key={index}>{quote.name}</Text>
+                                    <HStack w={"full"} py={5} key={index}>
+                                        <Text w={"full"}>{quote.name}</Text>
                                         <Button w={"30%"} bgColor={"green.500"} _hover={{ bgColor: "green.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
                                     </HStack>
                                 )
@@ -75,8 +75,8 @@ const VerEmpresa = (data) => {
                             {company.expiredQuote.length === 0 && <Text py={5}>No hay cotizaciones vencidas</Text>}
                             {company.expiredQuote.map((quote, index) => {
                                 return (
-                                    <HStack w={"full"} py={5}>
-                                        <Text w={"full"} key={index}>{quote.name}</Text>
+                                    <HStack w={"full"} py={5} key={index}>
+                                        <Text w={"full"}>{quote.name}</Text>
                                         <Button w={"30%"} bgColor={"red.500"} _hover={{ bgColor: "red.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
                                     </HStack>)
                             })}
