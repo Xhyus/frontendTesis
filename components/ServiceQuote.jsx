@@ -6,7 +6,7 @@ import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai'
 const ServiceQuote = ({ id, title, price, description, type, items, setSelectedServices, selectedServices }) => {
 
     const addToSelected = () => {
-        setSelectedServices([...selectedServices, id])
+        setSelectedServices([...selectedServices, { id, title }])
     }
 
     const removeFromSelected = () => {

@@ -13,9 +13,9 @@ const PasswordInput = ({ id, label, name, placeholder, show, handleChange, handl
                     name={name}
                     onChange={handleChange}
                 />
-                <InputRightElement width='4.5rem'>
+                <InputRightElement width='4.5rem' pr={1}>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
-                        {show ? 'Hide' : 'Show'}
+                        {show ? 'Ocultar' : 'Mostrar'}
                     </Button>
                 </InputRightElement>
             </InputGroup>

@@ -46,8 +46,7 @@ const AddServices = ({ services, selectedServices, cardList, setStep, step }) =>
                 <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
                 <SearchLook searchTerm={filter.searchTerm} setSearch={setSearch} text={"Ver cotización"} setStep={setStep} step={step} filter={filter} setFilter={setFilter} />
                 <Wrap spacing={10} justify={{ base: "center", md: "normal" }} pb={20}>
-                    {cardList(filter.status === true ? filter.filteredServices : services)}
-                    {/* {cardList(filter.filteredServices)} */}
+                    {cardList(filter.filteredServices)}
                 </Wrap>
             </Container >
             {selectedServices.length > 0 &&
