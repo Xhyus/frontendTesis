@@ -28,15 +28,21 @@ export async function getServerSideProps(context) {
 const VerCotizacion = ({ quote }) => {
     const router = useRouter()
     const handleDelete = async () => {
-        const response = await deleteQuote(quote._id)
-        if (response.status === 200) {
-            Swal.fire({
+        try {
+            const response = await deleteQuote(quote._id)
+            await Swal.fire({
                 title: 'Cotización eliminada',
                 text: 'La cotización ha sido eliminada correctamente',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
-            }).then(() => {
-                router.push('/cotizaciones')
+            })
+            router.push('/cotizaciones')
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error al eliminar la cotización',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
             })
         }
     }
