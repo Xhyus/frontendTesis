@@ -10,7 +10,7 @@ const ServiceQuote = ({ id, title, price, description, type, items, setSelectedS
     }
 
     const removeFromSelected = () => {
-        setSelectedServices(selectedServices.filter(item => item !== id))
+        setSelectedServices(selectedServices.filter(item => item.id !== id))
     }
 
     return (
@@ -25,7 +25,7 @@ const ServiceQuote = ({ id, title, price, description, type, items, setSelectedS
                 <Text >{formatDescription(description)}</Text>
                 <HStack justify={"space-between"} pt={5}>
                     <Text>{formatType(type)} | {items} Items</Text>
-                    {selectedServices.some(item => item === id) ?
+                    {selectedServices.some(item => item.id === id) ?
                         <Button borderRadius={"3xl"} bgColor={"#DE1A1A"} color="white" onClick={() => removeFromSelected()}>
                             <HStack align={"center"}>
                                 <AiOutlineDelete size={"20"} fontWeight={"bold"} />
