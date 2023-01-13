@@ -6,8 +6,6 @@ import FormInput from './FormInput'
 import { documentOptions, formalizationOptions, paymentOptions } from '../data/staticInfo'
 import TextareaForm from './TextareaForm'
 import Swal from 'sweetalert2'
-import { Select } from 'chakra-react-select'
-import { useEffect } from 'react'
 
 const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selectedInfo }) => {
     console.log(quote)
@@ -26,14 +24,11 @@ const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selec
             [value.name]: options.findIndex(option => option === value)
         })
     }
-
-    const data = quote
-    console.log(data)
     return (
         <Container maxW={"container.md"} pb={10}>
             <Formik
-                initialValues={{ name: quote.name, description: quote.description, projectDelivery: quote.projectDelivery }}
-                // validationSchema={quoteValidation}
+                initialValues={{ name: quote.name, description: quote.description, projectDelivery: quote.projectDelivery, paymentMethod: quote.paymentMethod }}
+                validationSchema={quoteValidation}
                 onSubmit={(values) => {
                     if (selectedInfo.company === null || selectedInfo.formalization === null || selectedInfo.payment === null || selectedInfo.document === null) {
                         Swal.fire({
@@ -50,41 +45,29 @@ const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selec
                             name: companyOptions[selectedInfo.company].label
                         },
                         payment: {
-                            id: paymentOptions[selectedInfo.payment].value,
+                            value: paymentOptions[selectedInfo.payment].value,
                             name: paymentOptions[selectedInfo.payment].label
                         },
                         formalization: {
-                            id: formalizationOptions[selectedInfo.formalization].value,
+                            value: formalizationOptions[selectedInfo.formalization].value,
                             name: formalizationOptions[selectedInfo.formalization].label
                         },
                         document: {
-                            id: documentOptions[selectedInfo.document].value,
+                            value: documentOptions[selectedInfo.document].value,
                             name: documentOptions[selectedInfo.document].label
                         }
                     })
-
-                    console.log(values)
-                    console.log(selectedInfo)
                     setStep(3)
                 }}
             >
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                     <form onSubmit={handleSubmit} id="form">
-                        {/* {console.log(values)} */}
                         <Heading mt={10} mb={5} fontSize={'6xl'} textAlign="center">Crear Cotización</Heading>
                         <FormInput placeHolder={"Ingrese el nombre con el que se identifica la cotización"} label="Nombre" name="name" type="text" values={values.name} onChange={handleChange} onBlur={handleBlur} errors={errors} touched={touched} />
                         <TextareaForm label="Descripción" name="description" placeholder="Ingrese una descripción de la cotización" value={values.description} onChange={handleChange} onBlur={handleBlur} errors={errors} touched={touched} />
                         <HStack w="full" mt={5} >
-                            <FormControl id="company" >
-                                <FormLabel>Empresa</FormLabel>
-                                <Select options={companyOptions} onChange={handleChangeSelect} defaultValue={companyOptions[selectedInfo.company]} />
-                            </FormControl>
-                            <FormControl id="formalization" >
-                                <FormLabel>Formalización</FormLabel>
-                                <Select options={formalizationOptions} onChange={handleChangeSelect} defaultValue={formalizationOptions[selectedInfo.formalization]} />
-                            </FormControl>
-                            {/* <ReactSelect label="Empresa" name="company" index={selectedInfo.company} value={selectedInfo.company} onChange={handleChangeSelect} options={companyOptions} /> */}
-                            {/* <ReactSelect label="Formalización" name="formalization" index={selectedInfo.formalization} value={selectedInfo.formalization} onChange={handleChangeSelect} options={formalizationOptions} /> */}
+                            <ReactSelect label="Empresa" name="company" index={selectedInfo.company} value={selectedInfo.company} onChange={handleChangeSelect} options={companyOptions} />
+                            <ReactSelect label="Formalización" name="formalization" index={selectedInfo.formalization} value={selectedInfo.formalization} onChange={handleChangeSelect} options={formalizationOptions} />
                         </HStack>
                         <HStack w="full" my={5} >
                             <ReactSelect label="Pago" name="payment" index={selectedInfo.payment} value={selectedInfo.payment} onChange={handleChangeSelect} options={paymentOptions} />

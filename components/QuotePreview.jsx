@@ -1,12 +1,39 @@
 import React from 'react'
 import { Heading, Text, Container, Button, HStack, Stack } from '@chakra-ui/react'
 import TagText from './TagText'
+import { createQuote } from '../data/quotes'
+import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 
 const QuotePreview = ({ quote, selectedServices, setStep }) => {
-    console.log(quote)
-
-    const handleSubmit = () => {
-        console.log(quote)
+    const router = useRouter()
+    const handleSubmit = async () => {
+        try {
+            await createQuote({
+                name: quote.name,
+                description: quote.description,
+                paymentMethod: quote.paymentMethod,
+                projectDelivery: quote.projectDelivery,
+                company: quote.company.id,
+                payment: quote.payment.value,
+                formalization: quote.formalization.value,
+                documents: quote.document.value,
+                services: selectedServices.map(service => service.id)
+            })
+            await Swal.fire({
+                title: 'Cotización creada',
+                text: 'La cotización ha sido creada con éxito',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
+            router.push('/cotizaciones')
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ha ocurrido un error',
+            })
+        }
     }
 
     return (
