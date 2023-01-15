@@ -1,4 +1,3 @@
-import React from 'react'
 import { Heading, Text, Container, Button, HStack, Stack } from '@chakra-ui/react'
 import TagText from './TagText'
 import { createQuote } from '../data/quotes'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { InputGroup, InputLeftElement, Input, InputRightElement, HStack, Button } from '@chakra-ui/react'
 import { AiOutlineClose, AiOutlineSearch, AiOutlineEye } from 'react-icons/ai'
 

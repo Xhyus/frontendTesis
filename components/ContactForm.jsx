@@ -1,15 +1,16 @@
-import React from 'react'
-import { Heading, HStack, Stack, Button, FormControl, Input, FormLabel, Tooltip } from '@chakra-ui/react'
+import { Heading, HStack, Button, FormControl, Input, FormLabel, Tooltip } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import FormikError from './FormikError'
 import FormInput from './FormInput'
+import contactValidation from '../utils/contactValidation'
 import { createCompany } from '../data/company'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import { formatRut } from 'rutlib'
+import { formatRut, validateRut } from 'rutlib'
 
 const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT, setContactRUT, companyRUT }) => {
 	const router = useRouter()
+	console.log(state)
 	const handleChangeRUT = (e) => {
 		if (e.target.value === '-') {
 			setContactRUT('')
@@ -22,18 +23,27 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 	return (
 		<Formik
 			initialValues={contact}
+			validationSchema={contactValidation}
 			onSubmit={async (values) => {
+				if (!validateRut(contactRUT)) {
+					console.log(contactRUT)
+					// return <Alert title="Error" description="El rut ingresado no es válido" status="error" />
+					return Swal.fire({
+						title: 'Error',
+						text: 'El rut ingresado no es válido',
+						icon: 'error',
+						confirmButtonText: 'Aceptar'
+					})
+				}
 				try {
-					const response = await createCompany(company, values, companyRUT, contactRUT, state)
-					if (response.status === 201) {
-						Swal.fire({
-							title: '¡Excelente!',
-							text: 'Tu empresa ha sido registrada con éxito',
-							icon: 'success',
-							confirmButtonText: 'Ok'
-						})
-						router.push('/')
-					}
+					await createCompany(company, values, companyRUT, contactRUT, state)
+					await Swal.fire({
+						title: '¡Excelente!',
+						text: 'Tu empresa ha sido registrada con éxito',
+						icon: 'success',
+						confirmButtonText: 'Ok'
+					})
+					router.push('/')
 				} catch (error) {
 					if (error.response.status === 400) {
 						Swal.fire({
@@ -63,27 +73,17 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 				handleSubmit,
 			}) => (
 				<form onSubmit={handleSubmit} id="form" >
-					<Heading as="h2" size="lg" my={5} color="white">Datos del contacto</Heading>
-					<FormInput label="Nombre" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Pérez" />
-					{touched.name && errors.name && (
-						<FormikError error={errors.name} />
-					)}
-					<FormInput label="Email" onChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
-					{touched.email && errors.email && (
-						<FormikError error={errors.email} />
-					)}
+					<Heading as={"h2"} fontSize={"3xl"} my={5}>Datos del contacto</Heading>
+					<FormInput label="Nombre" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Pérez" touched={touched.name} errors={errors.name} />
+					<FormInput label="Email" onChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" touched={touched.email} errors={errors.email} />
 					<HStack>
-						<Stack w={'full'}>
-							<FormControl isRequired py={3}>
-								<FormLabel>RUT de Contacto</FormLabel>
-								<Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
-									<Input type={"text"} name={contactRUT} maxLength={12} onChange={handleChangeRUT} value={contactRUT} placeholder={"11.111.111-1"} />
-								</Tooltip>
-							</FormControl>
-						</Stack>
-						<Stack w={'full'}>
-							<FormInput label="Teléfono" onChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
-						</Stack>
+						<FormControl isRequired py={3}>
+							<FormLabel>RUT de Contacto</FormLabel>
+							<Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
+								<Input type={"text"} name={contactRUT} maxLength={12} onChange={handleChangeRUT} value={contactRUT} placeholder={"11.111.111-1"} />
+							</Tooltip>
+						</FormControl>
+						<FormInput label="Teléfono" onChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" touched={touched.phone} errors={errors.phone} />
 					</HStack>
 					<HStack>
 						{touched.rut && errors.rut && (
@@ -93,12 +93,9 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 							<FormikError error={errors.phone} />
 						)}
 					</HStack>
-					<FormInput label="Rol" onChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder="Ej: Socio, asesor, etc." />
-					{touched.position && errors.position && (
-						<FormikError error={errors.position} />
-					)}
+					<FormInput label={state === true ? "Cargo" : "Rol"} onChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder={state === true ? "Ej: Gerente, Encargado RRHH, etc." : "Ej: Socio, amigo, etc."} touched={touched.position} errors={errors.position} />
 					<HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-						<Button colorScheme={"green"} type="submit" w="full"> Crear Empresa </Button>
+						<Button color={"white"} bgColor={"#7ABC63"} type="submit" w="full"> Crear Empresa </Button>
 						<Button colorScheme={"red"} w="full" onClick={() => { setContact(values), setStep(1) }}> Volver </Button>
 					</HStack>
 				</form>

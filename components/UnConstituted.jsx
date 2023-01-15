@@ -34,7 +34,7 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
                 handleSubmit,
             }) => (
                 <form onSubmit={handleSubmit} id="form" >
-                    <Heading as="h2" size="lg" mb={4} color="white">Datos del cliente</Heading>
+                    <Heading as={"h2"} fontSize={"3xl"} my={5}>Datos del cliente</Heading>
                     <FormInput label="Nombre del cliente" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Juan Gomez" />
                     {touched.name && errors.name && (
                         <FormikError error={errors.name} />
@@ -61,13 +61,8 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
                             <FormikError error={errors.phone} />
                         )}
                     </HStack>
-                    <FormInput label="Dirección" onChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" />
-                    {touched.address && errors.address && (
-                        <FormikError error={errors.address} />
-                    )}
-                    <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-                        <Button colorScheme={"green"} type="submit" w="full"> Siguiente paso </Button>
-                    </HStack>
+                    <FormInput label="Dirección" onChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" touched={touched.address} errors={errors.address} />
+                    <Button color={"white"} bgColor={"#7ABC63"} type="submit" w="full"> Siguiente paso </Button>
                 </form>
             )}
         </Formik>

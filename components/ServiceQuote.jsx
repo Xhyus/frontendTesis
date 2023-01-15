@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card, Flex, Text, Button, Heading, Box, Tag, TagLabel, HStack } from '@chakra-ui/react'
 import { formatDescription, formatPrice, formatTitle, formatType } from '../utils/formatInfo'
 import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai'

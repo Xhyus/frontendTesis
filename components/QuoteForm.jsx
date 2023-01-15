@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import { Container, Heading, Stack, FormControl, FormLabel, Button, HStack, Textarea } from '@chakra-ui/react'
+import { Container, Heading, Button, HStack } from '@chakra-ui/react'
 import quoteValidation from '../utils/quoteValidation'
 import ReactSelect from './ReactSelect'
 import FormInput from './FormInput'

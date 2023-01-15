@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router'
 import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react"
 import { FaBars, FaAngleDown } from 'react-icons/fa';
@@ -80,7 +80,7 @@ const Navbar = () => {
 
 	const DrawerMobile = () => {
 		const { isOpen, onOpen, onClose } = useDisclosure()
-		const btnRef = React.useRef()
+		const btnRef = useRef()
 		return (
 			<>
 				<HStack m={5} pb={2} align="center" justify={"space-between"}>
@@ -99,6 +99,8 @@ const Navbar = () => {
 								<Link color={currentPageMobile("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
 								<Link color={currentPageMobile("cotizaciones")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
 								<Link color={currentPageMobile("empresas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/empresas')}>Empresas</Link>
+								<Link color={currentPageMobile("perfil")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/perfil')}>Perfil</Link>
+								<Link color={currentPageMobile("crear/cuentas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/crear/cuentas')}>Crear cuenta</Link>
 							</Stack>
 						</DrawerBody>
 						<DrawerFooter justifyContent={"center"}>

@@ -10,18 +10,17 @@ const AddServices = ({ services, selectedServices, setStep, step, setSelectedSer
         searchTerm: ''
     })
     useEffect(() => {
-        const results = services.filter(service => {
-            return (
-                service.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-                service.description.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-                service.price.toString().includes(filter.searchTerm) ||
-                service.type.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-                service.item.some(item => item.description.toLowerCase().includes(filter.searchTerm.toLowerCase()))
-            )
-        })
         setFilter({
             ...filter,
-            filteredServices: results
+            filteredServices: data.filter(service => {
+                return (
+                    service.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+                    service.description.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+                    service.price.toString().includes(filter.searchTerm) ||
+                    service.type.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+                    service.item.some(item => item.description.toLowerCase().includes(filter.searchTerm.toLowerCase()))
+                )
+            })
         })
     }, [filter.searchTerm])
 
@@ -36,7 +35,7 @@ const AddServices = ({ services, selectedServices, setStep, step, setSelectedSer
             setFilter({
                 status: false,
                 searchTerm: '',
-                filteredServices: []
+                filteredServices: services
             })
         }
     }

@@ -1,9 +1,8 @@
-import React from 'react'
 import { FormControl, FormLabel, Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react'
 
 const PasswordInput = ({ id, label, name, placeholder, show, handleChange, handleClick, enterKeyHandler }) => {
     return (
-        <FormControl id={id}>
+        <FormControl id={id} pb={3}>
             <FormLabel>{label}</FormLabel>
             <InputGroup size='md' onKeyDown={enterKeyHandler}>
                 <Input

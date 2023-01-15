@@ -1,4 +1,3 @@
-import React from 'react'
 import { Tooltip, HStack, FormControl, Input, Button, FormLabel } from '@chakra-ui/react'
 
 const Item = ({ id, lastItem, handleDeleteItem, handleChangeItem, value }) => {

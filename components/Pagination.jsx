@@ -1,4 +1,3 @@
-import React from 'react'
 import { HStack, Button } from '@chakra-ui/react'
 import { MdArrowBackIos, MdArrowForwardIos, MdDoubleArrow } from 'react-icons/md'
 
