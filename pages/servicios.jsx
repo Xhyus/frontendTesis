@@ -24,55 +24,58 @@ export async function getServerSideProps(context) {
 }
 
 const Servicios = ({ data }) => {
-    const [services] = useState(data)
-    const [filteredServices, setFilteredServices] = useState([])
-    const [filter, setFilter] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
+    const [filter, setFilter] = useState({
+        status: false,
+        filteredServices: [],
+        searchTerm: ''
+    })
     const router = useRouter()
 
     useEffect(() => {
-        const results = services.filter(service => {
-            return (
-                service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                service.price.toString().includes(searchTerm) ||
-                service.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                service.item.some(item => item.description.toLowerCase().includes(searchTerm.toLowerCase()))
-            )
+        setFilter({
+            ...filter,
+            filteredServices: data.filter(service => {
+                return (
+                    service.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+                    service.description.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+                    service.price.toString().includes(filter.searchTerm) ||
+                    service.type.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
+                    service.item.some(item => item.description.toLowerCase().includes(filter.searchTerm.toLowerCase()))
+                )
+            })
         })
-        setFilteredServices(results)
-    }, [searchTerm])
+    }, [filter.searchTerm])
 
     const setSearch = (e) => {
-        if (e.target.value.length > 0) {
-            setSearchTerm(e.target.value)
-            setFilter(true)
+        if (e.target?.value.length > 0) {
+            setFilter({
+                ...filter,
+                status: true,
+                searchTerm: e.target.value
+            })
         } else {
-            setSearchTerm('')
-            setFilter(false)
+            setFilter({
+                status: false,
+                searchTerm: '',
+                filteredServices: data
+            })
         }
     }
 
-    const sendToService = (id) => {
-        router.push(`/servicios/ver/${id}`)
-    }
-
-    const cardList = (data) => {
-        return data.map(service => {
-            return (
-                <WrapItem key={service._id}>
-                    <ServiceCard id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} message="Detalles" func={sendToService} />
-                </WrapItem>
-            )
-        })
-    }
+    const sendToService = (id) => router.push(`/servicios/ver/${id}`)
 
     return (
         <Container maxW={"container.xl"} centerContent>
-            <Heading mt={10} fontSize={'6xl'}>Servicios</Heading>
-            <SearchButton goToPage="/servicios/crear" setSearchTerm={setSearchTerm} searchTerm={searchTerm} setSearch={setSearch} text={"Crear"} />
+            <Heading as={"h1"} mt={10} fontSize={'6xl'}>Servicios</Heading>
+            <SearchButton goToPage="/servicios/crear" setSearch={setSearch} text="Crear" searchTerm={filter.searchTerm} />
             <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
-                {cardList(filter ? filteredServices : services)}
+                {filter.filteredServices.map(service => {
+                    return (
+                        <WrapItem key={service._id}>
+                            <ServiceCard id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} message="Detalles" func={sendToService} />
+                        </WrapItem>
+                    )
+                })}
             </Wrap>
         </Container >
     )
