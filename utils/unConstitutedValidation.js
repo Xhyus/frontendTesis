@@ -11,7 +11,12 @@ const unconstitutedValidation = yup.object({
         .required("El telefono es obligatorio"),
     email: yup.string()
         .email("El email debe tener un formato valido")
-        .required("El email es obligatorio")
+        .required("El email es obligatorio"),
+    address: yup.string()
+        .min(2, "La direccion debe contener al menos 2 caracteres")
+        .max(250, "La direccion debe contener como maximo 250 caracteres")
+        .matches(/^[a-zA-Z0-9áéíóúÁÉÍÓÚ\s\-\_\.\,\;\:\(\)\[\]\{\}\¿\?\¡\!\@\#\$\%\^\&\*\+\|\?\/\\]+$/, 'La direccion solo debe contener letras, espacios, numeros y algunos caracteres')
+        .required("La direccion es obligatoria")
 })
 
 export default unconstitutedValidation;
