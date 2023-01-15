@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Heading, Container, Stack, Button } from '@chakra-ui/react'
+import { HStack, Heading, Container, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { changePassword } from '../data/user'
 import jsCookie from 'js-cookie'
@@ -81,15 +81,13 @@ const Perfil = () => {
 
     return (
         <Container maxW='container.md'>
-            <Heading my={10} textAlign={"center"}>Perfil</Heading>
-            <Heading size='md' my={10}>Cambiar contraseña</Heading>
-            <Stack>
-                <PasswordInput id="password" label="Contraseña actual" name="password" placeholder="Contraseña actual" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
-                <PasswordInput id="newPassword" label="Nueva contraseña" name="newPassword" placeholder="Nueva contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
-                <PasswordInput id="rePassword" label="Repetir contraseña" name="rePassword" placeholder="Repetir contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
-            </Stack>
+            <Heading as={"h1"} my={10} fontSize={'6xl'} textAlign={"center"}>Perfil</Heading>
+            <Heading as={"h2"} fontSize='3xl' mb={8}>Cambiar contraseña</Heading>
+            <PasswordInput id="password" label="Contraseña actual" name="password" placeholder="Contraseña actual" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
+            <PasswordInput id="newPassword" label="Nueva contraseña" name="newPassword" placeholder="Nueva contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
+            <PasswordInput id="rePassword" label="Repetir contraseña" name="rePassword" placeholder="Repetir contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
             <HStack w={"full"} my={10}>
-                <Button w="full" colorScheme={'green'} onClick={onSubmit}>Cambiar contraseña</Button>
+                <Button w="full" color={"white"} bgColor={"#7ABC63"} onClick={onSubmit}>Cambiar contraseña</Button>
                 <Button w="full" colorScheme={"orange"} onClick={() => router.push('/')}>Atras</Button>
             </HStack>
         </Container>

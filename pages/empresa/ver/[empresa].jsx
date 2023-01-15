@@ -23,16 +23,11 @@ export async function getServerSideProps(context) {
 }
 
 const VerEmpresa = (data) => {
-    console.log(data)
     const [company] = useState(data.data)
     const router = useRouter()
-    console.log(company)
-
     return (
         <Container maxW={"container.lg"}>
-            <HStack align={"center"} justify={"center"} my={10}>
-                <Heading as={"h1"} >Empresa: {company.name}</Heading>
-            </HStack>
+            <Heading as={"h1"} my={10} >Empresa: {company.name}</Heading>
             <Button colorScheme={"orange"} mb={10} onClick={() => router.push('/empresa/editar/' + company._id)}>Editar datos</Button>
             <HStack justify={"center"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
@@ -62,7 +57,7 @@ const VerEmpresa = (data) => {
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            {company.validQuote.length === 0 && <Text py={5}>No hay cotizaciones vencidas</Text>}
+                            {company.validQuote.length === 0 && <Text py={5}>No hay cotizaciones activas</Text>}
                             {company.validQuote.map((quote, index) => {
                                 return (
                                     <HStack w={"full"} py={5} key={index}>
@@ -70,7 +65,8 @@ const VerEmpresa = (data) => {
                                         <Button w={"30%"} bgColor={"green.500"} _hover={{ bgColor: "green.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
                                     </HStack>
                                 )
-                            })}                        </TabPanel>
+                            })}
+                        </TabPanel>
                         <TabPanel>
                             {company.expiredQuote.length === 0 && <Text py={5}>No hay cotizaciones vencidas</Text>}
                             {company.expiredQuote.map((quote, index) => {

@@ -64,7 +64,7 @@ const Cotizaciones = ({ data }) => {
 
     return (
         <Container maxW={"container.lg"} centerContent>
-            <Heading mt={10}>Cotizaciones</Heading>
+            <Heading as={"h1"} mt={10} fontSize={'6xl'}>Cotizaciones</Heading>
             <HStack w={"full"} my={5} align={"center"}>
                 <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "20%" }} fontSize={'2xl'} borderRadius={"3xl"} color={"white"} bgColor={"#7ABC63"} onClick={() => router.push("/cotizaciones/crear")}>Crear</Button>
                 <InputGroup w={{ base: "full", md: "40%" }} >

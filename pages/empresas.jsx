@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
-import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer } from '@chakra-ui/react'
+import { useState } from 'react'
+import { Heading, Table, Tr, Thead, Th, Tbody, Container, TableContainer } from '@chakra-ui/react'
 import { getCompanies } from '../data/company'
 import CompanyTable from '../components/CompanyTable'
-import { AiOutlineClose, } from 'react-icons/ai'
 import { createSignedPage } from '../data/signed'
 import Swal from 'sweetalert2'
 import Pagination from '../components/Pagination'
+import SearchButton from '../components/SearchButton'
 
 export async function getServerSideProps(context) {
     try {
@@ -80,16 +80,8 @@ const Empresas = ({ data }) => {
 
     return (
         <Container maxW={"container.lg"} centerContent>
-            <Heading mt={10}>Empresas</Heading>
-            <HStack w={"full"} my={5}>
-                <Button w={"full"} colorScheme="green" onClick={() => generateSignedPage()}>Crear empresa</Button>
-                <InputGroup w={"full"} >
-                    <Input w={"full"} focusBorderColor={"yellow.600"} type="text" placeholder="Buscar" onChange={setSearch} />
-                    <InputRightElement _hover={{ cursor: 'pointer', color: 'orange' }} color={"white"} onClick={() => setFilter({ filteredCompany: [], status: false, searchTerm: '' })} >
-                        <AiOutlineClose />
-                    </InputRightElement>
-                </InputGroup>
-            </HStack>
+            <Heading as={"h1"} mt={10} fontSize={'6xl'}>Empresas</Heading>
+            <SearchButton setSearch={setSearch} func={generateSignedPage} text={"Crear empresa"} searchTerm={filter.searchTerm} />
             <TableContainer w={"full"}>
                 <Table variant="striped">
                     <Thead>

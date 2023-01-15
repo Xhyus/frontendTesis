@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex, HStack } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack } from '@chakra-ui/react';
 import Swal from 'sweetalert2';
 import { createUser } from '../../data/user';
 import InputAccount from '../../components/InputAccount';
@@ -57,15 +57,13 @@ const Cuentas = () => {
 
     return (
         <Container maxW="container.md">
-            <Heading as={"h1"} my={10} textAlign="center">Crear cuenta</Heading>
-            <Stack spacing={4} w="full" mx="auto">
-                <InputAccount name="name" label="Nombre" type="text" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Nombre" />
-                <InputAccount name="email" label="Correo electronico" type="email" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Correo electronico" />
-                <InputAccount name="password" label="Contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Contraseña" />
-                <InputAccount name="confirmPassword" label="Confirmar contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Confirmar contraseña" />
-            </Stack>
-            <HStack spacing={4} w="full" mx="auto" my={4}>
-                <Button colorScheme="blue" w="full" onClick={onSubmit}>Crear cuenta</Button>
+            <Heading as={"h1"} my={10} fontSize={'6xl'} textAlign={"center"}>Crear cuenta</Heading>
+            <InputAccount name="name" label="Nombre" type="text" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Nombre" />
+            <InputAccount name="email" label="Correo electronico" type="email" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Correo electronico" />
+            <InputAccount name="password" label="Contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Contraseña" />
+            <InputAccount name="confirmPassword" label="Confirmar contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Confirmar contraseña" />
+            <HStack spacing={4} w="full" mx="auto" my={5}>
+                <Button color={"white"} bgColor={"#7ABC63"} w="full" onClick={onSubmit}>Crear cuenta</Button>
                 <Button colorScheme="red" w="full" onClick={() => router.push('/')}>Cancelar</Button>
             </HStack>
         </Container>
