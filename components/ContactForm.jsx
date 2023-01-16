@@ -95,8 +95,8 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 					</HStack>
 					<FormInput label={state === true ? "Cargo" : "Rol"} onChange={handleChange} values={values.position} handleBlur={handleBlur} name="position" type="text" placeHolder={state === true ? "Ej: Gerente, Encargado RRHH, etc." : "Ej: Socio, amigo, etc."} touched={touched.position} errors={errors.position} />
 					<HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-						<Button color={"white"} bgColor={"#7ABC63"} type="submit" w="full"> Crear Empresa </Button>
-						<Button colorScheme={"red"} w="full" onClick={() => { setContact(values), setStep(1) }}> Volver </Button>
+						<Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" w="full"> Crear Empresa </Button>
+						<Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} w="full" onClick={() => { setContact(values), setStep(1) }}> Volver </Button>
 					</HStack>
 				</form>
 			)}

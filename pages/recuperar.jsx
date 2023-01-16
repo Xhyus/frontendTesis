@@ -81,7 +81,7 @@ const Recuperar = () => {
                             <Input onKeyDown={enterKeyHandler} placeholder="Ej: correo@mail.com" color={"orange"} focusBorderColor={"yellow.600"} type="email" onChange={handleChange} name="email" />
                         </Tooltip>
                     </FormControl>
-                    <Button colorScheme="orange" size="md" w={'full'} onClick={handleSubmit}>Recuperar contraseña</Button>
+                    <Button bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} size="md" w={'full'} onClick={handleSubmit}>Recuperar contraseña</Button>
                     <Link onClick={() => Router.push("/")} color="orange.500" textAlign={"center"}>Volver al inicio</Link>
                 </Stack>
             </Container>

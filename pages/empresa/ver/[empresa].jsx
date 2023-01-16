@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react';
 import { getCompany } from '../../../data/company'
 import TextCopy from '../../../components/TextCopy';
+import TagText from '../../../components/TagText';
 import { useRouter } from 'next/router'
 
 export async function getServerSideProps(context) {
@@ -27,8 +28,8 @@ const VerEmpresa = (data) => {
     const router = useRouter()
     return (
         <Container maxW={"container.lg"}>
-            <Heading as={"h1"} my={10} >Empresa: {company.name}</Heading>
-            <Button colorScheme={"orange"} mb={10} onClick={() => router.push('/empresa/editar/' + company._id)}>Editar datos</Button>
+            <Heading as={"h1"} my={10} fontSize={'6xl'} >Empresa: {company.name}</Heading>
+            <Button bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} mb={10} onClick={() => router.push('/empresa/editar/' + company._id)}>Editar datos</Button>
             <HStack justify={"center"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                     <Heading size={"md"}>Datos de la empresa</Heading>
@@ -45,15 +46,15 @@ const VerEmpresa = (data) => {
                     <TextCopy prefix={"Rut"} data={company.contact.rut} />
                     <TextCopy prefix={"Teléfono"} data={company.contact.phone} />
                     <TextCopy prefix={"Email"} data={company.contact.email} />
-                    {company.contact.socialReason ? <Text>Cargo : {company.contact.role} </Text> : <Text>Rol : {company.contact.role} </Text>}
+                    {company.contact.socialReason ? <TagText tag={"Cargo"} data={company.contact.role} /> : <TagText tag={"Rol"} data={company.contact.role} />}
                 </Stack>
             </HStack>
             <Stack justify={"center"} mt={'10'}>
                 <Heading as={"h2"} size={"md"} textAlign={"center"} mb={5}>Cotizaciones</Heading>
                 <Tabs isFitted orientation={{ base: "horizontal", md: "horizontal" }} pb={10} variant="solid-rounded">
                     <TabList>
-                        <Tab bgColor={"green.500"} _hover={{ bgColor: "green.800" }}>Activas</Tab>
-                        <Tab bgColor={"red.500"} _hover={{ bgColor: "red.800" }} >Vencidas</Tab>
+                        <Tab bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }}>Activas</Tab>
+                        <Tab bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} >Vencidas</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>
@@ -62,7 +63,7 @@ const VerEmpresa = (data) => {
                                 return (
                                     <HStack w={"full"} py={5} key={index}>
                                         <Text w={"full"}>{quote.name}</Text>
-                                        <Button w={"30%"} bgColor={"green.500"} _hover={{ bgColor: "green.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
+                                        <Button w={"30%"} bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
                                     </HStack>
                                 )
                             })}
@@ -73,7 +74,7 @@ const VerEmpresa = (data) => {
                                 return (
                                     <HStack w={"full"} py={5} key={index}>
                                         <Text w={"full"}>{quote.name}</Text>
-                                        <Button w={"30%"} bgColor={"red.500"} _hover={{ bgColor: "red.800" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
+                                        <Button w={"30%"} bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
                                     </HStack>)
                             })}
                         </TabPanel>

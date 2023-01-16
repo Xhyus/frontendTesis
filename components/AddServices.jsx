@@ -12,7 +12,7 @@ const AddServices = ({ services, selectedServices, setStep, step, setSelectedSer
     useEffect(() => {
         setFilter({
             ...filter,
-            filteredServices: data.filter(service => {
+            filteredServices: services.filter(service => {
                 return (
                     service.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
                     service.description.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
@@ -44,7 +44,7 @@ const AddServices = ({ services, selectedServices, setStep, step, setSelectedSer
         <>
             <Container maxW={"container.xl"} centerContent>
                 <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
-                <SearchLook searchTerm={filter.searchTerm} setSearch={setSearch} text={"Ver cotización"} setStep={setStep} step={step} filter={filter} setFilter={setFilter} />
+                <SearchLook searchTerm={filter.searchTerm} setSearch={setSearch} text={"Ver cotización"} setStep={setStep} step={step} filter={filter} setFilter={setFilter} services={services} />
                 <Wrap spacing={10} justify={{ base: "center", md: "normal" }} pb={20}>
                     {filter.filteredServices.map(service => {
                         return (

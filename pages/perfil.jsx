@@ -87,8 +87,8 @@ const Perfil = () => {
             <PasswordInput id="newPassword" label="Nueva contraseña" name="newPassword" placeholder="Nueva contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
             <PasswordInput id="rePassword" label="Repetir contraseña" name="rePassword" placeholder="Repetir contraseña" show={show} handleChange={handleChange} handleClick={handleClick} enterKeyHandler={enterKeyHandler} />
             <HStack w={"full"} my={10}>
-                <Button w="full" color={"white"} bgColor={"#7ABC63"} onClick={onSubmit}>Cambiar contraseña</Button>
-                <Button w="full" colorScheme={"orange"} onClick={() => router.push('/')}>Atras</Button>
+                <Button w="full" bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} onClick={onSubmit}>Cambiar contraseña</Button>
+                <Button w="full" bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => router.push('/')}>Cancelar</Button>
             </HStack>
         </Container>
     )

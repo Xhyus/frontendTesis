@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, ListItem, List, Box, UnorderedList } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Stack, ListItem, UnorderedList, Tag, TagLeftIcon, TagLabel } from '@chakra-ui/react';
 import { getSpecificService, deleteServices } from '../../../data/services'
 import { formatDate } from '../../../utils/formatInfo';
+import TagText from '../../../components/TagText';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2'
+import { FaCalendarPlus, FaCalendarTimes } from 'react-icons/fa';
 
 export async function getServerSideProps(context) {
     try {
@@ -25,7 +27,6 @@ export async function getServerSideProps(context) {
 
 const VerServicio = (data) => {
     const [service] = useState(data.data)
-    console.log(data)
     const router = useRouter()
 
     const deleteButton = () => {
@@ -65,33 +66,24 @@ const VerServicio = (data) => {
     return (
         <Container maxW={"container.lg"}>
             <HStack align={"center"} justify={"center"} mt={10}>
-                <Heading as={"h1"} >Servicio: {service.name}</Heading>
+                <Tag size={"lg"} colorScheme={"green"} variant="solid">
+                    <TagLeftIcon as={FaCalendarPlus} boxSize="12px" />
+                    <TagLabel>{formatDate(service.created)}</TagLabel>
+                </Tag>
+                <Tag size={"lg"} colorScheme={"red"} variant="solid">
+                    <TagLeftIcon as={FaCalendarTimes} boxSize="12px" />
+                    <TagLabel>{formatDate(service.updated)}</TagLabel>
+                </Tag>
             </HStack>
-            <Stack spacing={10} mt={10}>
+            <Heading as={"h1"} my={10} fontSize={"6xl"}  >Servicio: {service.name}</Heading>
+            <Stack>
                 <Stack spacing={5} flexDirection="column" justify="space-between">
-                    <HStack>
-                        <Text>Nombre: </Text>
-                        <Text>{service.name}</Text>
-                    </HStack>
-                    <HStack>
-                        <Text>Precio: </Text>
-                        <Text>{service.price} UFs</Text>
-                    </HStack>
-                    <HStack>
-                        <Text>Fecha de creación: </Text>
-                        <Text>{formatDate(service.created)}</Text>
-                    </HStack>
-                    <HStack>
-                        <Text>Ultima actualización: </Text>
-                        <Text>{formatDate(service.updated)}</Text>
-                    </HStack>
-                    <HStack>
-                        <Text>Tipo: </Text>
-                        <Text>{service.type}</Text>
-                    </HStack>
-                    <HStack>
-                        <Text>{service.description}</Text>
-                    </HStack>
+                    <TagText tag="Nombre" data={service.name} />
+                    <TagText tag="Precio" data={service.price} />
+                    <TagText tag="Fecha de creación" data={formatDate(service.created)} />
+                    <TagText tag="Ultima actualización" data={formatDate(service.updated)} />
+                    <TagText tag="Tipo" data={service.type} />
+                    <TagText tag="Descripción" data={service.description} />
                 </Stack>
                 <Stack spacing={5}>
                     <Heading as={"h2"}>Items contemplados</Heading>
@@ -104,9 +96,9 @@ const VerServicio = (data) => {
                     </Stack>
                 </Stack>
                 <HStack>
-                    <Button colorScheme="orange" w={"full"} variant="solid" onClick={() => router.push(`/servicios/${service._id}`)}>Editar</Button>
-                    <Button colorScheme="red" w={"full"} variant="solid" onClick={deleteButton}>Eliminar</Button>
-                    <Button colorScheme="blue" w={"full"} variant="solid" onClick={() => router.push('/servicios')}>Volver a servicios</Button>
+                    <Button bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} w={"full"} variant="solid" onClick={() => router.push(`/servicios/${service._id}`)}>Editar</Button>
+                    <Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} w={"full"} variant="solid" onClick={deleteButton}>Eliminar</Button>
+                    <Button bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} w={"full"} variant="solid" onClick={() => router.push('/servicios')}>Volver a servicios</Button>
                 </HStack>
             </Stack>
         </Container>

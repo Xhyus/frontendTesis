@@ -7,7 +7,7 @@ const SearchButton = ({ searchTerm, goToPage, setSearch, text, func }) => {
     if (func) {
         return (
             <HStack w={"full"} my={5} align={"center"}>
-                <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "22%" }} fontSize={'2xl'} borderRadius={"3xl"} color={"white"} bgColor={"#7ABC63"} px={10} onClick={func}>{text}</Button>
+                <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "22%" }} fontSize={'xl'} borderRadius={"3xl"} bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} px={10} onClick={func}>{text}</Button>
                 <InputGroup w={{ base: "full", md: "40%" }} >
                     <InputLeftElement >
                         <AiOutlineSearch />
@@ -22,7 +22,7 @@ const SearchButton = ({ searchTerm, goToPage, setSearch, text, func }) => {
     } else {
         return (
             <HStack w={"full"} my={5} align={"center"}>
-                <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "22%" }} fontSize={'2xl'} borderRadius={"3xl"} color={"white"} bgColor={"#7ABC63"} px={10} onClick={() => router.push(goToPage)}>{text}</Button>
+                <Button leftIcon={<AiOutlinePlus size={20} strokeWidth={150} />} w={{ base: "full", md: "22%" }} fontSize={'2xl'} borderRadius={"3xl"} bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} px={10} onClick={() => router.push(goToPage)}>{text}</Button>
                 <InputGroup w={{ base: "full", md: "40%" }} >
                     <InputLeftElement >
                         <AiOutlineSearch />

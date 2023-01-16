@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Center, Spinner, Select, FormControl, FormLabel, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
@@ -156,10 +156,10 @@ const Crear = () => {
                             return <Item key={index} id={item.id} handleDeleteItem={handleDeleteItem} handleChangeItem={handleChangeItem} lastItem={items.length} />
                         })
                         }
-                        <Button onClick={handleAddItem} colorScheme="orange" mt="5" w="full">Agregar Ítem</Button>
+                        <Button onClick={handleAddItem} bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} mt="5" w="full">Agregar Ítem</Button>
                         <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-                            <Button colorScheme={"green"} type="submit" w="full"> Crear </Button>
-                            <Button colorScheme={"red"} type="reset" w="full" onClick={() => router.push('/servicios')}> Cancelar </Button>
+                            <Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" w="full"> Crear </Button>
+                            <Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} type="reset" w="full" onClick={() => router.push('/servicios')}> Cancelar </Button>
                         </HStack>
                     </form>
                 )}

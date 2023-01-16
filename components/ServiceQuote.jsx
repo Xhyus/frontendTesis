@@ -32,12 +32,7 @@ const ServiceQuote = ({ id, title, price, description, type, items, setSelectedS
                             </HStack>
                         </Button>
                         :
-                        <Button borderRadius={"3xl"} bgColor={"#53B6EE"} color={"white"} onClick={() => addToSelected()}>
-                            <HStack align={"center"}>
-                                <AiOutlinePlus size={"20"} fontWeight={"bold"} />
-                                <Text fontWeight={"bold"}>Agregar</Text>
-                            </HStack>
-                        </Button>
+                        <Button leftIcon={<AiOutlinePlus size={"20"} fontWeight={"bold"} />} borderRadius={"3xl"} bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} onClick={() => addToSelected()}>Agregar</Button>
                     }
                 </HStack>
             </Flex>

@@ -1,4 +1,5 @@
-import { FormControl, FormLabel, Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react'
+import { FormControl, FormLabel, Icon, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 
 const PasswordInput = ({ id, label, name, placeholder, show, handleChange, handleClick, enterKeyHandler }) => {
     return (
@@ -13,9 +14,7 @@ const PasswordInput = ({ id, label, name, placeholder, show, handleChange, handl
                     onChange={handleChange}
                 />
                 <InputRightElement width='4.5rem' pr={1}>
-                    <Button h='1.75rem' size='sm' onClick={handleClick}>
-                        {show ? 'Ocultar' : 'Mostrar'}
-                    </Button>
+                    <Icon as={show ? FaRegEyeSlash : FaRegEye} _hover={{ color: "cyan" }} onClick={handleClick} />
                 </InputRightElement>
             </InputGroup>
         </FormControl>

@@ -58,8 +58,8 @@ const Empresa = () => {
                 <>
                     <Heading as={"h2"} fontSize={"3xl"} my={5}>¿Cual es el estado de su empresa?</Heading>
                     <HStack align={"center"} justify={"center"} my={5}>
-                        <Button w={'full'} onClick={() => setConstitutedCompany(true)} colorScheme={'orange'}>Empresa constituida</Button>
-                        <Button w={'full'} onClick={() => setConstitutedCompany(false)} colorScheme={'cyan'}>Empresa no constituida</Button>
+                        <Button w={'full'} bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} onClick={() => setConstitutedCompany(true)} >Empresa constituida</Button>
+                        <Button w={'full'} bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} onClick={() => setConstitutedCompany(false)} >Empresa no constituida</Button>
                     </HStack>
                     {constitutedCompany === true ?
                         <Constituted company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />

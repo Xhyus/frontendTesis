@@ -21,7 +21,7 @@ const QuotesTable = ({ quotes }) => {
                     <Td fontSize={'small'}>{quote.company.contact.name}</Td>
                     <Td fontSize={'small'}>{new Date(quote.end).toLocaleDateString()}</Td>
                     <Td fontSize={'small'}>
-                        <Button colorScheme="blue" onClick={() => router.push("/cotizaciones/ver/" + quote._id)} fontSize={'small'}>Detalles</Button>
+                        <Button bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} onClick={() => router.push("/cotizaciones/ver/" + quote._id)} fontSize={'small'}>Detalles</Button>
                     </Td>
                 </Tr>
             )

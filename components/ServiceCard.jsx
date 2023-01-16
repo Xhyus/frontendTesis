@@ -14,7 +14,7 @@ const ServiceCard = ({ id, title, price, description, type, items, message, func
                 <Text >{formatDescription(description)}</Text>
                 <HStack justify={"space-between"} pt={5}>
                     <Text>{formatType(type)} | {items} Items</Text>
-                    <Button borderRadius={10} colorScheme="blue" color={"white"} onClick={() => func(id)}>{message}</Button>
+                    <Button borderRadius={10} bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} onClick={() => func(id)}>{message}</Button>
                 </HStack>
             </Flex>
         </Card>

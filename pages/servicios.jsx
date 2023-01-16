@@ -65,7 +65,7 @@ const Servicios = ({ data }) => {
     const sendToService = (id) => router.push(`/servicios/ver/${id}`)
 
     return (
-        <Container maxW={"container.xl"} centerContent>
+        <Container maxW={"container.xl"} centerContent pb={10}>
             <Heading as={"h1"} mt={10} fontSize={'6xl'}>Servicios</Heading>
             <SearchButton goToPage="/servicios/crear" setSearch={setSearch} text="Crear" searchTerm={filter.searchTerm} />
             <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>

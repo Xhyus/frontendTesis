@@ -50,7 +50,7 @@ const Constituted = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }
                         <FormikError error={errors.phone} />
                     )}
                     <FormInput label="Dirección" onChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" touched={touched.address} errors={errors.address} />
-                    <Button color={"white"} bgColor={"#7ABC63"} type="submit" w="full"> Siguiente paso</Button>
+                    <Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" w="full"> Siguiente paso</Button>
                 </form>
             )}
         </Formik>

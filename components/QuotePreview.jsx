@@ -58,8 +58,8 @@ const QuotePreview = ({ quote, selectedServices, setStep }) => {
                     )
                 })}
                 <HStack w={"full"} py={5}>
-                    <Button color={"white"} w={"full"} bgColor={"#7ABC63"} borderRadius={'3xl'} onClick={handleSubmit}>Crear cotización</Button>
-                    <Button colorScheme={"blue"} w={"full"} borderRadius={'3xl'} onClick={() => setStep(1)}>Atras</Button>
+                    <Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} w={"full"} borderRadius={'3xl'} onClick={handleSubmit}>Crear cotización</Button>
+                    <Button bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} w={"full"} borderRadius={'3xl'} onClick={() => setStep(1)}>Atras</Button>
                 </HStack>
             </Stack>
         </Container >

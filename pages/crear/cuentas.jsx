@@ -27,7 +27,6 @@ const Cuentas = () => {
     }
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(account)
         if (account.password !== account.confirmPassword) {
             return Swal.fire({
                 icon: 'error',
@@ -63,8 +62,8 @@ const Cuentas = () => {
             <InputAccount name="password" label="Contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Contraseña" />
             <InputAccount name="confirmPassword" label="Confirmar contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Confirmar contraseña" />
             <HStack spacing={4} w="full" mx="auto" my={5}>
-                <Button color={"white"} bgColor={"#7ABC63"} w="full" onClick={onSubmit}>Crear cuenta</Button>
-                <Button colorScheme="red" w="full" onClick={() => router.push('/')}>Cancelar</Button>
+                <Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} w="full" onClick={onSubmit}>Crear cuenta</Button>
+                <Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} w="full" onClick={() => router.push('/')}>Cancelar</Button>
             </HStack>
         </Container>
     )

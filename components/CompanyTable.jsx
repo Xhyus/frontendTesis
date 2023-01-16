@@ -24,7 +24,7 @@ const CompanyTable = ({ companies }) => {
                     <Td fontSize={'small'}>{company.contact.phone}</Td>
                     <Td fontSize={'small'}>{company.contact.email}</Td>
                     <Td fontSize={'small'}>
-                        <Button colorScheme="blue" onClick={() => router.push("/empresa/ver/" + company._id)} fontSize={'small'}>Detalles</Button>
+                        <Button bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} onClick={() => router.push("/empresa/ver/" + company._id)} fontSize={'small'}>Detalles</Button>
                     </Td>
                 </Tr>
             )

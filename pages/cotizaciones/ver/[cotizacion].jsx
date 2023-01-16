@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react'
+import { Heading, Button, Container, HStack, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react'
 import { getQuote, deleteQuote } from '../../../data/quotes'
 import { useRouter } from 'next/router'
 import TextCopy from '../../../components/TextCopy'
 import { FaCalendarTimes, FaCalendarPlus } from 'react-icons/fa'
-import { formatDate, formatFormalization, formatPrice, formatTitleDetail, formatText } from '../../../utils/formatInfo'
+import { formatDate, formatFormalization, formatTitleDetail, formatText } from '../../../utils/formatInfo'
 import Swal from 'sweetalert2'
 
 export async function getServerSideProps(context) {
@@ -29,7 +28,7 @@ const VerCotizacion = ({ quote }) => {
     const router = useRouter()
     const handleDelete = async () => {
         try {
-            const response = await deleteQuote(quote._id)
+            await deleteQuote(quote._id)
             await Swal.fire({
                 title: 'Cotización eliminada',
                 text: 'La cotización ha sido eliminada correctamente',
@@ -58,12 +57,10 @@ const VerCotizacion = ({ quote }) => {
                     <TagLabel>{formatDate(quote.end)}</TagLabel>
                 </Tag>
             </HStack>
-            <HStack align={"center"} justify={"center"} my={5}>
-                <Heading as={"h1"}>{formatTitleDetail(quote.name)}</Heading>
-            </HStack>
+            <Heading as={"h1"} my={10} fontSize={'6xl'}>{formatTitleDetail(quote.name)}</Heading>
             <HStack mb={5}>
-                <Button colorScheme={"gray"} w="full" onClick={() => router.push('/cliente/cotizacion/' + quote.url)}>Ver cotización</Button>
-                <Button colorScheme={"red"} w="full" onClick={() => handleDelete()}>Eliminar cotización</Button>
+                <Button bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} w="full" onClick={() => router.push('/cliente/cotizacion/' + quote.url)}>Ver cotización</Button>
+                <Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} w="full" onClick={() => handleDelete()}>Eliminar cotización</Button>
             </HStack>
             <HStack justify={"space-between"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >

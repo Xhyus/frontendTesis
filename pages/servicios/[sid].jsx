@@ -106,9 +106,7 @@ const Update = ({ data }) => {
 
     return (
         <Container maxW={"container.md"}>
-            <HStack align={"center"} justify={"center"} mt={10}>
-                <Heading>Servicio: {service.name}</Heading>
-            </HStack>
+            <Heading as={"h1"} mt={10} fontSize={'6xl'}>Servicio: {service.name}</Heading>
             <Formik
                 initialValues={service}
                 validationSchema={serviceValidation}
@@ -142,14 +140,8 @@ const Update = ({ data }) => {
                     handleSubmit,
                 }) => (
                     <form onSubmit={handleSubmit} id="form" >
-                        <FormInput label="Nombre del servicio" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
-                        {touched.name && errors.name && (
-                            <Text color={"red"}>{errors.name}</Text>
-                        )}
-                        <FormInput label="Descripción del servicio" onChange={handleChange} values={values.description} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
-                        {touched.description && errors.description && (
-                            <Text color={"red"}>{errors.description}</Text>
-                        )}
+                        <FormInput label="Nombre del servicio" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" touched={touched.name} errors={errors.name} />
+                        <FormInput label="Descripción del servicio" onChange={handleChange} values={values.description} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" touched={touched.description} errors={errors.description} />
                         <HStack>
                             <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 5 UF" />
                             <FormControl isRequired py={3}>
@@ -177,10 +169,10 @@ const Update = ({ data }) => {
                             return <ItemUpdate key={index} id={item.id} handleDeleteItem={handleDeleteItem} value={item.description} handleChangeItem={handleChangeItem} lastItem={items.length} />
                         })
                         }
-                        <Button onClick={handleAddItem} colorScheme="orange" mt="5" w="full">Agregar Ítem</Button>
+                        <Button onClick={handleAddItem} bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} mt="5" w="full">Agregar Ítem</Button>
                         <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-                            <Button colorScheme={"green"} type="submit" w="full">Modificar</Button>
-                            <Button colorScheme={"red"} type="reset" w="full" onClick={() => router.push(`/servicios/ver/${service._id}`)}>Cancelar</Button>
+                            <Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" w="full">Modificar</Button>
+                            <Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} type="reset" w="full" onClick={() => router.push(`/servicios/ver/${service._id}`)}>Cancelar</Button>
                         </HStack>
                     </form>
                 )}

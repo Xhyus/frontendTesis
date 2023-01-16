@@ -44,9 +44,7 @@ const Empresas = ({ data }) => {
     })
     const totalPages = Math.ceil(results.length / rows)
     const currentPageData = results.slice((page - 1) * rows, page * rows)
-    const handleChange = (page) => {
-        setPage(page)
-    }
+    const handleChange = (page) => setPage(page)
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
