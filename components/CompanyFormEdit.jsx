@@ -1,11 +1,13 @@
-import { Heading, HStack, Button, Stack, FormLabel, Input, FormControl, Tooltip } from '@chakra-ui/react';
+import { Heading, HStack, Button, FormLabel, Input, FormControl, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import FormInput from './FormInput';
-import FormikError from './FormikError';
 import constitutedValidation from '../utils/constitutedValidation';
-import { formatRut } from 'rutlib'
+import unconstitutedValidation from '../utils/unconstitutedValidation';
+import { useRouter } from 'next/router';
+import { formatRut, validateRut } from 'rutlib'
 
 const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyRUT, constituted, setConstituted }) => {
+    const router = useRouter()
     const handleChangeRUT = (e) => {
         if (e.target.value === '-') {
             setCompanyRUT('')
@@ -14,24 +16,19 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
             setCompanyRUT(formatRut(e.target.value))
         }
     }
-
-    const setButtonColor = () => {
-        if (constituted) {
-            return 'green'
-        } else {
-            return 'red'
-        }
-    }
-
-
-    console.log(constituted)
-
-
     return (
         <Formik
-            initialValues={company}
-            // validationSchema={constitutedValidation}
+            initialValues={{ name: company.name, socialReason: company.socialReason === null ? '' : company.socialReason, email: company.email, phone: company.phone, address: company.address, rut: company.rut, constituted: company.constituted }}
+            validationSchema={constituted ? constitutedValidation : unconstitutedValidation}
             onSubmit={(values) => {
+                if (!validateRut(companyRUT)) {
+                    return Swal.fire({
+                        title: 'Error',
+                        text: 'RUT inválido',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    })
+                }
                 setCompany(values)
                 setStep(2)
             }}
@@ -46,47 +43,27 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
             }) => (
                 <form onSubmit={handleSubmit} id="form" >
                     <Heading as="h2" size="lg" mb={4} color="white">Datos de la empresa</Heading>
-                    <HStack spacing={4} mb={4}>
-                        <Button colorScheme={setButtonColor} variant="outline" onClick={() => setConstituted(!constituted)}>{constituted === true ? "La empresa ya no esta constituida" : "¿Ha constituido su empresa?"}</Button>
-                    </HStack>
-                    <FormInput label="Nombre de la empresa" handleChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Estudio Fragua" />
-                    {touched.name && errors.name && (
-                        <FormikError error={errors.name} />
-                    )}
+                    <Button my={3} color="white" bgColor={constituted === true ? '#53B6EE' : '#FF9F0F'} _hover={{ bgColor: constituted === true ? '#33A7EB' : '#F59300' }} onClick={() => setConstituted(!constituted)}>
+                        {constituted === true ? "La empresa ya no esta constituida" : "¿Ha constituido su empresa?"}
+                    </Button>
+                    <FormInput label="Nombre de la empresa" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Estudio Fragua" touched={touched.name} errors={errors.name} />
                     {constituted && (
-                        <FormInput label="Razón social" handleChange={handleChange} values={values.socialReason} handleBlur={handleBlur} name="socialReason" type="text" placeHolder="Ej: Restaurantes McDonald's S.A." />
+                        <FormInput label="Razón social" onChange={handleChange} values={values.socialReason} handleBlur={handleBlur} name="socialReason" type="text" placeHolder="Ej: Restaurantes McDonald's S.A." touched={touched.socialReason} errors={errors.socialReason} />
                     )}
-                    {touched.socialReason && errors.socialReason && (
-                        <FormikError error={errors.socialReason} />
-                    )}
-                    <FormInput label="Email" handleChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" />
-                    {touched.email && errors.email && (
-                        <FormikError error={errors.email} />
-                    )}
+                    <FormInput label="Email" onChange={handleChange} values={values.email} handleBlur={handleBlur} name="email" type="email" placeHolder="Ej: Correo@gmail.cl" touched={touched.email} errors={errors.email} />
                     <HStack>
-                        <Stack w={'full'}>
-                            <FormControl isRequired py={3}>
-                                <FormLabel>RUT de Empresa</FormLabel>
-                                <Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
-                                    <Input type={"text"} name={companyRUT} maxLength={12} onChange={handleChangeRUT} value={companyRUT} placeholder={"11.111.111-1"} />
-                                </Tooltip>
-                            </FormControl>
-                        </Stack>
-                        <Stack w={'full'}>
-                            <FormInput label="Teléfono" handleChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
-                        </Stack>
+                        <FormControl isRequired py={3}>
+                            <FormLabel>RUT de Empresa</FormLabel>
+                            <Tooltip label={"Ingrese RUT"} aria-label={"Ingrese RUT"}>
+                                <Input type={"text"} name={companyRUT} maxLength={12} onChange={handleChangeRUT} value={companyRUT} placeholder={"11.111.111-1"} />
+                            </Tooltip>
+                        </FormControl>
+                        <FormInput label="Teléfono" onChange={handleChange} values={values.phone} handleBlur={handleBlur} name="phone" type="text" placeHolder="Ej: 12345678" />
                     </HStack>
+                    <FormInput label="Dirección" onChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" touched={touched.address} errors={errors.address} />
                     <HStack>
-                        {touched.phone && errors.phone && (
-                            <FormikError error={errors.phone} />
-                        )}
-                    </HStack>
-                    <FormInput label="Dirección" handleChange={handleChange} values={values.address} handleBlur={handleBlur} name="address" type="text" placeHolder="Ej: Av. Siempre Viva 123" />
-                    {touched.address && errors.address && (
-                        <FormikError error={errors.address} />
-                    )}
-                    <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
-                        <Button colorScheme={"green"} type="submit" w="full"> Siguiente paso </Button>
+                        <Button my={10} bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" w="full"> Siguiente paso </Button>
+                        <Button my={10} bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => router.push(`/empresa/ver/${company._id}`)} w="full"> Cancelar </Button>
                     </HStack>
                 </form>
             )}

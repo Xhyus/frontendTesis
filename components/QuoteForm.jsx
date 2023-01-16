@@ -8,7 +8,6 @@ import TextareaForm from './TextareaForm'
 import Swal from 'sweetalert2'
 
 const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selectedInfo }) => {
-    console.log(setStep, quote, setQuote, companies, setSelectedInfo, selectedInfo)
     let companyOptions = companies.map(company => {
         return {
             value: company._id,
@@ -63,8 +62,8 @@ const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selec
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                     <form onSubmit={handleSubmit} id="form">
                         <Heading mt={10} mb={5} fontSize={'6xl'} textAlign="center">Crear Cotización</Heading>
-                        <FormInput placeHolder={"Ingrese el nombre con el que se identifica la cotización"} label="Nombre" name="name" type="text" values={values.name} onChange={handleChange} onBlur={handleBlur} errors={errors.name} touched={touched.name} />
-                        <TextareaForm label="Descripción" name="description" placeholder="Ingrese una descripción de la cotización" value={values.description} onChange={handleChange} onBlur={handleBlur} errors={errors} touched={touched} />
+                        <FormInput placeHolder={"Ingrese el nombre con el que se identifica la cotización"} label="Nombre" name="name" type="text" values={values.name} onChange={handleChange} handleBlur={handleBlur} errors={errors.name} touched={touched.name} />
+                        <TextareaForm label="Descripción" name="description" placeholder="Ingrese una descripción de la cotización" value={values.description} onChange={handleChange} onBlur={handleBlur} errors={errors.description} touched={touched.description} />
                         <HStack w="full" mt={5} >
                             <ReactSelect label="Empresa" name="company" index={selectedInfo.company} value={selectedInfo.company} onChange={handleChangeSelect} options={companyOptions} />
                             <ReactSelect label="Formalización" name="formalization" index={selectedInfo.formalization} value={selectedInfo.formalization} onChange={handleChangeSelect} options={formalizationOptions} />
@@ -73,8 +72,8 @@ const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selec
                             <ReactSelect label="Pago" name="payment" index={selectedInfo.payment} value={selectedInfo.payment} onChange={handleChangeSelect} options={paymentOptions} />
                             <ReactSelect label="Documento" name="document" index={selectedInfo.document} value={selectedInfo.document} onChange={handleChangeSelect} options={documentOptions} />
                         </HStack>
-                        <TextareaForm label="Metodo de pago" placeholder='Ingrese el metodo de pago' type="text" name="paymentMethod" onChange={handleChange} onBlur={handleBlur} value={values.paymentMethod} errors={errors} touched={touched} />
-                        <TextareaForm label="Plazo de entrega" placeholder='Ingrese el plazo de entrega' type="text" name="projectDelivery" onChange={handleChange} onBlur={handleBlur} value={values.projectDelivery} errors={errors} touched={touched} />
+                        <TextareaForm label="Metodo de pago" placeholder='Ingrese el metodo de pago' type="text" name="paymentMethod" onChange={handleChange} onBlur={handleBlur} value={values.paymentMethod} errors={errors.paymentMethod} touched={touched.paymentMethod} />
+                        <TextareaForm label="Plazo de entrega" placeholder='Ingrese el plazo de entrega' type="text" name="projectDelivery" onChange={handleChange} onBlur={handleBlur} value={values.projectDelivery} errors={errors.projectDelivery} touched={touched.projectDelivery} />
                         <HStack my={5} w="full">
                             <Button w="full" bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" >Ir al siguiente paso</Button>
                             <Button w="full" bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => { setStep(1), setQuote({ ...quote, values }) }}>Atras</Button>

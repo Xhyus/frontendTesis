@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, Tooltip, InputGroup, InputLeftAddon } from '@chakra-ui/react'
+import { FormControl, FormLabel, Input, Tooltip, InputGroup, InputLeftAddon, Text } from '@chakra-ui/react'
 import FormikError from './FormikError';
 
 const FormInput = ({ label, onChange, handleBlur, name, type, placeHolder, values, touched, errors }) => {
