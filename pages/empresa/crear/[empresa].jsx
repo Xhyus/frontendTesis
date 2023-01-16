@@ -1,36 +1,36 @@
-import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react'
+import { Heading, Button, Container, HStack } from '@chakra-ui/react';
 import { signedPage } from '../../../data/signed'
 import Constituted from '../../../components/Constituted';
 import UnConstituted from '../../../components/UnConstituted';
 import ContactForm from '../../../components/ContactForm';
 
-// export const getServerSideProps = async (context) => {
-//     try {
-//         const res = await signedPage(context.query)
-//         if (res.status === 200 && res.data.use === 'company') {
-//             return {
-//                 props: {
-//                     data: res.data
-//                 }
-//             }
-//         } else {
-//             return {
-//                 redirect: {
-//                     destination: '/',
-//                     permanent: false,
-//                 },
-//             }
-//         }
-//     } catch (error) {
-//         return {
-//             redirect: {
-//                 destination: '/',
-//                 permanent: false
-//             }
-//         }
-//     }
-// }
+export const getServerSideProps = async (context) => {
+    try {
+        const res = await signedPage(context.query)
+        if (res.status === 200 && res.data.use === 'company') {
+            return {
+                props: {
+                    data: res.data
+                }
+            }
+        } else {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
+            }
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+}
 
 const Empresa = () => {
     const [constitutedCompany, setConstitutedCompany] = useState(true)
@@ -50,6 +50,10 @@ const Empresa = () => {
     })
     const [companyRUT, setCompanyRUT] = useState('')
     const [contactRUT, setContactRUT] = useState('')
+
+    useEffect(() => {
+        localStorage.setItem('chakra-ui-color-mode', 'dark')
+    }, [])
 
     return (
         <Container maxW={"container.md"}>

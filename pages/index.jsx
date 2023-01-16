@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
@@ -37,10 +37,15 @@ const Home = () => {
 		})
 	}
 
+	useEffect(() => {
+		localStorage.setItem('chakra-ui-color-mode', 'dark')
+	}, [])
+
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			await postLogin(user.email, user.password)
+			const response = await postLogin(user.email, user.password)
 			Cookies.set("token", response.data.token, { expires: 1 })
 			Cookies.set("user", response.data.user, { expires: 1 })
 			Router.push('/servicios')

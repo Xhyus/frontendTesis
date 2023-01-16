@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Heading, Container, Wrap, WrapItem } from '@chakra-ui/react'
+import { Heading, Container, Wrap, WrapItem, Grid, GridItem } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
 import SearchButton from '../components/SearchButton'
@@ -65,18 +65,18 @@ const Servicios = ({ data }) => {
     const sendToService = (id) => router.push(`/servicios/ver/${id}`)
 
     return (
-        <Container maxW={"container.xl"} centerContent pb={10}>
+        <Container maxW={"container.xl"} centerContent pb={10} >
             <Heading as={"h1"} mt={10} fontSize={'6xl'}>Servicios</Heading>
             <SearchButton goToPage="/servicios/crear" setSearch={setSearch} text="Crear" searchTerm={filter.searchTerm} />
-            <Wrap spacing={10} justify={{ base: "center", md: "normal" }}>
+            <Grid gap={10} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} mt={10}>
                 {filter.filteredServices.map(service => {
                     return (
-                        <WrapItem key={service._id}>
+                        <GridItem h='xs' key={service._id}>
                             <ServiceCard id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} message="Detalles" func={sendToService} />
-                        </WrapItem>
+                        </GridItem>
                     )
                 })}
-            </Wrap>
+            </Grid>
         </Container >
     )
 }

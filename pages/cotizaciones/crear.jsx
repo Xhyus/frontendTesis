@@ -49,7 +49,7 @@ const CrearCotizaciones = ({ data }) => {
         formalization: null,
         document: null
     })
-    const [step, setStep] = useState(2)
+    const [step, setStep] = useState(1)
 
     if (step === 1) {
         return (
