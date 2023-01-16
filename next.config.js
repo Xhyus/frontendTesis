@@ -7,8 +7,7 @@ const nextConfig = {
 module.exports = {
 	env: {
 		SERVIDOR: process.env.SERVIDOR,
-		SERVIDOR2: process.env.SERVIDOR2,
-		FRONTEND: process.env.FRONTEND,
+		FRONTEND: process.env.FRONTEND
 	},
 	nextConfig
 };
