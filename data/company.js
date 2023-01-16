@@ -31,7 +31,7 @@ const editCompany = async (company, contact, companyRUT, contactRUT, state, id) 
         contactRut: contactRUT,
         contactPhone: contact.phone,
         contactEmail: contact.email,
-        contactRole: contact.role,
+        contactRole: contact.position
     })
     return response;
 }

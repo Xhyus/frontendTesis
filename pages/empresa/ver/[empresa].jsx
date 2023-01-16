@@ -37,14 +37,14 @@ const VerEmpresa = (data) => {
                     <TextCopy prefix={"Rut"} data={company.rut} />
                     {company.socialReason !== null ? <TextCopy prefix={"Razón social"} data={company.socialReason} /> : null}
                     {company.address && <TextCopy prefix={"Dirección"} data={company.address} />}
-                    <TextCopy prefix={"Teléfono"} data={company.phone} />
+                    <TextCopy prefix={"Teléfono"} data={"+569" + company.phone} />
                     <TextCopy prefix={"Email"} data={company.email} />
                 </Stack>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} pt={{ base: 5, md: "0" }}>
                     <Heading size={"md"}>Datos de contacto</Heading>
                     <TextCopy prefix={"Nombre"} data={company.contact.name} />
                     <TextCopy prefix={"Rut"} data={company.contact.rut} />
-                    <TextCopy prefix={"Teléfono"} data={company.contact.phone} />
+                    <TextCopy prefix={"Teléfono"} data={"+569" + company.contact.phone} />
                     <TextCopy prefix={"Email"} data={company.contact.email} />
                     {company.contact.socialReason ? <TagText tag={"Cargo"} data={company.contact.role} /> : <TagText tag={"Rol"} data={company.contact.role} />}
                 </Stack>
@@ -63,7 +63,7 @@ const VerEmpresa = (data) => {
                                 return (
                                     <HStack w={"full"} py={5} key={index}>
                                         <Text w={"full"}>{quote.name}</Text>
-                                        <Button w={"30%"} bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
+                                        <Button w={"30%"} bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} onClick={() => router.push('/cotizaciones/ver/' + quote._id)}>Ver</Button>
                                     </HStack>
                                 )
                             })}
@@ -74,7 +74,7 @@ const VerEmpresa = (data) => {
                                 return (
                                     <HStack w={"full"} py={5} key={index}>
                                         <Text w={"full"}>{quote.name}</Text>
-                                        <Button w={"30%"} bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
+                                        <Button w={"30%"} bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => router.push('/cotizaciones/ver/' + quote._id)}>Ver</Button>
                                     </HStack>
                                 )
                             })}

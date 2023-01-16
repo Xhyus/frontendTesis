@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getClientQuote } from '../../../data/quotes'
-import { Heading, HStack, Image, Stack, Text } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import Service from '../../../components/quote/Service'
 import Resume from '../../../components/quote/Resume'
 import MoreData from '../../../components/quote/MoreData'
@@ -43,7 +43,7 @@ const VisualizarCotizacion = ({ quoteData }) => {
     return (
         <>
             <Stack w={'full'} h={"150vh"} justify={"center"} align="center" backgroundImage="url('/portada.png')" bgSize={'cover'} bgPosition={'center'} />
-            <Stack w={'full'} h={"150vh"} justify={"center"} align="center" backgroundImage="url('/creamos-marcas-a-fuego.jpg')" bgSize={'cover'} />
+            <Stack w={'full'} h={"150vh"} justify={"center"} align="center" backgroundImage="url('/creamos-marcas-a-fuego.jpg')" bgSize={'cover'} mt={"-1"} />
             <Stack w={'full'} h={"100vh"} justify={"center"} align="center" bgColor={"#FF5122"} bgSize={'cover'} p={'28'} >
                 <Stack w={'90%'} h={"full"} justify={"center"} align="center" backgroundImage="url('/aqui-estan-los.png')" bgRepeat={'no-repeat'} bgSize={'contain'} />
             </Stack>

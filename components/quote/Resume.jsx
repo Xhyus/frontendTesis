@@ -5,7 +5,7 @@ const Resume = ({ quoteData }) => {
         <>
             <Box bgColor="#fff" w="full" h="100vh" px="40" py={"20"}>
                 <Flex h="100%" gap={20}>
-                    <Flex flexDir="column" justifyContent="space-between" w={"15%"}>
+                    <Flex flexDir="column" justifyContent="space-between" w={"25%"}>
                         <Box borderTop="solid 15px black">
                             <Heading as="h1" size="2xl" fontWeight={"extrabold"} color="black">Resumen</Heading>
                         </Box>

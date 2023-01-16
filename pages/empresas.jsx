@@ -47,15 +47,15 @@ const Empresas = ({ data }) => {
     const handleChange = (page) => setPage(page)
 
     const setSearch = (e) => {
-        if (e.target.value.length > 0) {
+        if (e.target?.value.length > 0) {
             setFilter({
-                ...filter,
                 status: true,
-                searchTerm: e.target.value
+                searchTerm: e.target.value,
+                filteredCompany: results
             })
         } else {
             setFilter({
-                ...filter,
+                filteredCompany: results,
                 status: false,
                 searchTerm: ''
             })

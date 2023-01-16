@@ -6,9 +6,9 @@ const MoreData = ({ quoteData }) => {
         <>
             <Box bgColor="#fff" w="full" minH="100vh" px="40" py={"20"}>
                 <Flex h="100%" gap={20}>
-                    <Flex flexDir="column" justifyContent="space-between" w={"15%"}>
+                    <Flex flexDir="column" justifyContent="space-between" w={"20%"}>
                         <Box borderTop="solid 15px black">
-                            <Heading as="h1" size="2xl" fontWeight={"extrabold"} color="black">Otros Datos</Heading>
+                            <Heading as="h1" size={"2xl"} fontWeight={"extrabold"} color="black">Otros Datos</Heading>
                         </Box>
                         <Image src="/squaredots2.png" alt="dots" w="100%" />
                     </Flex>
