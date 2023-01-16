@@ -27,20 +27,13 @@ const Navbar = () => {
 		if (path[1] === 'empresas' && boton === 'empresas' || path[1] === 'empresa' && boton === 'empresas') {
 			return "orange.300"
 		}
-		return "white"
-	}
-
-	const currentPageMobile = (boton) => {
-		if (path[1] === 'servicios' && boton === 'servicios') {
-			return "orange"
+		if (path[1] === 'perfil' && boton === 'perfil' || path[1] === 'perfil' && boton === 'user') {
+			return "orange.300"
 		}
-		if (path[1] === 'cotizaciones' && boton === 'cotizaciones') {
-			return "orange"
+		if (path[1] === 'crear' && path[2] === 'cuentas' && (boton === 'perfil/cuentas' || boton === 'user')) {
+			return "orange.300"
 		}
-		if (path[1] === 'empresas' && boton === 'empresas' || path[1] === 'empresa' && boton === 'empresas') {
-			return "orange"
-		}
-		return "black"
+		return null
 	}
 
 	const logout = async () => {
@@ -60,15 +53,15 @@ const Navbar = () => {
 						<Link _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("cotizaciones")} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
 						<Link _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("empresas")} onClick={() => router.push('/empresas')}>Empresas</Link>
 						<Menu>
-							<MenuButton _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("perfil")} w={"fit-content"}>
+							<MenuButton _hover={{ color: "none" }} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("user")} w={"fit-content"}>
 								<HStack spacing={1}>
 									<Text>{user}</Text>
 									<FaAngleDown />
 								</HStack>
 							</MenuButton>
 							<MenuList>
-								<MenuItem onClick={() => router.push('/perfil')}>Perfil</MenuItem>
-								<MenuItem onClick={() => router.push('/crear/cuentas')}>Crear cuenta</MenuItem>
+								<MenuItem color={currentPage("perfil")} onClick={() => router.push('/perfil')}>Perfil</MenuItem>
+								<MenuItem color={currentPage("perfil/cuentas")} onClick={() => router.push('/crear/cuentas')}>Crear cuenta</MenuItem>
 								<MenuItem onClick={logout} color={"red"}>Cerrar sesion</MenuItem>
 							</MenuList>
 						</Menu>
@@ -96,15 +89,15 @@ const Navbar = () => {
 						</DrawerHeader>
 						<DrawerBody justifyContent={"center"}>
 							<Stack>
-								<Link color={currentPageMobile("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
-								<Link color={currentPageMobile("cotizaciones")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
-								<Link color={currentPageMobile("empresas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/empresas')}>Empresas</Link>
-								<Link color={currentPageMobile("perfil")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/perfil')}>Perfil</Link>
-								<Link color={currentPageMobile("crear/cuentas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/crear/cuentas')}>Crear cuenta</Link>
+								<Link color={currentPage("servicios")} fontWeight={"bold"} onClick={() => router.push('/servicios')}>Servicios</Link>
+								<Link color={currentPage("cotizaciones")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/cotizaciones')}>Cotizaciones</Link>
+								<Link color={currentPage("empresas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/empresas')}>Empresas</Link>
+								<Link color={currentPage("perfil")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/perfil')}>Perfil</Link>
+								<Link color={currentPage("perfil/cuentas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('/crear/cuentas')}>Crear cuenta</Link>
 							</Stack>
 						</DrawerBody>
 						<DrawerFooter justifyContent={"center"}>
-							<Button colorScheme={"red"} fontWeight={"bold"} onClick={logout} >Cerrar Sesión</Button>
+							<Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} fontWeight={"bold"} onClick={logout} >Cerrar Sesión</Button>
 						</DrawerFooter>
 					</DrawerContent>
 				</Drawer >

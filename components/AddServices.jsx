@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import SearchLook from './SearchLook'
-import { Container, Heading, Wrap, Stack, Text, Button, HStack, WrapItem } from '@chakra-ui/react'
+import { Container, Heading, Stack, Text, Button, HStack, Grid, GridItem } from '@chakra-ui/react'
 import ServiceQuote from './ServiceQuote'
 
 const AddServices = ({ services, selectedServices, setStep, step, setSelectedServices }) => {
@@ -45,15 +45,15 @@ const AddServices = ({ services, selectedServices, setStep, step, setSelectedSer
             <Container maxW={"container.xl"} centerContent>
                 <Heading mt={10} mb={5} fontSize={'6xl'}>Crear Cotización</Heading>
                 <SearchLook searchTerm={filter.searchTerm} setSearch={setSearch} text={"Ver cotización"} setStep={setStep} step={step} filter={filter} setFilter={setFilter} services={services} />
-                <Wrap spacing={10} justify={{ base: "center", md: "normal" }} pb={20}>
+                <Grid gap={10} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} mt={10}>
                     {filter.filteredServices.map(service => {
                         return (
-                            <WrapItem key={service._id}>
+                            <GridItem h='xs' key={service._id}>
                                 <ServiceQuote id={service._id} title={service.name} price={service.price} description={service.description} type={service.type} items={service.item.length} setSelectedServices={setSelectedServices} selectedServices={selectedServices} />
-                            </WrapItem>
+                            </GridItem>
                         )
                     })}
-                </Wrap>
+                </Grid>
             </Container >
             {selectedServices.length > 0 &&
                 <Stack position="sticky" bottom={0} w="full" p={4} bg="blue.800">
