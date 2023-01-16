@@ -8,7 +8,7 @@ const serviceValidation = yup.object({
         .required("El nombre es obligatorio"),
     description: yup.string()
         .min(10, "La descripción debe contener al menos 10 caracteres")
-        .max(100, "La descripción debe contener como maximo 100 caracteres")
+        .max(250, "La descripción debe contener como maximo 100 caracteres")
         .matches(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s\-\_\.\,\;\:\(\)\[\]\{\}\!\¡\¿\?\@\#\$\%\&\*\+\/]+$/, "El nombre solo puede contener letras, numeros, espacios y los siguientes caracteres: -_.,;:()[]{}!¡¿?@#$%&*+/ñÑáéíóúÁÉÍÓÚ")
         .required("La descripción es obligatoria"),
     price: yup.number()

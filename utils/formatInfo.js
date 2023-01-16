@@ -7,7 +7,7 @@ const formatTitleDetail = (title) => {
 }
 
 const formatDescription = (description) => {
-    return description.charAt(0).toUpperCase() + description.slice(1) + (description.length > 200 ? '...' : '');
+    return description.length > 150 ? description.charAt(0).toUpperCase() + description.slice(1, 150) + '...' : description.charAt(0).toUpperCase() + description.slice(1);
 }
 
 const formatPrice = (price) => {
