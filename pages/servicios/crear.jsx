@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Center, Spinner, Select, FormControl, FormLabel, Tooltip } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Center, Spinner, Select, FormControl, FormLabel, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
 import Item from '../../components/Item';
@@ -8,6 +8,8 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
 import { checkToken } from '../../data/user'
 import { postService } from '../../data/services'
+import TextareaForm from '../../components/TextareaForm';
+import FormikError from '../../components/FormikError';
 
 export const getServerSideProps = async (context) => {
     try {
@@ -120,15 +122,9 @@ const Crear = () => {
                     handleBlur,
                     handleSubmit,
                 }) => (
-                    <form onSubmit={handleSubmit} id="form" >
-                        <FormInput label="Nombre del servicio" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" />
-                        {touched.name && errors.name && (
-                            <Text color={"red"}>{errors.name}</Text>
-                        )}
-                        <FormInput label="Descripción del servicio" onChange={handleChange} values={values.description} handleBlur={handleBlur} name="description" type="text" placeHolder="Ej: Desarrollo de página web con diseño responsivo" />
-                        {touched.description && errors.description && (
-                            <Text color={"red"}>{errors.description}</Text>
-                        )}
+                    <form onSubmit={handleSubmit} >
+                        <FormInput label="Nombre del servicio" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Desarrollo de página web" errors={errors.name} touched={touched.name} />
+                        <TextareaForm label="Descripción" name="description" placeholder="Ingrese una descripción de la cotización" value={values.description} onChange={handleChange} onBlur={handleBlur} errors={errors.description} touched={touched.description} />
                         <HStack>
                             <FormInput label="Precio del servicio" onChange={handleChange} values={values.price} handleBlur={handleBlur} name="price" type="number" placeHolder="Ej: 5 UF" />
                             <FormControl isRequired py={3}>
@@ -145,17 +141,16 @@ const Crear = () => {
                         </HStack>
                         <HStack justify={"space-between"}>
                             {touched.price && errors.price && (
-                                <Text color={"red"}>{errors.price}</Text>
+                                <FormikError error={errors.price} />
                             )}
                             {touched.type && errors.type && (
-                                <Text color={"red"}>{errors.type}</Text>
+                                <FormikError error={errors.type} />
                             )}
                         </HStack>
                         <Heading fontSize={20} pt="5">Lista de Ítems</Heading>
                         {items.map((item, index) => {
                             return <Item key={index} id={item.id} handleDeleteItem={handleDeleteItem} handleChangeItem={handleChangeItem} lastItem={items.length} />
-                        })
-                        }
+                        })}
                         <Button onClick={handleAddItem} bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} mt="5" w="full">Agregar Ítem</Button>
                         <HStack align={"center"} justify={"center"} mt={5} pb={"10%"}>
                             <Button bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" w="full"> Crear </Button>

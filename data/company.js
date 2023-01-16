@@ -18,8 +18,8 @@ const createCompany = (company, contact, companyRUT, contactRUT, state) => {
     return response;
 }
 
-const editCompany = (company, contact, companyRUT, contactRUT, state) => {
-    const response = axios.put(`${process.env.SERVIDOR}/company`, {
+const editCompany = async (company, contact, companyRUT, contactRUT, state, id) => {
+    const response = await axios.put(`${process.env.SERVIDOR}/company/update/${id}`, {
         name: company.name,
         rut: companyRUT,
         phone: company.phone,
@@ -31,7 +31,7 @@ const editCompany = (company, contact, companyRUT, contactRUT, state) => {
         contactRut: contactRUT,
         contactPhone: contact.phone,
         contactEmail: contact.email,
-        contactRole: contact.position,
+        contactRole: contact.role,
     })
     return response;
 }

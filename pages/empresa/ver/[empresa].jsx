@@ -35,10 +35,10 @@ const VerEmpresa = (data) => {
                     <Heading size={"md"}>Datos de la empresa</Heading>
                     <TextCopy prefix={"Nombre"} data={company.name} />
                     <TextCopy prefix={"Rut"} data={company.rut} />
-                    {company.socialReason && <TextCopy prefix={"Razón social"} data={company.socialReason} />}
+                    {company.socialReason !== null ? <TextCopy prefix={"Razón social"} data={company.socialReason} /> : null}
                     {company.address && <TextCopy prefix={"Dirección"} data={company.address} />}
-                    <TextCopy prefix={"Teléfono"} data={company.contact.phone} />
-                    <TextCopy prefix={"Email"} data={company.contact.email} />
+                    <TextCopy prefix={"Teléfono"} data={company.phone} />
+                    <TextCopy prefix={"Email"} data={company.email} />
                 </Stack>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} pt={{ base: 5, md: "0" }}>
                     <Heading size={"md"}>Datos de contacto</Heading>
@@ -75,7 +75,8 @@ const VerEmpresa = (data) => {
                                     <HStack w={"full"} py={5} key={index}>
                                         <Text w={"full"}>{quote.name}</Text>
                                         <Button w={"30%"} bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => router.push('/cotizacion/ver/' + quote._id)}>Ver</Button>
-                                    </HStack>)
+                                    </HStack>
+                                )
                             })}
                         </TabPanel>
                     </TabPanels>
