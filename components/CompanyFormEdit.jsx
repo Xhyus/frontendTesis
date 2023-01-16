@@ -2,7 +2,7 @@ import { Heading, HStack, Button, FormLabel, Input, FormControl, Tooltip } from 
 import { Formik } from 'formik';
 import FormInput from './FormInput';
 import constitutedValidation from '../utils/constitutedValidation';
-import unconstitutedValidation from '../utils/unconstitutedValidation';
+import unConstitutedValidation from '../utils/unConstitutedValidation';
 import { useRouter } from 'next/router';
 import { formatRut, validateRut } from 'rutlib'
 
@@ -19,7 +19,7 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
     return (
         <Formik
             initialValues={{ name: company.name, socialReason: company.socialReason === null ? '' : company.socialReason, email: company.email, phone: company.phone, address: company.address, rut: company.rut, constituted: company.constituted }}
-            validationSchema={constituted ? constitutedValidation : unconstitutedValidation}
+            validationSchema={constituted ? constitutedValidation : unConstitutedValidation}
             onSubmit={(values) => {
                 if (!validateRut(companyRUT)) {
                     return Swal.fire({

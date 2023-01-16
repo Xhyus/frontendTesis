@@ -2,7 +2,7 @@ import { Heading, HStack, Button, Stack, FormControl, Input, Tooltip, FormLabel 
 import { Formik } from 'formik';
 import FormInput from './FormInput';
 import FormikError from './FormikError';
-import unconstitutedValidation from '../utils/unconstitutedValidation';
+import unConstitutedValidation from '../utils/unConstitutedValidation';
 import { formatRut } from 'rutlib';
 
 
@@ -19,7 +19,7 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
     return (
         <Formik
             initialValues={company}
-            validationSchema={unconstitutedValidation}
+            validationSchema={unConstitutedValidation}
             onSubmit={(values) => {
                 setCompany(values)
                 setStep(2)
