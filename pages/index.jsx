@@ -50,10 +50,10 @@ const Home = () => {
 			Cookies.set("user", response.data.user, { expires: 1 })
 			Router.push('/servicios')
 		} catch (error) {
-			Swal.fire({
+			return Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Usuario o contraseña incorrectos',
+				text: 'Algo salió mal, por favor intente nuevamente',
 			})
 		}
 	}

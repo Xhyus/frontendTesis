@@ -87,7 +87,7 @@ const Empresas = ({ data }) => {
                             <Th>Nombre Empresa</Th>
                             <Th>RUT Empresa</Th>
                             <Th>Contacto</Th>
-                            <Th>Telefono</Th>
+                            <Th>Teléfono</Th>
                             <Th>Correo</Th>
                             <Th>Acciones</Th>
                         </Tr>

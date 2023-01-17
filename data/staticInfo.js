@@ -8,8 +8,8 @@ const formalizationOptions = [
 const paymentOptions = [
     { value: 'Efectivo', label: 'Efectivo', name: "payment" },
     { value: 'Transferencia', label: 'Transferencia', name: "payment" },
-    { value: 'Credito', label: 'Credito', name: "payment" },
-    { value: 'Debito', label: 'Debito', name: "payment" },
+    { value: 'Credito', label: 'Crédito', name: "payment" },
+    { value: 'Debito', label: 'Débito', name: "payment" },
     { value: 'Otros', label: 'Otros', name: "payment" },
 ]
 

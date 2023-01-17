@@ -46,8 +46,8 @@ const getCompany = (id, token) => {
     return response;
 }
 
-const deleteCompany = (id, token) => {
-    const response = axios.delete(`${process.env.SERVIDOR}/company/delete/${id}`, { headers: { cookie: token } })
+const deleteCompany = (id) => {
+    const response = axios.delete(`${process.env.SERVIDOR}/company/delete/${id}`)
     return response;
 }
 

@@ -42,6 +42,21 @@ const formatFormalization = (formalization) => {
     }
 }
 
+const formatServiceType = (serviceType) => {
+    if (serviceType === 'Diseño') {
+        return 'Diseño'
+    }
+    if (serviceType === 'Desarrollo') {
+        return 'Desarrollo Web'
+    }
+    if (serviceType === 'Marketing') {
+        return 'Marketing'
+    }
+    if (serviceType === 'Otros') {
+        return 'Otros'
+    }
+}
+
 module.exports = {
     formatTitle,
     formatDescription,
@@ -50,5 +65,6 @@ module.exports = {
     formatDate,
     formatTitleDetail,
     formatText,
-    formatFormalization
+    formatFormalization,
+    formatServiceType
 }

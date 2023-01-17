@@ -44,7 +44,7 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
                 <form onSubmit={handleSubmit} id="form" >
                     <Heading as="h2" size="lg" mb={4} color="white">Datos de la empresa</Heading>
                     <Button my={3} color="white" bgColor={constituted === true ? '#53B6EE' : '#FF9F0F'} _hover={{ bgColor: constituted === true ? '#33A7EB' : '#F59300' }} onClick={() => setConstituted(!constituted)}>
-                        {constituted === true ? "La empresa ya no esta constituida" : "¿Ha constituido su empresa?"}
+                        {constituted === true ? "La empresa ya no está constituida" : "¿Ha constituido su empresa?"}
                     </Button>
                     <FormInput label="Nombre de la empresa" onChange={handleChange} values={values.name} handleBlur={handleBlur} name="name" type="text" placeHolder="Ej: Estudio Fragua" touched={touched.name} errors={errors.name} />
                     {constituted && (

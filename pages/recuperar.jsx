@@ -57,7 +57,7 @@ const Recuperar = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ha ocurrido un error, el correo no existe, no esta asociado a una cuenta o no se ha podido enviar el correo',
+                text: 'Ha ocurrido un error, el correo no existe, no está asociado a una cuenta o no se ha podido enviar el correo',
             })
         }
     }
@@ -74,7 +74,7 @@ const Recuperar = () => {
             <Container maxW="container.md" justifyContent={"center"} alignItems={"center"} backdropFilter='auto' backdropContrast='85%' p={'14'} >
                 <Stack spacing={4} justify={"center"} >
                     <Heading as="h1" size="xl" textAlign={"center"} textShadow={'2px 2px black'}>Recuperar Contraseña</Heading>
-                    <Heading as="h2" size="md" textAlign={"center"} textShadow={'2px 2px black'}>Para solicitar una nueva contraseña escriba su correo electronico asociado a una cuenta de la plataforma</Heading>
+                    <Heading as="h2" size="md" textAlign={"center"} textShadow={'2px 2px black'}>Para solicitar una nueva contraseña escriba su correo electrónico asociado a una cuenta de la plataforma</Heading>
                     <FormControl id="email">
                         <FormLabel>Correo Electrónico</FormLabel>
                         <Tooltip label="Ingresar Correo Electrónico" aria-label="Correo Electrónico">

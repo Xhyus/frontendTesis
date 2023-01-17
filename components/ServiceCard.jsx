@@ -10,13 +10,13 @@ const ServiceCard = ({ id, title, price, description, type, items, message, func
                         <Heading as={"h2"} fontWeight={'semibold'} fontSize={'3xl'}>{formatTitle(title)}</Heading>
                         <Box py={3}>
                             <Tag size="lg" borderRadius={'3xl'} py={2} px={3} w={"fit-content"} bgColor={"#FF9F0F"} color={"white"}>
-                                <TagLabel fontWeight={'bold'}>$ {formatPrice(price)}</TagLabel>
+                                <TagLabel fontWeight={'bold'}>{formatPrice(price)} UF</TagLabel>
                             </Tag>
                         </Box>
                         <Text my={1}>{formatDescription(description)}</Text>
                     </Box>
                     <HStack justify={"space-between"} >
-                        <Text>{formatType(type)} | {items} Items</Text>
+                        <Text>{formatType(type)} | {items} {items > 1 ? 'Items' : "Item"}</Text>
                         <Button borderRadius={10} bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} onClick={() => func(id)}>{message}</Button>
                     </HStack>
                 </Flex>

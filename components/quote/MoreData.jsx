@@ -20,11 +20,11 @@ const MoreData = ({ quoteData }) => {
                                     <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{quoteData.projectDelivery}</Text>
                                 </Stack>
                                 <Stack borderBottom={"2px solid black"} pb={2}>
-                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Formalizacion:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Formalización:</Text>
                                     <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{formatFormalization(quoteData.formalization)} </Text>
                                 </Stack>
                                 <Stack borderBottom={"2px solid black"} pb={2}>
-                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Metodo de pago:</Text>
+                                    <Text fontSize={'2xl'} fontFamily="Open Sans" color="black" fontWeight={'semibold'}>Método de pago:</Text>
                                     <Text fontSize={'2xl'} fontFamily="Open Sans" color="black">{quoteData.paymentMethod} </Text>
                                 </Stack>
                                 <Stack borderBottom={"2px solid black"} pb={2}>

@@ -1,4 +1,4 @@
-import { Heading, Button, Container, HStack, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, Tag, TagLabel, TagLeftIcon, Grid, Box, Text } from '@chakra-ui/react'
+import { Heading, Button, Container, HStack, Stack, Tag, TagLabel, TagLeftIcon, Grid, Box, Text } from '@chakra-ui/react'
 import { getQuote, deleteQuote } from '../../../data/quotes'
 import { useRouter } from 'next/router'
 import TextCopy from '../../../components/TextCopy'
@@ -29,14 +29,27 @@ const VerCotizacion = ({ quote }) => {
     const router = useRouter()
     const handleDelete = async () => {
         try {
-            await deleteQuote(quote._id)
-            await Swal.fire({
-                title: 'Cotización eliminada',
-                text: 'La cotización ha sido eliminada correctamente',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteQuote(quote._id)
+                    Swal.fire({
+                        title: 'Cotización eliminada',
+                        text: 'La cotización ha sido eliminada correctamente',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    })
+                    router.push('/cotizaciones')
+                }
             })
-            router.push('/cotizaciones')
         } catch (error) {
             Swal.fire({
                 title: 'Error',
@@ -95,7 +108,7 @@ const VerCotizacion = ({ quote }) => {
                     </Stack>
                 </HStack>
                 <TextCopy prefix={"Plazo de entrega"} data={formatText(quote.projectDelivery)} />
-                <TextCopy prefix={"Metodo de pago"} data={formatText(quote.paymentMethod)} />
+                <TextCopy prefix={"Método de pago"} data={formatText(quote.paymentMethod)} />
                 <TextCopy prefix={"Descripción"} data={formatText(quote.description)} />
             </Stack>
             <Stack justify={"center"} mt={'10'} mb={'16'}>

@@ -84,7 +84,7 @@ const Cotizaciones = ({ data }) => {
                             <Th>Nombre Cotización</Th>
                             <Th>RUT Empresa</Th>
                             <Th>Contacto</Th>
-                            <Th>Valida hasta</Th>
+                            <Th>Válida hasta</Th>
                             <Th>Acciones</Th>
                         </Tr>
                     </Thead>

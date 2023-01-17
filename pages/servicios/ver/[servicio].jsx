@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Heading, Button, Container, HStack, Stack, ListItem, UnorderedList, Tag, TagLeftIcon, TagLabel } from '@chakra-ui/react';
 import { getSpecificService, deleteServices } from '../../../data/services'
-import { formatDate } from '../../../utils/formatInfo';
+import { formatDate, formatPrice, formatServiceType, formatText, formatType } from '../../../utils/formatInfo';
 import TagText from '../../../components/TagText';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2'
@@ -70,7 +70,7 @@ const VerServicio = (data) => {
                     <TagLeftIcon as={FaCalendarPlus} boxSize="12px" />
                     <TagLabel>{formatDate(service.created)}</TagLabel>
                 </Tag>
-                <Tag size={"lg"} colorScheme={"red"} variant="solid">
+                <Tag size={"lg"} colorScheme={"orange"} variant="solid">
                     <TagLeftIcon as={FaCalendarTimes} boxSize="12px" />
                     <TagLabel>{formatDate(service.updated)}</TagLabel>
                 </Tag>
@@ -78,15 +78,13 @@ const VerServicio = (data) => {
             <Heading as={"h1"} my={10} fontSize={"6xl"}  >Servicio: {service.name}</Heading>
             <Stack>
                 <Stack spacing={5} flexDirection="column" justify="space-between">
-                    <TagText tag="Nombre" data={service.name} />
-                    <TagText tag="Precio" data={service.price} />
-                    <TagText tag="Fecha de creación" data={formatDate(service.created)} />
-                    <TagText tag="Ultima actualización" data={formatDate(service.updated)} />
-                    <TagText tag="Tipo" data={service.type} />
+                    <TagText tag="Nombre" data={formatText(service.name)} />
+                    <TagText tag="Precio" data={formatPrice(service.price) + " UF"} />
+                    <TagText tag="Tipo" data={formatServiceType(service.type)} />
                     <TagText tag="Descripción" data={service.description} />
                 </Stack>
                 <Stack spacing={5}>
-                    <Heading as={"h2"}>Items contemplados</Heading>
+                    <Heading as={"h2"}>Ítems contemplados</Heading>
                     <Stack spacing={5}>
                         <UnorderedList>
                             {service.item.map((item, index) => (
@@ -95,7 +93,7 @@ const VerServicio = (data) => {
                         </UnorderedList>
                     </Stack>
                 </Stack>
-                <HStack>
+                <HStack py={5}>
                     <Button bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} w={"full"} variant="solid" onClick={() => router.push(`/servicios/${service._id}`)}>Editar</Button>
                     <Button bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} w={"full"} variant="solid" onClick={deleteButton}>Eliminar</Button>
                     <Button bgColor={"#53B6EE"} color="white" _hover={{ bgColor: "#33A7EB" }} w={"full"} variant="solid" onClick={() => router.push('/servicios')}>Volver a servicios</Button>

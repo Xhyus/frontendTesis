@@ -49,7 +49,7 @@ const Cuentas = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ha ocurrido un error, el correo no existe, no esta asociado a una cuenta o no se ha podido enviar el correo',
+                text: 'Ha ocurrido un error, el correo no es válido, ya existe o las contraseñas no coinciden',
             })
         }
     }
@@ -58,7 +58,7 @@ const Cuentas = () => {
         <Container maxW="container.md">
             <Heading as={"h1"} my={10} fontSize={'6xl'} textAlign={"center"}>Crear cuenta</Heading>
             <InputAccount name="name" label="Nombre" type="text" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Nombre" />
-            <InputAccount name="email" label="Correo electronico" type="email" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Correo electronico" />
+            <InputAccount name="email" label="Correo electrónico" type="email" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Correo electrónico" />
             <InputAccount name="password" label="Contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Contraseña" />
             <InputAccount name="confirmPassword" label="Confirmar contraseña" type="password" handlechange={handleChange} enterKeyHandler={enterKeyHandler} placeholder="Confirmar contraseña" />
             <HStack spacing={4} w="full" mx="auto" my={5}>
