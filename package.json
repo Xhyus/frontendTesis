@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && next start"
+    "produccion": "next build && next start -p 80"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.0.2",
