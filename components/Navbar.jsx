@@ -80,7 +80,7 @@ const Navbar = () => {
 					<FaBars size={30} ref={btnRef} onClick={onOpen} />
 					<Image src="/logo.png" alt="logo" w={'40%'} />
 				</HStack>
-				<Drawer isOpen={isOpen} placement='right' onClose={onClose} finalFocusRef={btnRef}>
+				<Drawer isOpen={isOpen} placement='left' onClose={onClose} finalFocusRef={btnRef}>
 					<DrawerOverlay />
 					<DrawerContent>
 						<DrawerCloseButton />
