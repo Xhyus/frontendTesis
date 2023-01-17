@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react';
-import { getCompany } from '../../../data/company'
+import { getCompany, deleteCompany } from '../../../data/company'
 import TextCopy from '../../../components/TextCopy';
 import TagText from '../../../components/TagText';
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2';
 
 export async function getServerSideProps(context) {
     try {
@@ -26,10 +27,41 @@ export async function getServerSideProps(context) {
 const VerEmpresa = (data) => {
     const [company] = useState(data.data)
     const router = useRouter()
+
+    const handleDelete = async () => {
+        try {
+            await Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const res = await deleteCompany(company._id)
+                    if (res.status === 200) {
+                        router.push('/')
+                    }
+                }
+            })
+        } catch (error) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ha ocurrido un error al eliminar la empresa',
+            })
+        }
+    }
+
     return (
         <Container maxW={"container.lg"}>
             <Heading as={"h1"} my={10} fontSize={'6xl'} >Empresa: {company.name}</Heading>
-            <Button bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} mb={10} onClick={() => router.push('/empresa/editar/' + company._id)}>Editar datos</Button>
+            <HStack mb={10} w="full">
+                <Button w="full" bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} onClick={() => router.push('/empresa/editar/' + company._id)}>Editar datos</Button>
+                <Button w="full" bgColor={"#C1292E"} color="white" _hover={{ bgColor: "#A82428" }} onClick={() => handleDelete(company._id)}>Eliminar empresa</Button>
+            </HStack>
             <HStack justify={"center"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                     <Heading size={"md"}>Datos de la empresa</Heading>
