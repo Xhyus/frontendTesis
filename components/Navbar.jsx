@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import { LogoutContext } from '../context/logoutContext';
+// import { LogoutContext } from '../context/logoutContext';
 import { useRouter } from 'next/router'
 import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react"
 import { FaBars, FaAngleDown } from 'react-icons/fa';
@@ -39,10 +39,16 @@ const Navbar = () => {
 	}
 
 	const logout = async () => {
-		await Axios.get(process.env.SERVIDOR + "/logout")
-		Cookies.remove("token");
-		Cookies.remove("user");
-		router.push('/')
+		try {
+			await Axios.get(process.env.SERVIDOR + "/logout")
+			Cookies.remove("token");
+			Cookies.remove("user");
+			router.push('/')
+		} catch (error) {
+			Cookies.remove("token");
+			Cookies.remove("user");
+			router.push('/')
+		}
 	}
 
 	const Desk = () => {
