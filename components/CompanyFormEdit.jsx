@@ -21,7 +21,7 @@ const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyR
             initialValues={{ name: company.name, socialReason: company.socialReason === null ? '' : company.socialReason, email: company.email, phone: company.phone, address: company.address, rut: company.rut, constituted: company.constituted }}
             validationSchema={constituted ? constitutedValidation : unConstitutedValidation}
             onSubmit={(values) => {
-                if (!validateRut(companyRUT)) {
+                if (!validateRut(companyRUT) || companyRUT.length < 11) {
                     return Swal.fire({
                         title: 'Error',
                         text: 'RUT inválido',

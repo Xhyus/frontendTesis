@@ -1,9 +1,10 @@
-import { Heading, HStack, Button, Stack, FormLabel, Input, FormControl, Tooltip } from '@chakra-ui/react';
+import { Heading, HStack, Button, FormLabel, Input, FormControl, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import FormInput from './FormInput';
 import constitutedValidation from '../utils/constitutedValidation';
-import { formatRut } from 'rutlib'
+import { formatRut, validateRut } from 'rutlib'
 import FormikError from './FormikError';
+import Swal from 'sweetalert2';
 
 const Constituted = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }) => {
 
@@ -20,6 +21,13 @@ const Constituted = ({ setStep, company, setCompany, companyRUT, setCompanyRUT }
             initialValues={company}
             validationSchema={constitutedValidation}
             onSubmit={(values) => {
+                if (!validateRut(companyRUT) || companyRUT.length < 11) {
+                    return Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'RUT de empresa inválido',
+                    })
+                }
                 setCompany(values)
                 setStep(2)
             }}

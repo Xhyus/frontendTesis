@@ -112,6 +112,17 @@ const Update = ({ data }) => {
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
                     try {
+                        items.map(item => {
+                            if (item.name.trim() === '') {
+                                setLoading(false)
+                                return Swal.fire({
+                                    title: 'Error',
+                                    text: 'Debe ingresar al menos un item',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                })
+                            }
+                        })
                         updateService(sid, values, items).then(() => {
                             Swal.fire({
                                 icon: 'success',

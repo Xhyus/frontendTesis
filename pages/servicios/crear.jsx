@@ -90,6 +90,17 @@ const Crear = () => {
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
                     setLoading(true)
+                    items.map(item => {
+                        if (item.name.trim() === '') {
+                            setLoading(false)
+                            return Swal.fire({
+                                title: 'Error',
+                                text: 'El ítem no puede estar vacío',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                            })
+                        }
+                    })
                     postService(values.name, values.description, values.price, values.type, items)
                         .then((res) => {
                             if (res.status === 200) {

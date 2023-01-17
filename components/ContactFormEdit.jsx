@@ -25,7 +25,7 @@ const ContactFormEdit = ({ company, setStep, setContact, contact, state, contact
             validationSchema={contactValidation}
             onSubmit={async (values) => {
                 try {
-                    if (!validateRut(contactRUT)) {
+                    if (!validateRut(contactRUT) || contactRUT.length < 11) {
                         return Swal.fire({
                             title: 'Error',
                             text: 'RUT inválido',

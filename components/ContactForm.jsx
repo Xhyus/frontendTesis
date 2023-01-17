@@ -10,7 +10,6 @@ import { formatRut, validateRut } from 'rutlib'
 
 const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT, setContactRUT, companyRUT }) => {
 	const router = useRouter()
-	console.log(state)
 	const handleChangeRUT = (e) => {
 		if (e.target.value === '-') {
 			setContactRUT('')
@@ -25,9 +24,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 			initialValues={contact}
 			validationSchema={contactValidation}
 			onSubmit={async (values) => {
-				if (!validateRut(contactRUT)) {
-					console.log(contactRUT)
-					// return <Alert title="Error" description="El rut ingresado no es válido" status="error" />
+				if (!validateRut(contactRUT) || contactRUT.length < 11) {
 					return Swal.fire({
 						title: 'Error',
 						text: 'El rut ingresado no es válido',

@@ -3,7 +3,8 @@ import { Formik } from 'formik';
 import FormInput from './FormInput';
 import FormikError from './FormikError';
 import unConstitutedValidation from '../utils/unConstitutedValidation';
-import { formatRut } from 'rutlib';
+import { formatRut, validateRut } from 'rutlib';
+import Swal from 'sweetalert2';
 
 
 const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT }) => {
@@ -21,6 +22,13 @@ const UnConstituted = ({ setStep, setCompany, company, companyRUT, setCompanyRUT
             initialValues={company}
             validationSchema={unConstitutedValidation}
             onSubmit={(values) => {
+                if (!validateRut(companyRUT) || companyRUT.length < 11) {
+                    return Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'RUT de empresa no válido',
+                    })
+                }
                 setCompany(values)
                 setStep(2)
             }}
