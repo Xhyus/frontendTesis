@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
             const res = await getQuote(context.query.cotizacion, context.req.headers.cookie)
             return {
                 props: {
-                    data: res.data
+                    quote: res.data
                 }
             }
         }
