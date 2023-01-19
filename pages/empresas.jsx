@@ -71,10 +71,10 @@ const Empresas = ({ data }) => {
         if (response.status === 200) {
             const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({
-                title: 'Página firmada',
-                text: ` y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
+                title: 'Página generada correctamente',
+                text: ` La página se ha generado correctamente.`,
                 icon: 'success',
-                html: `<p>La página firmada se ha generado correctamente.</p> <p>Puede copiar el siguiente enlace:</p><p style="font-size: 0.8rem; font-weight: 600; color: #000;">${url}</p>`,
+                html: `<p>La página de creación de empresa se ha generado correctamente.</p> <p>Puede copiar el siguiente enlace:</p><p style="font-size: 0.8rem; font-weight: 600; color: #000;">${url}</p>`,
                 confirmButtonText: 'Ok'
             })
         }
