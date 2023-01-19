@@ -10,26 +10,29 @@ import { getSpecificService, updateService } from '../../data/services'
 
 export async function getServerSideProps(context) {
     try {
-        const res = await getSpecificService(context.query.sid, context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            try {
+                const res = await getSpecificService(context.query.sid, context.req.headers.cookie)
+                return {
+                    props: {
+                        data: res.data
+                    }
+                }
+            } catch (error) {
+                return {
+                    redirect: {
+                        destination: '/servicios',
+                        permanent: false
+                    }
+                }
             }
         }
     } catch (error) {
-        if (error.status === 401) {
-            return {
-                redirect: {
-                    destination: '/',
-                    permanent: false
-                }
-            }
-        } else {
-            return {
-                redirect: {
-                    destination: '/servicios',
-                    permanent: false
-                }
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
             }
         }
     }

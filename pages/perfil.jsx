@@ -3,16 +3,18 @@ import { useRouter } from 'next/router'
 import { HStack, Heading, Container, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { changePassword } from '../data/user'
-import jsCookie from 'js-cookie'
 import PasswordInput from '../components/PasswordInput'
 import { checkToken } from '../data/user'
+import Cookies from 'js-cookie'
 
 export const getServerSideProps = async (context) => {
     try {
-        const res = await checkToken(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            return {
+                props: {
+                    data: null
+                }
             }
         }
     } catch (error) {
@@ -29,7 +31,6 @@ const Perfil = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
     const router = useRouter()
-    const [token] = useState(jsCookie.get('token'))
     const [password, setPassword] = useState({
         password: '',
         newPassword: '',
@@ -60,7 +61,7 @@ const Perfil = () => {
             })
         }
         try {
-            const response = await changePassword(password, token)
+            const response = await changePassword(password, token, Cookies.get("user_id"))
             if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',

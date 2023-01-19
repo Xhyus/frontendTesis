@@ -6,17 +6,18 @@ import Item from '../../components/Item';
 import FormInput from '../../components/FormInput';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import { checkToken } from '../../data/user'
 import { postService } from '../../data/services'
 import TextareaForm from '../../components/TextareaForm';
 import FormikError from '../../components/FormikError';
 
 export const getServerSideProps = async (context) => {
     try {
-        const res = await checkToken(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            return {
+                props: {
+                    data: null
+                }
             }
         }
     } catch (error) {

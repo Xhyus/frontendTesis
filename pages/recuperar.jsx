@@ -1,23 +1,17 @@
 import { useState } from 'react'
-import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
+import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { recoverPassword } from '../data/user';
 import Swal from 'sweetalert2';
 
 export const getServerSideProps = async (context) => {
     try {
-        const res = await checkToken(context.req.headers.cookie)
-        if (res.status === 200) {
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
             return {
                 redirect: {
                     destination: '/servicios',
                     permanent: false
-                }
-            }
-        } else {
-            return {
-                props: {
-                    data: res.data
                 }
             }
         }

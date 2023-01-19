@@ -1,12 +1,11 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import axios from 'axios'
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter()
-	axios.defaults.withCredentials = true
+	// axios.defaults.withCredentials = true
 	const useNavbar = () => {
 		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/empresa/crear/[empresa]' || router.pathname == '/recuperar' || router.pathname == '/cliente/cotizacion/[cotizacion]') {
 			return <Component {...pageProps} />

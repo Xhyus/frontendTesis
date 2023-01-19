@@ -1,17 +1,15 @@
-import { useEffect, useState, useRef, useContext } from 'react';
-// import { LogoutContext } from '../context/logoutContext';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router'
 import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react"
 import { FaBars, FaAngleDown } from 'react-icons/fa';
 import Cookies from 'js-cookie'
-import Axios from 'axios'
+// import Axios from 'axios'
 
 const Navbar = () => {
 	const [isMobile] = useMediaQuery("(max-width: 600px)")
 	const router = useRouter()
 	const path = router.pathname.split('/')
 	const [user, setUser] = useState('Usuario')
-	// const { logout } = useContext(LogoutContext)
 
 	useEffect(() => {
 		if (Cookies.get('user')) {
@@ -38,15 +36,16 @@ const Navbar = () => {
 		return null
 	}
 
-	const logout = async () => {
+	const logout = () => {
 		try {
-			await Axios.get(process.env.SERVIDOR + "/logout")
-			Cookies.remove("token");
+			Cookies.remove("loggedIn");
 			Cookies.remove("user");
+			Cookies.remove("user_id");
 			router.push('/')
 		} catch (error) {
-			Cookies.remove("token");
+			Cookies.remove("loggedIn");
 			Cookies.remove("user");
+			Cookies.remove("user_id");
 			router.push('/')
 		}
 	}

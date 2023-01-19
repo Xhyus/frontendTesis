@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Heading, Container, Wrap, WrapItem, Grid, GridItem } from '@chakra-ui/react'
+import { Heading, Container, Grid, GridItem } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
 import SearchButton from '../components/SearchButton'
 
 export async function getServerSideProps(context) {
     try {
-        const res = await getServices(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            const res = await getServices(context.req.headers.cookie)
+            return {
+                props: {
+                    data: res.data
+                }
             }
         }
     } catch (error) {

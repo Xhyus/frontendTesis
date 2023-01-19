@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
+import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
-import { checkToken, postLogin } from '../data/user';
+import { postLogin } from '../data/user';
 import PasswordInput from '../components/PasswordInput';
 
 export const getServerSideProps = async (context) => {
 	try {
-		await checkToken(context.req.headers.cookie)
-		return {
-			redirect: {
-				destination: '/servicios',
-				permanent: false
+		const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+		if (loggedIn === 'true') {
+			return {
+				redirect: {
+					destination: '/servicios',
+					permanent: false
+				}
 			}
 		}
 	} catch (error) {
@@ -46,10 +48,12 @@ const Home = () => {
 		e.preventDefault();
 		try {
 			const response = await postLogin(user.email, user.password)
-			Cookies.set("token", response.data.token, { expires: 1 })
+			Cookies.set("loggedIn", true, { expires: 1 })
 			Cookies.set("user", response.data.user, { expires: 1 })
+			Cookies.set("user_id", response.data.user_id, { expires: 1 })
 			Router.push('/servicios')
 		} catch (error) {
+			console.log(error)
 			return Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
