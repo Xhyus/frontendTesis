@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { getServices } from '../../data/services';
 import { getCompanies } from '../../data/company';
 import AddServices from '../../components/AddServices';
-import ServiceQuote from '../../components/ServiceQuote';
 import QuoteForm from '../../components/QuoteForm';
 import QuotePreview from '../../components/QuotePreview';
 

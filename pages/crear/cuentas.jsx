@@ -26,7 +26,7 @@ export const getServerSideProps = async (context) => {
 }
 
 
-const Cuentas = ({ data }) => {
+const Cuentas = () => {
     const [account, setAccount] = useState({
         name: '',
         email: '',

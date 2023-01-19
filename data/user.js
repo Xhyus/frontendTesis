@@ -20,12 +20,14 @@ const recoverPassword = async (email) => {
     return response;
 }
 
-const changePassword = async (password, token) => {
+const changePassword = async (password, token, id) => {
     const response = await axios.put(`${process.env.SERVIDOR}/changePassword`, {
         password: password.password,
         newPassword: password.newPassword,
         rePassword: password.rePassword,
+        user: id
     });
+    console.log(response)
     return response;
 }
 

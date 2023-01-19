@@ -72,7 +72,7 @@ const QuoteForm = ({ setStep, quote, setQuote, companies, setSelectedInfo, selec
                             <ReactSelect label="Pago" name="payment" index={selectedInfo.payment} value={selectedInfo.payment} onChange={handleChangeSelect} options={paymentOptions} />
                             <ReactSelect label="Documento" name="document" index={selectedInfo.document} value={selectedInfo.document} onChange={handleChangeSelect} options={documentOptions} />
                         </HStack>
-                        <TextareaForm label="Metodo de pago" placeholder='Ingrese el metodo de pago' type="text" name="paymentMethod" onChange={handleChange} onBlur={handleBlur} value={values.paymentMethod} errors={errors.paymentMethod} touched={touched.paymentMethod} />
+                        <TextareaForm label="Método de pago" placeholder='Ingrese el método de pago' type="text" name="paymentMethod" onChange={handleChange} onBlur={handleBlur} value={values.paymentMethod} errors={errors.paymentMethod} touched={touched.paymentMethod} />
                         <TextareaForm label="Plazo de entrega" placeholder='Ingrese el plazo de entrega' type="text" name="projectDelivery" onChange={handleChange} onBlur={handleBlur} value={values.projectDelivery} errors={errors.projectDelivery} touched={touched.projectDelivery} />
                         <HStack my={5} w="full">
                             <Button w="full" bgColor={"#7ABC63"} color="white" _hover={{ bgColor: "#64AB49" }} type="submit" >Ir al siguiente paso</Button>

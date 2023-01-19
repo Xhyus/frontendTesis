@@ -47,7 +47,7 @@ const Perfil = () => {
     const enterKeyHandler = event => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            handleSubmit(event);
+            onSubmit(event);
         }
     };
 
@@ -61,7 +61,9 @@ const Perfil = () => {
             })
         }
         try {
-            const response = await changePassword(password, token, Cookies.get("user_id"))
+            const user = Cookies.get('user_id')
+            const token = ''
+            const response = await changePassword(password, token, user)
             if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
