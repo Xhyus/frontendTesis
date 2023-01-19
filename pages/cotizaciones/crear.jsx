@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { Heading, Container, WrapItem, Text, Button } from '@chakra-ui/react';
+import { useState } from 'react'
 import { getServices } from '../../data/services';
 import { getCompanies } from '../../data/company';
 import AddServices from '../../components/AddServices';
@@ -9,14 +8,17 @@ import QuotePreview from '../../components/QuotePreview';
 
 export async function getServerSideProps(context) {
     try {
-        let services = await getServices(context.req.headers.cookie)
-        let companies = await getCompanies(context.req.headers.cookie)
-        return {
-            props: {
-                data: {
-                    services: services.data,
-                    company: companies.data
-                },
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            let services = await getServices(context.req.headers.cookie)
+            let companies = await getCompanies(context.req.headers.cookie)
+            return {
+                props: {
+                    data: {
+                        services: services.data,
+                        company: companies.data
+                    },
+                }
             }
         }
     } catch (error) {

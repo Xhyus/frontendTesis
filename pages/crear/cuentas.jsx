@@ -5,7 +5,28 @@ import Swal from 'sweetalert2';
 import { createUser } from '../../data/user';
 import InputAccount from '../../components/InputAccount';
 
-const Cuentas = () => {
+export const getServerSideProps = async (context) => {
+    try {
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            return {
+                props: {
+                    data: null
+                }
+            }
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+}
+
+
+const Cuentas = ({ data }) => {
     const [account, setAccount] = useState({
         name: '',
         email: '',

@@ -9,10 +9,13 @@ import SearchButton from '../components/SearchButton'
 
 export async function getServerSideProps(context) {
     try {
-        const res = await getCompanies(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
+        const loggedIn = context.req.headers.cookie.split(';').find(c => c.trim().startsWith('loggedIn=')).split('=')[1]
+        if (loggedIn === 'true') {
+            const res = await getCompanies(context.req.headers.cookie)
+            return {
+                props: {
+                    data: res.data
+                }
             }
         }
     } catch (error) {
@@ -24,6 +27,7 @@ export async function getServerSideProps(context) {
         }
     }
 }
+
 const Empresas = ({ data }) => {
     const [companies] = useState(data)
     const [filter, setFilter] = useState({
