@@ -116,7 +116,7 @@ const Update = ({ data }) => {
                 onSubmit={(values) => {
                     try {
                         items.map(item => {
-                            if (item.name.trim() === '') {
+                            if (item.description.trim() === '') {
                                 setLoading(false)
                                 return Swal.fire({
                                     title: 'Error',
