@@ -7,6 +7,14 @@ import Swal from 'sweetalert2'
 const QuotePreview = ({ quote, selectedServices, setStep }) => {
     const router = useRouter()
     const handleSubmit = async () => {
+        if (selectedServices.length === 0) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debe seleccionar al menos un servicio',
+            })
+        }
+
         try {
             await createQuote({
                 name: quote.name,
