@@ -6,6 +6,7 @@ import { createSignedPage } from '../data/signed'
 import Swal from 'sweetalert2'
 import Pagination from '../components/Pagination'
 import SearchButton from '../components/SearchButton'
+import { useCookies } from 'react-cookie'
 
 export async function getServerSideProps(context) {
     try {
@@ -31,6 +32,8 @@ const Empresas = ({ data }) => {
         filteredCompany: [],
         searchTerm: ''
     })
+    const [cookies, setCookie] = useCookies(['token', 'user'])
+    console.log(cookies)
     const rows = 10
     const [page, setPage] = useState(1)
     const results = companies.filter(company => {
@@ -63,7 +66,7 @@ const Empresas = ({ data }) => {
     }
 
     const generateSignedPage = async () => {
-        const response = await createSignedPage('company')
+        const response = await createSignedPage('company', token)
         if (response.status === 200) {
             const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({

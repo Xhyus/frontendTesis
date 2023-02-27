@@ -10,10 +10,8 @@ const signedPage = (id) => {
     return response;
 }
 
-const createSignedPage = (use) => {
-    const response = axios.post(`${process.env.SERVIDOR}/signed`, {
-        use: use
-    })
+const createSignedPage = (use, token) => {
+    const response = axios.post(`${process.env.SERVIDOR}/signed`, { use })
     return response;
 }
 

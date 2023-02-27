@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
+import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 import Cookies from 'js-cookie'
+import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
 import { checkToken, postLogin } from '../data/user';
@@ -29,6 +30,8 @@ const Home = () => {
 		email: '',
 		password: '',
 	})
+	const [cookies, setCookie] = useCookies(['token', 'user']);
+
 	const Router = useRouter();
 	const handleChange = (e) => {
 		setUser({
@@ -46,8 +49,11 @@ const Home = () => {
 		e.preventDefault();
 		try {
 			const response = await postLogin(user.email, user.password)
-			Cookies.set("token", response.data.token, { expires: 1 })
-			Cookies.set("user", response.data.user, { expires: 1 })
+			console.log(response)
+			setCookie('user', response.data.user)
+			setCookie('token', response.data.token)
+			// Cookies.set("token", response.data.token, { expires: 1 })
+			// Cookies.set("user", response.data.user, { expires: 1 })
 			Router.push('/servicios')
 		} catch (error) {
 			return Swal.fire({
