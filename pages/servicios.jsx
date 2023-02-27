@@ -1,29 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Heading, Container, Wrap, WrapItem, Grid, GridItem } from '@chakra-ui/react'
+import { Heading, Container, Grid, GridItem } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
 import SearchButton from '../components/SearchButton'
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getServices(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
 
-const Servicios = ({ data }) => {
+const Servicios = () => {
+    const [data, setData] = useState([])
     const [filter, setFilter] = useState({
         status: false,
         filteredServices: [],
@@ -45,6 +29,27 @@ const Servicios = ({ data }) => {
             })
         })
     }, [filter.searchTerm])
+
+    useEffect(() => {
+        console.log('useEffect')
+        const fetchData = async () => {
+            console.log('async')
+            try {
+                let token = localStorage.getItem('token')
+                const res = await getServices(token)
+                console.log(res)
+                setData(res)
+            } catch (error) {
+                console.log(error)
+                router.push(
+                    '/', {
+                    pathname: '/',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
 
     const setSearch = (e) => {
         if (e.target?.value.length > 0) {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const createCompany = (company, contact, companyRUT, contactRUT, state) => {
     const response = axios.post(`${process.env.SERVIDOR}/company`, {
@@ -37,6 +38,8 @@ const editCompany = async (company, contact, companyRUT, contactRUT, state, id) 
 }
 
 const getCompanies = (token) => {
+    let token1 = Cookies.get('token');
+    console.log(token1)
     const response = axios.get(`${process.env.SERVIDOR}/companies`, { headers: { cookie: token } })
     return response;
 }

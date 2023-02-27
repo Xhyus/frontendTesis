@@ -6,7 +6,8 @@ const deleteServices = async (id) => {
 }
 
 const getServices = async (token) => {
-    const response = await axios.get(`${process.env.SERVIDOR}/services`, { headers: { cookie: token } });
+    console.log("peticion por realizar")
+    const response = await axios.get(`${process.env.SERVIDOR}/services`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 

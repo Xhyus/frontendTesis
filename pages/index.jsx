@@ -1,27 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
-import Cookies from 'js-cookie'
-import { useCookies } from 'react-cookie';
+// import Cookies from 'js-cookie'
+// import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
 import { checkToken, postLogin } from '../data/user';
 import PasswordInput from '../components/PasswordInput';
 
-export const getServerSideProps = async (context) => {
-	try {
-		await checkToken(context.req.headers.cookie)
-		return {
-			redirect: {
-				destination: '/servicios',
-				permanent: false
-			}
-		}
-	} catch (error) {
-		return {
-			props: { data: null }
-		}
-	}
-}
 
 const Home = () => {
 	const [showInput, setShowInput] = useState(false);
@@ -30,7 +15,7 @@ const Home = () => {
 		email: '',
 		password: '',
 	})
-	const [cookies, setCookie] = useCookies(['token', 'user']);
+	// const [cookies, setCookie] = useCookies(['token', 'user']);
 
 	const Router = useRouter();
 	const handleChange = (e) => {
@@ -42,6 +27,23 @@ const Home = () => {
 
 	useEffect(() => {
 		localStorage.setItem('chakra-ui-color-mode', 'dark')
+		{
+			async () => {
+				try {
+					await checkToken(localStorage.getItem('token'))
+					return {
+						redirect: {
+							destination: '/servicios',
+							permanent: false
+						}
+					}
+				} catch (error) {
+					return {
+						props: { data: null }
+					}
+				}
+			}
+		}
 	}, [])
 
 
@@ -50,8 +52,10 @@ const Home = () => {
 		try {
 			const response = await postLogin(user.email, user.password)
 			console.log(response)
-			setCookie('user', response.data.user)
-			setCookie('token', response.data.token)
+			localStorage.setItem('token', response.data.token)
+			localStorage.setItem('user', JSON.stringify(response.data.user))
+			// setCookie('user', response.data.user)
+			// setCookie('token', response.data.token)
 			// Cookies.set("token", response.data.token, { expires: 1 })
 			// Cookies.set("user", response.data.user, { expires: 1 })
 			Router.push('/servicios')
