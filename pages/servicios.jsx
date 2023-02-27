@@ -37,7 +37,6 @@ const Servicios = () => {
             try {
                 let token = localStorage.getItem('token')
                 const res = await getServices(token)
-                console.log(res)
                 setData(res)
             } catch (error) {
                 console.log(error)
