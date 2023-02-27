@@ -66,7 +66,7 @@ const Empresas = ({ data }) => {
     }
 
     const generateSignedPage = async () => {
-        const response = await createSignedPage('company', token)
+        const response = await createSignedPage('company', cookies.token)
         if (response.status === 200) {
             const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({
