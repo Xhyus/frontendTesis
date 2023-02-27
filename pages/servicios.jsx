@@ -8,14 +8,37 @@ import SearchButton from '../components/SearchButton'
 
 const Servicios = () => {
     const [data, setData] = useState([])
+    console.log(data)
+    const router = useRouter()
+    useEffect(() => {
+        console.log('useEffect')
+        const fetchData = async () => {
+            console.log('async')
+            try {
+                let token = localStorage?.getItem('token')
+                const res = await getServices(token)
+                setData(res.data)
+                console.log("data seteada")
+            } catch (error) {
+                console.log(error)
+                router.push(
+                    '/', {
+                    pathname: '/',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
+
     const [filter, setFilter] = useState({
         status: false,
         filteredServices: [],
         searchTerm: ''
     })
-    const router = useRouter()
 
     useEffect(() => {
+        console.log(data)
         setFilter({
             ...filter,
             filteredServices: data.filter(service => {
@@ -28,27 +51,7 @@ const Servicios = () => {
                 )
             })
         })
-    }, [filter.searchTerm])
-
-    useEffect(() => {
-        console.log('useEffect')
-        const fetchData = async () => {
-            console.log('async')
-            try {
-                let token = localStorage.getItem('token')
-                const res = await getServices(token)
-                setData(res)
-            } catch (error) {
-                console.log(error)
-                router.push(
-                    '/', {
-                    pathname: '/',
-                    permanent: true
-                })
-            }
-        }
-        fetchData()
-    }, [])
+    }, [filter.searchTerm || data])
 
     const setSearch = (e) => {
         if (e.target?.value.length > 0) {
