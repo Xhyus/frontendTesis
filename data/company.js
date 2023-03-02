@@ -1,7 +1,6 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
-const createCompany = (company, contact, companyRUT, contactRUT, state) => {
+const createCompany = (company, contact, companyRUT, contactRUT, state, token) => {
     const response = axios.post(`${process.env.SERVIDOR}/company`, {
         name: company.name,
         rut: companyRUT,
@@ -15,11 +14,11 @@ const createCompany = (company, contact, companyRUT, contactRUT, state) => {
         contactPhone: contact.phone,
         contactEmail: contact.email,
         contactRole: contact.position,
-    })
+    }, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
-const editCompany = async (company, contact, companyRUT, contactRUT, state, id) => {
+const editCompany = async (company, contact, companyRUT, contactRUT, state, id, token) => {
     const response = await axios.put(`${process.env.SERVIDOR}/company/update/${id}`, {
         name: company.name,
         rut: companyRUT,
@@ -33,24 +32,22 @@ const editCompany = async (company, contact, companyRUT, contactRUT, state, id) 
         contactPhone: contact.phone,
         contactEmail: contact.email,
         contactRole: contact.position
-    })
+    }, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
-const getCompanies = (token) => {
-    let token1 = Cookies.get('token');
-    console.log(token1)
-    const response = axios.get(`${process.env.SERVIDOR}/companies`, { headers: { cookie: token } })
+const getCompanies = (token, token) => {
+    const response = axios.get(`${process.env.SERVIDOR}/companies`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
 const getCompany = (id, token) => {
-    const response = axios.get(`${process.env.SERVIDOR}/company/search/${id}`, { headers: { cookie: token } })
+    const response = axios.get(`${process.env.SERVIDOR}/company/search/${id}`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
-const deleteCompany = (id) => {
-    const response = axios.delete(`${process.env.SERVIDOR}/company/delete/${id}`)
+const deleteCompany = (id, token) => {
+    const response = axios.delete(`${process.env.SERVIDOR}/company/delete/${id}`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
