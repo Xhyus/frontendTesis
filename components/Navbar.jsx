@@ -1,9 +1,7 @@
-import { useEffect, useState, useRef, useContext } from 'react';
-// import { LogoutContext } from '../context/logoutContext';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router'
 import { Box, Link, HStack, ChakraProvider, Image, Drawer, DrawerOverlay, DrawerContent, DrawerFooter, DrawerCloseButton, useMediaQuery, Stack, useDisclosure, Button, DrawerHeader, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react"
 import { FaBars, FaAngleDown } from 'react-icons/fa';
-import Cookies from 'js-cookie'
 import Axios from 'axios'
 
 const Navbar = () => {
@@ -11,13 +9,12 @@ const Navbar = () => {
 	const router = useRouter()
 	const path = router.pathname.split('/')
 	const [user, setUser] = useState('Usuario')
-	// const { logout } = useContext(LogoutContext)
 
 	useEffect(() => {
-		if (Cookies.get('user')) {
-			setUser(Cookies.get('user'))
+		if (localStorage.getItem('user')) {
+			setUser(localStorage.getItem('user'))
 		}
-	}, [Cookies.get('user')])
+	}, [])
 
 	const currentPage = (boton) => {
 		if (path[1] === 'servicios' && boton === 'servicios') {
@@ -40,13 +37,13 @@ const Navbar = () => {
 
 	const logout = async () => {
 		try {
-			await Axios.get(process.env.SERVIDOR + "/logout")
-			Cookies.remove("token");
-			Cookies.remove("user");
+			await Axios.get(process.env.SERVIDOR + "/logout", { headers: { 'authorization': 'Bearer ' + localStorage.getItem('token') } })
+			localStorage.removeItem('token')
+			localStorage.removeItem('user')
 			router.push('/')
 		} catch (error) {
-			Cookies.remove("token");
-			Cookies.remove("user");
+			localStorage.removeItem('token')
+			localStorage.removeItem('user')
 			router.push('/')
 		}
 	}
