@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
-// import Cookies from 'js-cookie'
-// import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
 import { checkToken, postLogin } from '../data/user';
 import PasswordInput from '../components/PasswordInput';
-
 
 const Home = () => {
 	const [showInput, setShowInput] = useState(false);
@@ -15,7 +12,6 @@ const Home = () => {
 		email: '',
 		password: '',
 	})
-	// const [cookies, setCookie] = useCookies(['token', 'user']);
 
 	const Router = useRouter();
 	const handleChange = (e) => {
@@ -27,25 +23,17 @@ const Home = () => {
 
 	useEffect(() => {
 		localStorage.setItem('chakra-ui-color-mode', 'dark')
-		{
-			async () => {
-				try {
-					await checkToken(localStorage.getItem('token'))
-					return {
-						redirect: {
-							destination: '/servicios',
-							permanent: false
-						}
-					}
-				} catch (error) {
-					return {
-						props: { data: null }
-					}
-				}
+		const check = async () => {
+			try {
+				let token = localStorage.getItem('token')
+				await checkToken(token)
+				Router.push('/servicios')
+			} catch (error) {
+				return
 			}
 		}
+		check()
 	}, [])
-
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -53,11 +41,7 @@ const Home = () => {
 			const response = await postLogin(user.email, user.password)
 			console.log(response)
 			localStorage.setItem('token', response.data.token)
-			localStorage.setItem('user', JSON.stringify(response.data.user))
-			// setCookie('user', response.data.user)
-			// setCookie('token', response.data.token)
-			// Cookies.set("token", response.data.token, { expires: 1 })
-			// Cookies.set("user", response.data.user, { expires: 1 })
+			localStorage.setItem('user', response.data.user)
 			Router.push('/servicios')
 		} catch (error) {
 			return Swal.fire({

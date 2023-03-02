@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Heading, Table, Tr, Thead, Th, Tbody, Container, TableContainer } from '@chakra-ui/react'
 import { getCompanies } from '../data/company'
 import CompanyTable from '../components/CompanyTable'
@@ -6,34 +6,32 @@ import { createSignedPage } from '../data/signed'
 import Swal from 'sweetalert2'
 import Pagination from '../components/Pagination'
 import SearchButton from '../components/SearchButton'
-import { useCookies } from 'react-cookie'
+import { useRouter } from 'next/router'
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getCompanies(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-const Empresas = ({ data }) => {
-    const [companies] = useState(data)
+const Empresas = () => {
+    const [companies, setCompany] = useState([])
     const [filter, setFilter] = useState({
         status: false,
         filteredCompany: [],
         searchTerm: ''
     })
-    const [cookies, setCookie] = useCookies(['token', 'user'])
-    console.log(cookies)
+    const router = useRouter()
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                const res = await getCompanies(token)
+                setCompany(res.data)
+            } catch (error) {
+                router.push(
+                    '/', {
+                    pathname: '/',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
     const rows = 10
     const [page, setPage] = useState(1)
     const results = companies.filter(company => {
@@ -66,7 +64,8 @@ const Empresas = ({ data }) => {
     }
 
     const generateSignedPage = async () => {
-        const response = await createSignedPage('company', cookies.token)
+        let token = localStorage?.getItem('token')
+        const response = await createSignedPage('company', token)
         if (response.status === 200) {
             const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({

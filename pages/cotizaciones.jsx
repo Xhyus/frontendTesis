@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer, InputLeftElement } from '@chakra-ui/react'
 import { getQuotes } from '../data/quotes'
 import QuotesTable from '../components/QuotesTable'
@@ -6,30 +6,30 @@ import { AiOutlineClose, AiOutlinePlus, AiOutlineSearch, } from 'react-icons/ai'
 import Pagination from '../components/Pagination'
 import { useRouter } from 'next/router'
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getQuotes(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-const Cotizaciones = ({ data }) => {
-    const [quotes] = useState(data)
+const Cotizaciones = () => {
+    const [quotes, setQuotes] = useState([])
     const [filter, setFilter] = useState({
         status: false,
         filteredQuotes: [],
         searchTerm: ''
     })
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                const res = await getQuotes(token)
+                setQuotes(res.data)
+            } catch (error) {
+                console.log(error)
+                router.push(
+                    '/', {
+                    pathname: '/',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
     const router = useRouter()
     const rows = 10
     const [page, setPage] = useState(1)
@@ -42,9 +42,7 @@ const Cotizaciones = ({ data }) => {
     })
     const totalPages = Math.ceil(results.length / rows)
     const currentPageData = results.slice((page - 1) * rows, page * rows)
-    const handleChange = (page) => {
-        setPage(page)
-    }
+    const handleChange = (page) => setPage(page)
 
     const setSearch = (e) => {
         if (e.target.value.length > 0) {
