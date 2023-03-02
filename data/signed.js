@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const updateSignedPage = (id) => {
-    const response = axios.get(`${process.env.SERVIDOR}/sign/page/${id.empresa}`);
+    const response = axios.get(`${process.env.SERVIDOR}/sign/page/${id.empresa}`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
@@ -11,7 +11,7 @@ const signedPage = (id) => {
 }
 
 const createSignedPage = (use, token) => {
-    const response = axios.post(`${process.env.SERVIDOR}/signed`, { use })
+    const response = axios.post(`${process.env.SERVIDOR}/signed`, { use }, { headers: { 'authorization': `bearer ${token}` } })
     return response;
 }
 

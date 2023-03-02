@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const checkToken = async (token) => {
-    const response = await axios.get(`${process.env.SERVIDOR}/checkToken`, { headers: { cookie: token } });
+    const response = await axios.get(`${process.env.SERVIDOR}/checkToken`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
@@ -25,17 +25,17 @@ const changePassword = async (password, token) => {
         password: password.password,
         newPassword: password.newPassword,
         rePassword: password.rePassword,
-    });
+    }, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
-const createUser = async (name, email, password, rePassword) => {
+const createUser = async (name, email, password, rePassword, token) => {
     const response = await axios.post(`${process.env.SERVIDOR}/user`, {
         name,
         email,
         password,
         rePassword,
-    });
+    }, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
