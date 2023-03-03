@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
+import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex, Center } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { recoverPassword, checkToken } from '../data/user';
 import Swal from 'sweetalert2';
@@ -9,6 +9,7 @@ const Recuperar = () => {
     const [user, setUser] = useState({
         email: ''
     })
+    const [loading, setLoading] = useState(true)
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -23,11 +24,19 @@ const Recuperar = () => {
                 await checkToken(token)
                 router.push('/servicios')
             } catch (error) {
+                setLoading(false)
                 return
             }
         }
         fetchData()
     }, [])
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();

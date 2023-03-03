@@ -36,7 +36,7 @@ const editCompany = async (company, contact, companyRUT, contactRUT, state, id, 
     return response;
 }
 
-const getCompanies = (token, token) => {
+const getCompanies = (token) => {
     const response = axios.get(`${process.env.SERVIDOR}/companies`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }

@@ -1,9 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import axios from 'axios'
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import { useRouter } from 'next/router'
-import { CookiesProvider } from 'react-cookie'
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter()
@@ -30,9 +28,7 @@ function MyApp({ Component, pageProps }) {
 					}
 				`}</style>
 			</Head>
-			<CookiesProvider>
-				{useNavbar()}
-			</CookiesProvider>
+			{useNavbar()}
 		</ChakraProvider>
 	)
 }

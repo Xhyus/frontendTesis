@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { HStack, Heading, Container, Button } from '@chakra-ui/react'
+import { HStack, Heading, Container, Button, Center, Spinner } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { changePassword } from '../data/user'
 import PasswordInput from '../components/PasswordInput'
@@ -10,6 +10,7 @@ const Perfil = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
     const router = useRouter()
+    const [loading, setLoading] = useState(true)
     const [password, setPassword] = useState({
         password: '',
         newPassword: '',
@@ -21,12 +22,9 @@ const Perfil = () => {
             try {
                 let token = localStorage?.getItem('token')
                 await checkToken(token)
+                setLoading(false)
             } catch (error) {
-                router.push(
-                    '/servicios', {
-                    pathname: '/servicios',
-                    permanent: true
-                })
+                router.push('/servicios')
             }
         }
         fetchData()
@@ -74,6 +72,14 @@ const Perfil = () => {
                 text: 'Ha ocurrido un error, revisa los datos ingresados',
             })
         }
+    }
+
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
     }
 
     return (

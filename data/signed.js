@@ -6,7 +6,7 @@ const updateSignedPage = (id) => {
 }
 
 const signedPage = (id) => {
-    const response = axios.get(`${process.env.SERVIDOR}/signed/search/${id.empresa}`);
+    const response = axios.get(`${process.env.SERVIDOR}/signed/search/${id}`);
     return response;
 }
 
