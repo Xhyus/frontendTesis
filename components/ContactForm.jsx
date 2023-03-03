@@ -33,7 +33,8 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 					})
 				}
 				try {
-					await createCompany(company, values, companyRUT, contactRUT, state)
+					let token = localStorage?.getItem('token')
+					await createCompany(company, values, companyRUT, contactRUT, state, token)
 					await Swal.fire({
 						title: '¡Excelente!',
 						text: 'Tu empresa ha sido registrada con éxito',
@@ -43,7 +44,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 					router.push('/')
 				} catch (error) {
 					if (error.response.status === 400) {
-						Swal.fire({
+						return Swal.fire({
 							title: 'Error',
 							text: 'Ha ocurrido un error al registrar su empresa',
 							icon: 'error',
@@ -51,7 +52,7 @@ const ContactForm = ({ company, setStep, setContact, contact, state, contactRUT,
 						})
 					}
 					if (error.response.status) {
-						Swal.fire({
+						return Swal.fire({
 							title: 'Error',
 							text: 'Ese rut ya se encuentra registrado, favor contactese con Estudio Fragua',
 							icon: 'error',

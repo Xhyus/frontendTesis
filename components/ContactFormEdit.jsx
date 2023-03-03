@@ -33,7 +33,8 @@ const ContactFormEdit = ({ company, setStep, setContact, contact, state, contact
                             confirmButtonText: 'Aceptar'
                         })
                     }
-                    await editCompany(company, values, companyRUT, contactRUT, state, id)
+                    let token = localStorage?.getItem('token')
+                    await editCompany(company, values, companyRUT, contactRUT, state, id, token)
                     await Swal.fire({
                         title: '¡Excelente!',
                         text: 'Tu empresa ha sido editada con éxito',
