@@ -20,7 +20,6 @@ const Cotizaciones = () => {
                 const res = await getQuotes(token)
                 setQuotes(res.data)
             } catch (error) {
-                console.log(error)
                 router.push(
                     '/', {
                     pathname: '/',

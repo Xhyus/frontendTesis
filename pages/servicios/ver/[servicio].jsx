@@ -1,33 +1,35 @@
-import { useState } from 'react'
-import { Heading, Button, Container, HStack, Stack, ListItem, UnorderedList, Tag, TagLeftIcon, TagLabel } from '@chakra-ui/react';
+import { useState, useEffect } from 'react'
+import { Heading, Button, Container, HStack, Stack, ListItem, UnorderedList, Tag, TagLeftIcon, Center, Spinner, TagLabel } from '@chakra-ui/react';
 import { getSpecificService, deleteServices } from '../../../data/services'
-import { formatDate, formatPrice, formatServiceType, formatText, formatType } from '../../../utils/formatInfo';
+import { formatDate, formatPrice, formatServiceType, formatText } from '../../../utils/formatInfo';
 import TagText from '../../../components/TagText';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2'
 import { FaCalendarPlus, FaCalendarTimes } from 'react-icons/fa';
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getSpecificService(context.query.servicio, context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-
-const VerServicio = (data) => {
-    const [service] = useState(data.data)
+const VerServicio = ({ servicio }) => {
+    const [service, setService] = useState([])
     const router = useRouter()
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                const res = await getSpecificService(servicio, token)
+                setService(res.data)
+                setLoading(false)
+            } catch (error) {
+                console.log(error)
+                router.push(
+                    '/servicios', {
+                    pathname: '/servicios',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
+
 
     const deleteButton = () => {
         Swal.fire({
@@ -42,7 +44,8 @@ const VerServicio = (data) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    deleteServices(service._id).then(() => {
+                    let token = localStorage?.getItem('token')
+                    deleteServices(service._id, token).then(() => {
                         Swal.fire({
                             title: 'Eliminado',
                             text: 'El servicio ha sido eliminado',
@@ -61,6 +64,13 @@ const VerServicio = (data) => {
                 }
             }
         })
+    }
+    if (loading) {
+        return (
+            <Center h="90vh">
+                <Spinner />
+            </Center>
+        )
     }
 
     return (
@@ -101,6 +111,10 @@ const VerServicio = (data) => {
             </Stack>
         </Container>
     )
+}
+
+VerServicio.getInitialProps = async (ctx) => {
+    return { servicio: ctx.query.servicio }
 }
 
 export default VerServicio

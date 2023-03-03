@@ -39,7 +39,6 @@ const Home = () => {
 		e.preventDefault();
 		try {
 			const response = await postLogin(user.email, user.password)
-			console.log(response)
 			localStorage.setItem('token', response.data.token)
 			localStorage.setItem('user', response.data.user)
 			Router.push('/servicios')

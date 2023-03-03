@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Heading, Button, Container, HStack, Center, Spinner, Select, FormControl, FormLabel, Tooltip } from '@chakra-ui/react';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
@@ -11,24 +11,6 @@ import { postService } from '../../data/services'
 import TextareaForm from '../../components/TextareaForm';
 import FormikError from '../../components/FormikError';
 
-export const getServerSideProps = async (context) => {
-    try {
-        const res = await checkToken(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-
 const Crear = () => {
     const [loading, setLoading] = useState(false)
     const [items, setItems] = useState([{
@@ -36,6 +18,22 @@ const Crear = () => {
         name: ''
     }])
     const router = useRouter()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                await checkToken(token)
+            } catch (error) {
+                router.push(
+                    '/servicios', {
+                    pathname: '/servicios',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
 
     const handleChangeItem = (e) => {
         setItems(

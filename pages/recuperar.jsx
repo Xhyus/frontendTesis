@@ -1,44 +1,33 @@
-import { useState } from 'react'
-import { Heading, Stack, FormControl, Input, FormLabel, InputGroup, Button, InputRightElement, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
+import { useState, useEffect } from 'react'
+import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { recoverPassword } from '../data/user';
+import { recoverPassword, checkToken } from '../data/user';
 import Swal from 'sweetalert2';
 
-export const getServerSideProps = async (context) => {
-    try {
-        const res = await checkToken(context.req.headers.cookie)
-        if (res.status === 200) {
-            return {
-                redirect: {
-                    destination: '/servicios',
-                    permanent: false
-                }
-            }
-        } else {
-            return {
-                props: {
-                    data: res.data
-                }
-            }
-        }
-    } catch (error) {
-        return {
-            props: { data: null }
-        }
-    }
-}
-
 const Recuperar = () => {
+    const router = useRouter();
     const [user, setUser] = useState({
         email: ''
     })
-    const Router = useRouter();
     const handleChange = (e) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
         })
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                await checkToken(token)
+                router.push('/servicios')
+            } catch (error) {
+                return
+            }
+        }
+        fetchData()
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -50,7 +39,7 @@ const Recuperar = () => {
                     title: 'Recuperación de contraseña',
                     text: 'Se ha enviado un correo a su cuenta de correo electronico',
                 }).then(() => {
-                    Router.push("/")
+                    router.push("/")
                 })
             }
         } catch (error) {
@@ -82,7 +71,7 @@ const Recuperar = () => {
                         </Tooltip>
                     </FormControl>
                     <Button bgColor={"#FF9F0F"} color="white" _hover={{ bgColor: "#F59300" }} size="md" w={'full'} onClick={handleSubmit}>Recuperar contraseña</Button>
-                    <Link onClick={() => Router.push("/")} color="orange.500" textAlign={"center"}>Volver al inicio</Link>
+                    <Link onClick={() => router.push("/")} color="orange.500" textAlign={"center"}>Volver al inicio</Link>
                 </Stack>
             </Container>
         </Flex>)

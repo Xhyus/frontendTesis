@@ -7,7 +7,6 @@ import { CookiesProvider } from 'react-cookie'
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter()
-	axios.defaults.withCredentials = true
 	const useNavbar = () => {
 		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/empresa/crear/[empresa]' || router.pathname == '/recuperar' || router.pathname == '/cliente/cotizacion/[cotizacion]') {
 			return <Component {...pageProps} />

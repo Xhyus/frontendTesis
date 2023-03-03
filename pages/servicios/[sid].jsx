@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heading, Button, Container, HStack, Text, FormControl, FormLabel, Tooltip, Select } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Text, FormControl, FormLabel, Tooltip, Select, Center, Spinner } from '@chakra-ui/react';
 import { Formik } from 'formik'
 import serviceValidation from '../../utils/serviceValidation'
 import ItemUpdate from '../../components/ItemUpdate';
@@ -8,42 +8,17 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
 import { getSpecificService, updateService } from '../../data/services'
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getSpecificService(context.query.sid, context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        if (error.status === 401) {
-            return {
-                redirect: {
-                    destination: '/',
-                    permanent: false
-                }
-            }
-        } else {
-            return {
-                redirect: {
-                    destination: '/servicios',
-                    permanent: false
-                }
-            }
-        }
-    }
-}
 
-const Update = ({ data }) => {
+
+const Update = ({ sid }) => {
     const [items, setItems] = useState([])
-    const [service] = useState(data)
+    const [service, setService] = useState([])
     const router = useRouter()
-    const { sid } = router.query
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        (async () => {
-            data.item.map((item, index) => {
+        const fetchItems = () => {
+            service.item?.map((item, index) => {
                 let values = {
                     description: item.description,
                     _id: item._id,
@@ -51,8 +26,25 @@ const Update = ({ data }) => {
                 }
                 setItems(items => [...items, values])
             })
-        })();
-    }, [sid])
+        }
+        fetchItems()
+    }, [service])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = await localStorage?.getItem('token')
+                const res = await getSpecificService(sid, token)
+                setService(res.data)
+                setLoading(false)
+            } catch (error) {
+                router.push('/servicios')
+            }
+        }
+        fetchData()
+
+    }, [])
+
 
     const handleChangeItem = (e) => {
         setItems(
@@ -104,6 +96,14 @@ const Update = ({ data }) => {
         })
     }
 
+    if (loading) {
+        return (
+            <Center h="92.5vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
+
     return (
         <Container maxW={"container.md"}>
             <Heading as={"h1"} mt={10} fontSize={'6xl'}>Servicio: {service.name}</Heading>
@@ -112,18 +112,15 @@ const Update = ({ data }) => {
                 validationSchema={serviceValidation}
                 onSubmit={(values) => {
                     try {
+                        let token = localStorage.getItem('token')
                         items.map(item => {
-                            if (item.name.trim() === '') {
+                            if (!item.description || !item.description.trim()) {
                                 setLoading(false)
-                                return Swal.fire({
-                                    title: 'Error',
-                                    text: 'Debe ingresar al menos un item',
-                                    icon: 'error',
-                                    confirmButtonText: 'Aceptar'
-                                })
+                                throw new Error('No puedes dejar campos vacíos')
+
                             }
                         })
-                        updateService(sid, values, items).then(() => {
+                        updateService(sid, values, items, token).then(() => {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Servicio actualizado',
@@ -131,13 +128,15 @@ const Update = ({ data }) => {
                                 showConfirmButton: true
                             }).then(() => {
                                 router.push(`/servicios/ver/${service._id}`)
+                            }).catch((error) => {
+                                throw new Error(error)
                             })
                         })
                     } catch (error) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Algo salió mal',
+                            text: error,
                         })
                     }
                 }}
@@ -190,6 +189,10 @@ const Update = ({ data }) => {
             </Formik>
         </Container >
     )
+}
+
+Update.getInitialProps = async (ctx) => {
+    return { sid: ctx.query.sid }
 }
 
 export default Update

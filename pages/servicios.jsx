@@ -8,19 +8,20 @@ import SearchButton from '../components/SearchButton'
 
 const Servicios = () => {
     const [data, setData] = useState([])
-    console.log(data)
+    const [filter, setFilter] = useState({
+        status: false,
+        filteredServices: [],
+        searchTerm: ''
+    })
     const router = useRouter()
+
     useEffect(() => {
-        console.log('useEffect')
         const fetchData = async () => {
-            console.log('async')
             try {
                 let token = localStorage?.getItem('token')
                 const res = await getServices(token)
                 setData(res.data)
-                console.log("data seteada")
             } catch (error) {
-                console.log(error)
                 router.push(
                     '/', {
                     pathname: '/',
@@ -31,14 +32,7 @@ const Servicios = () => {
         fetchData()
     }, [])
 
-    const [filter, setFilter] = useState({
-        status: false,
-        filteredServices: [],
-        searchTerm: ''
-    })
-
     useEffect(() => {
-        console.log(data)
         setFilter({
             ...filter,
             filteredServices: data.filter(service => {

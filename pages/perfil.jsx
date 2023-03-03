@@ -1,40 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { HStack, Heading, Container, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { changePassword } from '../data/user'
-import jsCookie from 'js-cookie'
 import PasswordInput from '../components/PasswordInput'
 import { checkToken } from '../data/user'
-
-export const getServerSideProps = async (context) => {
-    try {
-        const res = await checkToken(context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
 
 const Perfil = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
     const router = useRouter()
-    const [token] = useState(jsCookie.get('token'))
     const [password, setPassword] = useState({
         password: '',
         newPassword: '',
         rePassword: ''
     })
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                await checkToken(token)
+            } catch (error) {
+                router.push(
+                    '/servicios', {
+                    pathname: '/servicios',
+                    permanent: true
+                })
+            }
+        }
+        fetchData()
+    }, [])
 
     const handleChange = (e) => {
         setPassword({
@@ -60,6 +56,7 @@ const Perfil = () => {
             })
         }
         try {
+            let token = localStorage.getItem('token')
             const response = await changePassword(password, token)
             if (response.status === 200) {
                 Swal.fire({
