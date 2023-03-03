@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer, InputLeftElement } from '@chakra-ui/react'
+import { HStack, Button, Heading, Table, Tr, Thead, Th, Tbody, Container, Input, InputGroup, InputRightElement, TableContainer, InputLeftElement, Center, Spinner } from '@chakra-ui/react'
 import { getQuotes } from '../data/quotes'
 import QuotesTable from '../components/QuotesTable'
 import { AiOutlineClose, AiOutlinePlus, AiOutlineSearch, } from 'react-icons/ai'
@@ -13,18 +13,16 @@ const Cotizaciones = () => {
         filteredQuotes: [],
         searchTerm: ''
     })
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         const fetchData = async () => {
             try {
                 let token = localStorage?.getItem('token')
                 const res = await getQuotes(token)
                 setQuotes(res.data)
+                setLoading(false)
             } catch (error) {
-                router.push(
-                    '/', {
-                    pathname: '/',
-                    permanent: true
-                })
+                router.push('/')
             }
         }
         fetchData()
@@ -57,6 +55,14 @@ const Cotizaciones = () => {
                 searchTerm: ''
             })
         }
+    }
+
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
     }
 
     return (

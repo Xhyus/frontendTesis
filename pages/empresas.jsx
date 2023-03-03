@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heading, Table, Tr, Thead, Th, Tbody, Container, TableContainer } from '@chakra-ui/react'
+import { Heading, Table, Tr, Thead, Th, Tbody, Container, TableContainer, Center, Spinner } from '@chakra-ui/react'
 import { getCompanies } from '../data/company'
 import CompanyTable from '../components/CompanyTable'
 import { createSignedPage } from '../data/signed'
@@ -15,6 +15,7 @@ const Empresas = () => {
         filteredCompany: [],
         searchTerm: ''
     })
+    const [loading, setLoading] = useState(true)
     const router = useRouter()
     useEffect(() => {
         const fetchData = async () => {
@@ -22,6 +23,7 @@ const Empresas = () => {
                 let token = localStorage?.getItem('token')
                 const res = await getCompanies(token)
                 setCompany(res.data)
+                setLoading(false)
             } catch (error) {
                 router.push(
                     '/', {
@@ -64,18 +66,33 @@ const Empresas = () => {
     }
 
     const generateSignedPage = async () => {
-        let token = localStorage?.getItem('token')
-        const response = await createSignedPage('company', token)
-        if (response.status === 200) {
+        try {
+            let token = localStorage?.getItem('token')
+            const response = await createSignedPage('company', token)
             const url = `${process.env.FRONTEND}empresa/crear/${response.data._id}`
             Swal.fire({
-                title: 'Página firmada',
-                text: ` y se ha copiado a su portapapeles. Puede pegarla en el navegador para verla.`,
+                title: 'Link generado',
+                text: ` El link para crear una empresa ha sido generado correctamente.`,
                 icon: 'success',
-                html: `<p>La página firmada se ha generado correctamente.</p> <p>Puede copiar el siguiente enlace:</p><p style="font-size: 0.8rem; font-weight: 600; color: #000;">${url}</p>`,
+                html: `<p>El link para crear una empresa ha sido generado correctamente.</p> <p>Puede copiar el siguiente enlace:</p><p style="font-size: 0.8rem; font-weight: 600; color: #000;">${url}</p>`,
+                confirmButtonText: 'Ok'
+            })
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error al generar la página',
+                icon: 'error',
                 confirmButtonText: 'Ok'
             })
         }
+    }
+
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
     }
 
     return (

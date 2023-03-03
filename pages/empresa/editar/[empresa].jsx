@@ -1,33 +1,38 @@
-import { useState } from 'react'
-import { Heading, Container } from '@chakra-ui/react';
+import { useState, useEffect } from 'react'
+import { Heading, Container, Center, Spinner } from '@chakra-ui/react';
 import { getCompany } from '../../../data/company'
 import CompanyFormEdit from '../../../components/CompanyFormEdit';
 import ContactFormEdit from '../../../components/ContactFormEdit';
+import { useRouter } from 'next/router';
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getCompany(context.query.empresa, context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-
-const Empresa = ({ data }) => {
+const Empresa = ({ empresa }) => {
     const [step, setStep] = useState(1)
+    const [data, setData] = useState()
     const [company, setCompany] = useState()
-    const [constituted, setConstituted] = useState(data.socialReason !== null ? true : false)
-    const [companyRUT, setCompanyRUT] = useState(data.rut)
-    const [contactRUT, setContactRUT] = useState(data.contact.rut)
+    const [constituted, setConstituted] = useState(data?.socialReason !== null ? true : false)
+    const [companyRUT, setCompanyRUT] = useState(data?.rut)
+    const [contactRUT, setContactRUT] = useState(data?.contact.rut)
+    const [loading, setLoading] = useState(true)
+    const router = useRouter()
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const res = await getCompany(empresa)
+                setData(res.data)
+                setLoading(false)
+            } catch (error) {
+                router.push('/')
+            }
+        }
+        getData()
+    }, [])
+    if (loading) {
+        return (
+            <Center v="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
 
     return (
         <Container maxW={"container.md"}>
@@ -39,7 +44,10 @@ const Empresa = ({ data }) => {
             }
         </Container >
     )
+}
 
+Empresa.getInitialProps = async (ctx) => {
+    return { empresa: ctx.query.empresa }
 }
 
 export default Empresa

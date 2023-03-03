@@ -1,40 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Heading, Button, Container, HStack } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Spinner, Center } from '@chakra-ui/react';
 import { signedPage } from '../../../data/signed'
 import Constituted from '../../../components/Constituted';
 import UnConstituted from '../../../components/UnConstituted';
 import ContactForm from '../../../components/ContactForm';
+import { useRouter } from 'next/router';
 
-export const getServerSideProps = async (context) => {
-    try {
-        const res = await signedPage(context.query)
-        if (res.status === 200 && res.data.use === 'company') {
-            return {
-                props: {
-                    data: res.data
-                }
-            }
-        } else {
-            return {
-                redirect: {
-                    destination: '/',
-                    permanent: false,
-                },
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-
-const Empresa = () => {
+const Empresa = ({ empresa }) => {
     const [constitutedCompany, setConstitutedCompany] = useState(true)
     const [step, setStep] = useState(1)
+    const [loading, setLoading] = useState(true)
     const [company, setCompany] = useState({
         name: '',
         socialReason: '',
@@ -42,6 +17,7 @@ const Empresa = () => {
         phone: '',
         address: ''
     })
+    const router = useRouter()
     const [contact, setContact] = useState({
         name: '',
         email: '',
@@ -53,7 +29,24 @@ const Empresa = () => {
 
     useEffect(() => {
         localStorage.setItem('chakra-ui-color-mode', 'dark')
+        const getSigned = async () => {
+            try {
+                await signedPage(empresa)
+                setLoading(false)
+            } catch (error) {
+                router.push('/')
+            }
+        }
+        getSigned()
     }, [])
+
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
 
     return (
         <Container maxW={"container.md"}>
@@ -71,8 +64,7 @@ const Empresa = () => {
                         <UnConstituted company={company} setCompany={setCompany} setStep={setStep} companyRUT={companyRUT} setCompanyRUT={setCompanyRUT} />
                     }
                 </>
-            )
-            }
+            )}
             {
                 step === 2 && (
                     <ContactForm company={company} setStep={setStep} setContact={setContact} contact={contact} state={constitutedCompany} companyRUT={companyRUT} contactRUT={contactRUT} setContactRUT={setContactRUT} />
@@ -80,6 +72,10 @@ const Empresa = () => {
             }
         </Container >
     )
+}
+
+Empresa.getInitialProps = async (ctx) => {
+    return { empresa: ctx.query.empresa }
 }
 
 export default Empresa

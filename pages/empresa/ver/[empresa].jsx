@@ -1,33 +1,29 @@
-import { useState } from 'react'
-import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react';
+import { useEffect, useState } from 'react'
+import { Heading, Button, Container, HStack, Text, Stack, Tabs, TabList, Tab, TabPanel, TabPanels, Center, Spinner } from '@chakra-ui/react';
 import { getCompany, deleteCompany } from '../../../data/company'
 import TextCopy from '../../../components/TextCopy';
 import TagText from '../../../components/TagText';
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2';
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getCompany(context.query.empresa, context.req.headers.cookie)
-        return {
-            props: {
-                data: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
 
-const VerEmpresa = (data) => {
-    const [company] = useState(data.data)
+const VerEmpresa = ({ empresa }) => {
+    const [company, setCompany] = useState([])
     const router = useRouter()
-
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                const res = await getCompany(empresa, token)
+                setCompany(res.data)
+                setLoading(false)
+            } catch (error) {
+                router.push('/')
+            }
+        }
+        getData()
+    }, [])
     const handleDelete = async () => {
         try {
             await Swal.fire({
@@ -40,10 +36,9 @@ const VerEmpresa = (data) => {
                 confirmButtonText: 'Sí, eliminar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const res = await deleteCompany(company._id)
-                    if (res.status === 200) {
-                        router.push('/')
-                    }
+                    let token = localStorage?.getItem('token')
+                    await deleteCompany(empresa, token)
+                    router.push('/empresas')
                 }
             })
         } catch (error) {
@@ -53,6 +48,13 @@ const VerEmpresa = (data) => {
                 text: 'Ha ocurrido un error al eliminar la empresa',
             })
         }
+    }
+    if (loading) {
+        return (
+            <Center h="95vh"   >
+                <Spinner size="xl" />
+            </Center>
+        )
     }
 
     return (
@@ -118,4 +120,7 @@ const VerEmpresa = (data) => {
     )
 }
 
+VerEmpresa.getInitialProps = async (ctx) => {
+    return { empresa: ctx.query.empresa }
+}
 export default VerEmpresa
