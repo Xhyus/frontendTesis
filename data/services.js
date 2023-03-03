@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const deleteServices = async (id, token) => {
-    const response = await axios.put(`${process.env.SERVIDOR}/service/delete/${id}`, { headers: { 'authorization': `bearer ${token}` } });
+    const response = await axios.put(`${process.env.SERVIDOR}/service/delete/${id}`, {}, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
 
