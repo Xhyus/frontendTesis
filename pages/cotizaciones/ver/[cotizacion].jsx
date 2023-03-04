@@ -1,4 +1,4 @@
-import { Heading, Button, Container, HStack, Stack, Tag, TagLabel, TagLeftIcon, Grid, Box, Text } from '@chakra-ui/react'
+import { Heading, Button, Container, HStack, Stack, Tag, TagLabel, TagLeftIcon, Grid, Box, Text, Center, Spinner } from '@chakra-ui/react'
 import { getQuote, deleteQuote } from '../../../data/quotes'
 import { useRouter } from 'next/router'
 import TextCopy from '../../../components/TextCopy'
@@ -6,27 +6,28 @@ import { FaCalendarTimes, FaCalendarPlus } from 'react-icons/fa'
 import { formatDate, formatFormalization, formatTitleDetail, formatText } from '../../../utils/formatInfo'
 import Swal from 'sweetalert2'
 import TagText from '../../../components/TagText'
+import { useEffect, useState } from 'react'
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getQuote(context.query.cotizacion, context.req.headers.cookie)
-        return {
-            props: {
-                quote: res.data
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-
-const VerCotizacion = ({ quote }) => {
+const VerCotizacion = ({ cotizacion }) => {
     const router = useRouter()
+    const [quote, setQuote] = useState()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                const res = await getQuote(cotizacion, token)
+                setQuote(res.data)
+                setLoading(false)
+            } catch (error) {
+                router.push('/')
+            }
+        }
+        getData()
+    }, [])
+
+
     const handleDelete = async () => {
         try {
             Swal.fire({
@@ -40,7 +41,8 @@ const VerCotizacion = ({ quote }) => {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    deleteQuote(quote._id)
+                    let token = localStorage?.getItem('token')
+                    deleteQuote(cotizacion, token)
                     Swal.fire({
                         title: 'Cotización eliminada',
                         text: 'La cotización ha sido eliminada correctamente',
@@ -59,6 +61,14 @@ const VerCotizacion = ({ quote }) => {
             })
         }
     }
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
+
     return (
         <Container maxW={"container.lg"}>
             <HStack align={"center"} justify={"center"} my={10}>
@@ -130,6 +140,10 @@ const VerCotizacion = ({ quote }) => {
             </Stack>
         </Container >
     )
+}
+
+VerCotizacion.getInitialProps = async (ctx) => {
+    return { cotizacion: ctx.query.cotizacion }
 }
 
 export default VerCotizacion

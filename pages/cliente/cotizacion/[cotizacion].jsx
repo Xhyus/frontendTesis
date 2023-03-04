@@ -1,29 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getClientQuote } from '../../../data/quotes'
-import { Stack } from '@chakra-ui/react'
+import { Stack, Center, Spinner } from '@chakra-ui/react'
 import Service from '../../../components/quote/Service'
 import Resume from '../../../components/quote/Resume'
 import MoreData from '../../../components/quote/MoreData'
+import { useRouter } from 'next/router'
 
-export async function getServerSideProps(context) {
-    try {
-        const res = await getClientQuote(context.query.cotizacion, context.req.headers.cookie)
-        return {
-            props: {
-                quoteData: res.data
+const VisualizarCotizacion = ({ cotizacion }) => {
+    const [loading, setLoading] = useState(true)
+    const [quoteData, setQuoteData] = useState({})
+    const router = useRouter()
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const res = await getClientQuote(cotizacion)
+                setQuoteData(res.data)
+                setLoading(false)
+            } catch (error) {
+                router.push('/servicios')
             }
         }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
+        getData()
+    }, [])
 
-const VisualizarCotizacion = ({ quoteData }) => {
+    useEffect(() => {
+        setDots(() => {
+            const dots = []
+            for (let i = 0; i < quoteData.quoteServices?.length + 2; i++) {
+                dots.push(dotsImage[i % dotsImage.length])
+            }
+            return dots
+        })
+    }, [quoteData])
     const [dotsImage] = useState([
         '/dots.png',
         '/dots2.png',
@@ -32,13 +40,15 @@ const VisualizarCotizacion = ({ quoteData }) => {
         '/dots5.png',
         '/dots6.png',
     ])
-    const [dots] = useState(() => {
-        const dots = []
-        for (let i = 0; i < quoteData.quoteServices.length + 2; i++) {
-            dots.push(dotsImage[i % dotsImage.length])
-        }
-        return dots
-    })
+    const [dots, setDots] = useState([])
+
+    if (loading) {
+        return (
+            <Center h={'95vh'}>
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
 
     return (
         <>
@@ -57,6 +67,10 @@ const VisualizarCotizacion = ({ quoteData }) => {
             <Stack w={'full'} h={"150vh"} justify={"center"} align="center" backgroundImage="url('/fondo-cotizacion-fragua.jpg')" bgSize={'cover'} bgPosition={'center'} />
         </>
     )
+}
+
+VisualizarCotizacion.getInitialProps = async (ctx) => {
+    return { cotizacion: ctx.query.cotizacion }
 }
 
 export default VisualizarCotizacion

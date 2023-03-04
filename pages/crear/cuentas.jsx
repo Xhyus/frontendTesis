@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Heading, Button, Container, HStack } from '@chakra-ui/react';
+import { Heading, Button, Container, HStack, Center, Spinner } from '@chakra-ui/react';
 import Swal from 'sweetalert2';
 import { createUser } from '../../data/user';
 import InputAccount from '../../components/InputAccount';
+import { checkToken } from '../../data/user'
 
 const Cuentas = () => {
     const [account, setAccount] = useState({
@@ -19,6 +20,21 @@ const Cuentas = () => {
             onSubmit(event);
         }
     };
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                await checkToken(token)
+                setLoading(false)
+            } catch (error) {
+                router.push('/')
+            }
+        }
+        getData()
+    }, [])
+
+
     const handleChange = (e) => {
         setAccount({
             ...account,
@@ -35,7 +51,8 @@ const Cuentas = () => {
             })
         }
         try {
-            const response = await createUser(account.name, account.email, account.password, account.confirmPassword)
+            let token = localStorage?.getItem('token')
+            const response = await createUser(account.name, account.email, account.password, account.confirmPassword, token)
             if (response.status === 201) {
                 Swal.fire({
                     icon: 'success',
@@ -52,6 +69,14 @@ const Cuentas = () => {
                 text: 'Ha ocurrido un error, el correo no es válido, ya existe o las contraseñas no coinciden',
             })
         }
+    }
+
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
     }
 
     return (

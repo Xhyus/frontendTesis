@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Heading, Container, Grid, GridItem } from '@chakra-ui/react'
+import { Heading, Container, Grid, GridItem, Center, Spinner } from '@chakra-ui/react'
 import { getServices } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
 import SearchButton from '../components/SearchButton'
-
 
 const Servicios = () => {
     const [data, setData] = useState([])
@@ -14,6 +13,7 @@ const Servicios = () => {
         searchTerm: ''
     })
     const router = useRouter()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,6 +21,7 @@ const Servicios = () => {
                 let token = localStorage?.getItem('token')
                 const res = await getServices(token)
                 setData(res.data)
+                setLoading(false)
             } catch (error) {
                 router.push(
                     '/', {
@@ -64,6 +65,14 @@ const Servicios = () => {
     }
 
     const sendToService = (id) => router.push(`/servicios/ver/${id}`)
+
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
 
     return (
         <Container maxW={"container.xl"} centerContent pb={10} >

@@ -1,38 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Heading, Container, WrapItem, Text, Button } from '@chakra-ui/react';
 import { getServices } from '../../data/services';
 import { getCompanies } from '../../data/company';
 import AddServices from '../../components/AddServices';
-import ServiceQuote from '../../components/ServiceQuote';
 import QuoteForm from '../../components/QuoteForm';
 import QuotePreview from '../../components/QuotePreview';
+import { useRouter } from 'next/router'
+import { Center, Spinner } from '@chakra-ui/react'
 
-export async function getServerSideProps(context) {
-    try {
-        let services = await getServices(context.req.headers.cookie)
-        let companies = await getCompanies(context.req.headers.cookie)
-        return {
-            props: {
-                data: {
-                    services: services.data,
-                    company: companies.data
-                },
-            }
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        }
-    }
-}
-
-const CrearCotizaciones = ({ data }) => {
-    const [companiesList] = useState(data.company)
-    const [services] = useState(data.services)
+const CrearCotizaciones = () => {
+    const [companiesList, setCompanyList] = useState([])
+    const [services, setServices] = useState([])
     const [selectedServices, setSelectedServices] = useState([])
+    const [loading, setLoading] = useState(true)
+    const router = useRouter()
     const [quote, setQuote] = useState({
         name: '',
         description: '',
@@ -43,6 +23,21 @@ const CrearCotizaciones = ({ data }) => {
         formalization: '',
         document: '',
     })
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                let token = localStorage?.getItem('token')
+                let response = await getCompanies(token)
+                setCompanyList(response.data)
+                response = await getServices(token)
+                setServices(response.data)
+                setLoading(false)
+            } catch (error) {
+                router.push('/')
+            }
+        }
+        getData()
+    }, [])
     const [selectedInfo, setSelectedInfo] = useState({
         company: null,
         payment: null,
@@ -50,7 +45,13 @@ const CrearCotizaciones = ({ data }) => {
         document: null
     })
     const [step, setStep] = useState(1)
-
+    if (loading) {
+        return (
+            <Center h="95vh">
+                <Spinner size="xl" />
+            </Center>
+        )
+    }
     if (step === 1) {
         return (
             <AddServices services={services} selectedServices={selectedServices} setStep={setStep} step={step} setSelectedServices={setSelectedServices} />
