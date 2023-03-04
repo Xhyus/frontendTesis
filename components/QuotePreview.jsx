@@ -8,6 +8,10 @@ const QuotePreview = ({ quote, selectedServices, setStep }) => {
     const router = useRouter()
     const handleSubmit = async () => {
         try {
+            if (selectedServices.length === 0) {
+                throw new error('No se han seleccionado servicios')
+            }
+            let token = localStorage?.getItem('token')
             await createQuote({
                 name: quote.name,
                 description: quote.description,
@@ -18,7 +22,7 @@ const QuotePreview = ({ quote, selectedServices, setStep }) => {
                 formalization: quote.formalization.value,
                 documents: quote.document.value,
                 services: selectedServices.map(service => service.id)
-            })
+            }, token)
             await Swal.fire({
                 title: 'Cotización creada',
                 text: 'La cotización ha sido creada con éxito',

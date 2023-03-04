@@ -6,6 +6,8 @@ const getQuotes = async (token) => {
 }
 
 const getQuote = async (id, token) => {
+    console.log(id)
+    console.log(token)
     const response = await axios.get(`${process.env.SERVIDOR}/quote/search/${id}`, { headers: { 'authorization': `bearer ${token}` } });
     return response
 }
