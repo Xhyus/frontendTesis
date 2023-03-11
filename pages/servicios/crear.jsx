@@ -86,41 +86,39 @@ const Crear = () => {
             <Formik
                 initialValues={{ name: '', description: '', price: '', type: '' }}
                 validationSchema={serviceValidation}
-                onSubmit={(values) => {
-                    setLoading(true)
-                    items.map(item => {
-                        if (item.name.trim() === '') {
-                            setLoading(false)
-                            return Swal.fire({
-                                title: 'Error',
-                                text: 'El ítem no puede estar vacío',
-                                icon: 'error',
-                                confirmButtonText: 'Aceptar'
-                            })
-                        }
-                    })
-                    postService(values.name, values.description, values.price, values.type, items)
-                        .then((res) => {
-                            if (res.status === 200) {
-                                Swal.fire({
-                                    title: 'Servicio creado',
-                                    text: 'El servicio ha sido creado correctamente',
-                                    icon: 'success',
+                onSubmit={async (values) => {
+                    try {
+                        setLoading(true)
+                        items.map(item => {
+                            if (item.name.trim() === '') {
+                                setLoading(false)
+                                return Swal.fire({
+                                    title: 'Error',
+                                    text: 'El ítem no puede estar vacío',
+                                    icon: 'error',
                                     confirmButtonText: 'Aceptar'
-                                }).then(() => {
-                                    router.replace('/servicios')
                                 })
                             }
                         })
-                        .catch((err) => {
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'Ha ocurrido un error',
-                                icon: 'error',
-                                confirmButtonText: 'Aceptar'
-                            })
-                            setLoading(false)
+                        let token = localStorage?.getItem('token')
+                        await postService(values.name, values.description, values.price, values.type, items, token)
+                        Swal.fire({
+                            title: 'Servicio creado',
+                            text: 'El servicio ha sido creado correctamente',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar'
+                        }).then(() => {
+                            router.replace('/servicios')
                         })
+                    } catch (error) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ha ocurrido un error',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        })
+                        setLoading(false)
+                    }
                 }}
             >
                 {({

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const checkToken = async (token) => {
+    console.log(token)
     const response = await axios.get(`${process.env.SERVIDOR}/checkToken`, { headers: { 'authorization': `bearer ${token}` } });
     return response;
 }
