@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex, Center } from '@chakra-ui/react';
+import { Heading, Stack, FormControl, Input, FormLabel, Button, Container, Link, Tooltip, Flex, Center, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { recoverPassword, checkToken } from '../data/user';
 import Swal from 'sweetalert2';
