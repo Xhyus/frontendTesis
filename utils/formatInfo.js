@@ -27,7 +27,7 @@ const formatDate = (date) => {
 }
 
 const formatText = (text) => {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+    return text?.charAt(0).toUpperCase() + text?.slice(1);
 }
 
 const formatFormalization = (formalization) => {

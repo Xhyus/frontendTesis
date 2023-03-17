@@ -10,8 +10,8 @@ const Empresa = ({ empresa }) => {
     const [data, setData] = useState()
     const [company, setCompany] = useState()
     const [constituted, setConstituted] = useState(data?.socialReason !== null ? true : false)
-    const [companyRUT, setCompanyRUT] = useState(data?.rut)
-    const [contactRUT, setContactRUT] = useState(data?.contact.rut)
+    const [companyRUT, setCompanyRUT] = useState('')
+    const [contactRUT, setContactRUT] = useState('')
     const [loading, setLoading] = useState(true)
     const router = useRouter()
     useEffect(() => {
@@ -19,6 +19,8 @@ const Empresa = ({ empresa }) => {
             try {
                 const res = await getCompany(empresa)
                 setData(res.data)
+                setCompanyRUT(res.data.rut)
+                setContactRUT(res.data.contact.rut)
                 setLoading(false)
             } catch (error) {
                 router.push('/')

@@ -5,6 +5,7 @@ import constitutedValidation from '../utils/constitutedValidation';
 import unConstitutedValidation from '../utils/unConstitutedValidation';
 import { useRouter } from 'next/router';
 import { formatRut, validateRut } from 'rutlib'
+import Swal from 'sweetalert2';
 
 const CompanyFormEdit = ({ setStep, company, setCompany, companyRUT, setCompanyRUT, constituted, setConstituted }) => {
     const router = useRouter()

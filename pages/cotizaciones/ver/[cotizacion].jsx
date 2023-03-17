@@ -89,20 +89,20 @@ const VerCotizacion = ({ cotizacion }) => {
             <HStack justify={"space-between"} wrap={{ base: "wrap", md: "nowrap" }} align={"flex-start"} w={"full"}>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} >
                     <Heading size={"md"} color={"Orange"}>Datos de la empresa</Heading>
-                    <TextCopy prefix={"Nombre"} data={formatText(quote.company.name)} />
-                    <TextCopy prefix={"Rut"} data={quote.company.rut} />
-                    {quote.company.socialReason !== null ? <TextCopy prefix={"Razón social"} data={formatText(quote.company.socialReason)} /> : null}
-                    {quote.company.address && <TextCopy prefix={"Dirección"} data={formatText(quote.company.address)} />}
-                    <TextCopy prefix={"Teléfono"} data={"+569" + quote.company.phone} />
-                    <TextCopy prefix={"Email"} data={quote.company.email} />
+                    <TextCopy prefix={"Nombre"} data={formatText(quote.company?.name)} />
+                    <TextCopy prefix={"Rut"} data={quote.company?.rut} />
+                    {quote.company?.socialReason !== null ? <TextCopy prefix={"Razón social"} data={formatText(quote.company?.socialReason)} /> : null}
+                    {quote.company?.address && <TextCopy prefix={"Dirección"} data={formatText(quote.company?.address)} />}
+                    <TextCopy prefix={"Teléfono"} data={"+569" + quote.company?.phone} />
+                    <TextCopy prefix={"Email"} data={quote.company?.email} />
                 </Stack>
                 <Stack justify={"center"} w={{ base: "100%", md: "50%" }} pt={{ base: 5, md: "0" }}>
                     <Heading size={"md"} color={"Orange"}>Datos de contacto</Heading>
-                    <TextCopy prefix={"Nombre"} data={formatText(quote.company.contact.name)} />
-                    <TextCopy prefix={"Rut"} data={quote.company.contact.rut} />
-                    <TextCopy prefix={"Teléfono"} data={"+569" + quote.company.contact.phone} />
-                    <TextCopy prefix={"Email"} data={quote.company.contact.email} />
-                    {quote.company.socialReason !== null ? <TagText tag={"Cargo"} data={formatText(quote.company.contact.role)} /> : <TagText tag={"Rol"} data={formatText(quote.company.contact.role)} />}
+                    <TextCopy prefix={"Nombre"} data={formatText(quote.company?.contact.name)} />
+                    <TextCopy prefix={"Rut"} data={quote.company?.contact.rut} />
+                    <TextCopy prefix={"Teléfono"} data={"+569" + quote.company?.contact.phone} />
+                    <TextCopy prefix={"Email"} data={quote.company?.contact.email} />
+                    {quote.company?.socialReason !== null ? <TagText tag={"Cargo"} data={formatText(quote.company?.contact.role)} /> : <TagText tag={"Rol"} data={formatText(quote.company.contact.role)} />}
                 </Stack>
             </HStack>
             <Stack>
